@@ -1,0 +1,9 @@
+/**
+ * @deprecated use ServerZoneType instead
+ */
+export var ServerZone;
+(function (ServerZone) {
+    ServerZone["US"] = "US";
+    ServerZone["EU"] = "EU";
+})(ServerZone || (ServerZone = {}));
+//# sourceMappingURL=server-zone.js.map

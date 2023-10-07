@@ -1,0 +1,1 @@
+{"version":3,"file":"transport.js","sourceRoot":"","sources":["../../src/transport.ts"],"names":[],"mappings":"","sourcesContent":["import { Payload } from './payload';\nimport { Response } from './response';\n\nexport interface Transport {\n  send(serverUrl: string, payload: Payload): Promise<Response | null>;\n}\n\nexport type TransportType = 'xhr' | 'beacon' | 'fetch';\n"]}

@@ -1,0 +1,1 @@
+{"version":3,"file":"identity.d.ts","sourceRoot":"","sources":["../../../src/plugins/identity.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,YAAY,EAAE,MAAM,EAAE,KAAK,EAAE,MAAM,4BAA4B,CAAC;AAGzE,qBAAa,mBAAoB,YAAW,YAAY;IACtD,IAAI,SAAc;IAClB,IAAI,WAAqB;IAEzB,aAAa,0FAAyC;IAEhD,OAAO,CAAC,OAAO,EAAE,KAAK,GAAG,OAAO,CAAC,KAAK,CAAC;IAQvC,KAAK,CAAC,MAAM,EAAE,MAAM;CAK3B"}
