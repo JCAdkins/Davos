@@ -12,7 +12,7 @@ const SnapCenterCard = (props) => {
   };
 
   const handleClick = () => {
-    props.handleClick(props.podcast.embedded_src);
+    props.handleClick(props.podcast);
   };
 
   return (
@@ -47,7 +47,7 @@ const SnapCenterCard = (props) => {
                   />
                 </svg>
               </span>
-              <p className="text-white">00:58:36</p>
+              <p className="text-white">{props.podcast.duration}</p>
               <span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

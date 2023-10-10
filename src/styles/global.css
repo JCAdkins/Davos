@@ -7,6 +7,8 @@
   line-height: 1.5;
   font-weight: 400;
 
+  width: fit-content;
+
   color-scheme: light dark;
   color: rgb(255, 255, 255);
   background-color: #ffffff;
@@ -16,6 +18,10 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+}
+
+.test {
+  list-style: none;
 }
 
 @layer components {

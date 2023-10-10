@@ -10,15 +10,15 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="bg-cover bg-fixed w-screen overscroll-contain">
+    <div className="bg-cover bg-fixed w-fit">
       <Router>
         <StickyNavbar />
         <Routes>
-          <Route exact path="/about" element={<About />} />
-          <Route exact path="/events" element={<Events />} />
-          <Route exact path="/home" element={<Home />} />
-          <Route exact path="/members" element={<Members />} />
-          <Route exact path="/podcasts" element={<Podcasts />} />
+          <Route exact path="jordy/about" element={<About />} />
+          <Route exact path="jordy/events" element={<Events />} />
+          <Route exact path="jordy/home" element={<Home />} />
+          <Route exact path="jordy/members" element={<Members />} />
+          <Route exact path="jordy/podcasts" element={<Podcasts />} />
         </Routes>
         <Footer />
       </Router>

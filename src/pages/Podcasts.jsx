@@ -4,21 +4,22 @@ import VerticalAccordion from "../components/VerticalAccordion";
 import { useState } from "react";
 
 const Podcasts = () => {
-  const [audio, setAudio] = useState(null);
   const [haveAudio, setHaveAudio] = useState(null);
+  const [podcastList, setPodcastList] = useState([]);
 
-  const playAudio = (audio) => {
-    setAudio(audio);
-    setHaveAudio(true);
-    return true;
+  const addPodcast = (podcast) => {
+    setPodcastList([...podcastList, podcast]);
   };
 
-  const audioPlayer = new AudioPlayerII();
+  const playAudio = (podcast) => {
+    addPodcast(podcast);
+    setHaveAudio(true);
+  };
 
   return (
     <div className="">
-      <div className="flex flex-row justify-evenly">
-        <div className="flex flex-col px-6 basis-1/2 max-w-sm md:max-w-2xl h-fit mr-15">
+      <div className="flex flex-row justify-evenly bg-black">
+        <div className="flex flex-col px-6 basis-1/2 max-w-sm md:max-w-2xl mr-15">
           <CardDefault
             display="justify-center mb-4"
             className="bg-opacity-50 max-w-sm"
@@ -43,7 +44,9 @@ const Podcasts = () => {
           text="2xl"
         >
           {!haveAudio && <div>Nothing Playing</div>}
-          {haveAudio && audioPlayer.render()}
+          {haveAudio && (
+            <AudioPlayerII podcastList={podcastList} setList={setPodcastList} />
+          )}
         </CardDefault>
       </div>
     </div>

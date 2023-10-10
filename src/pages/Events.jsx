@@ -1,5 +1,4 @@
 import CardDefault from "../components/CardDefault";
-import CarouselCard from "../components/CarouselCard";
 import DefaultCalendar from "../components/DefaultCalendar";
 import OverlayCard from "../components/OverlayCard";
 

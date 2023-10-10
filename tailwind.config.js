@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
 const withMT = require("@material-tailwind/react/utils/withMT");
+const percentageWidth = require("tailwindcss-percentage-width");
 
 export default withMT({
   content: [
@@ -10,17 +11,24 @@ export default withMT({
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        home: "url('https://dsk4t6ov5vq8n.cloudfront.net/uploads/PBS-Articles/2022/The-Green-Planet/Episode-4-photos/Sized-photos/The_Green_Planet_04_010.jpg')",
-        members: "",
-        events: "",
-        podcasts: "",
-        about: "",
-      },
       color: {
         skyblue: "#87CEEB",
+        shadowblue: "#274684",
+        cornflower_blue: {
+          50: "#f2f6fc",
+          100: "#e1ebf8",
+          200: "#cadbf3",
+          300: "#a6c5ea",
+          400: "#709fdc",
+          500: "#5c88d5",
+          600: "#486ec8",
+          700: "#3e5cb7",
+          800: "#384d95",
+          900: "#314277",
+          950: "#222a49",
+        },
       },
     },
   },
-  plugins: [require("flowbite/plugin")],
+  plugins: [require("flowbite/plugin"), percentageWidth],
 });
