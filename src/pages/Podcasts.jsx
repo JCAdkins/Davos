@@ -1,11 +1,17 @@
 import AudioPlayerII from "../components/AudioPlayer/AudioPlayerII";
 import CardDefault from "../components/CardDefault";
+import PodcastSignInModal from "../components/Modals/PodcastSignUpModal";
 import VerticalAccordion from "../components/VerticalAccordion";
 import { useState } from "react";
 
 const Podcasts = () => {
   const [haveAudio, setHaveAudio] = useState(null);
   const [podcastList, setPodcastList] = useState([]);
+  const [modal, setModal] = useState(false);
+
+  setTimeout(() => {
+    setModal(true);
+  }, 3000);
 
   const addPodcast = (podcast) => {
     setPodcastList([...podcastList, podcast]);
@@ -14,6 +20,14 @@ const Podcasts = () => {
   const playAudio = (podcast) => {
     addPodcast(podcast);
     setHaveAudio(true);
+  };
+
+  const removePodcast = (indexToRemove) => {
+    const updatedPodcastList = [...podcastList];
+    updatedPodcastList.splice(indexToRemove, 1);
+    if (updatedPodcastList.length == 0) setHaveAudio(false);
+    setPodcastList(updatedPodcastList);
+    1;
   };
 
   return (
@@ -45,10 +59,14 @@ const Podcasts = () => {
         >
           {!haveAudio && <div>Nothing Playing</div>}
           {haveAudio && (
-            <AudioPlayerII podcastList={podcastList} setList={setPodcastList} />
+            <AudioPlayerII
+              podcastList={podcastList}
+              removePodcast={removePodcast}
+            />
           )}
         </CardDefault>
       </div>
+      {modal && <PodcastSignInModal />}
     </div>
   );
 };

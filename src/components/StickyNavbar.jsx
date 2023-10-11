@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { DefaultImage } from "./DefaultImage";
 import {
   Navbar,
@@ -7,12 +7,18 @@ import {
   Button,
   IconButton,
 } from "@material-tailwind/react";
+import MemberSignInModal from "./Modals/MemberSignInModal";
 
 export function StickyNavbar() {
   const [openNav, setOpenNav] = React.useState(false);
+  const [openSignIn, setOpenSignIn] = useState(false);
 
   const signIn = (props) => {
-    console.log("onClick: " + props);
+    setOpenSignIn(true);
+  };
+
+  const resetModal = () => {
+    setOpenSignIn(false);
   };
 
   React.useEffect(() => {
@@ -136,10 +142,17 @@ export function StickyNavbar() {
       </div>
       <MobileNav open={openNav}>
         {navList}
-        <Button variant="gradient" size="sm" fullWidth className="mb-2">
+        <Button
+          onClick={signIn}
+          variant="gradient"
+          size="sm"
+          fullWidth
+          className="mb-2"
+        >
           <span>Sign In</span>
         </Button>
       </MobileNav>
+      {openSignIn && <MemberSignInModal resetModal={resetModal} />}
     </Navbar>
   );
 }

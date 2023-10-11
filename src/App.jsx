@@ -14,11 +14,11 @@ function App() {
       <Router>
         <StickyNavbar />
         <Routes>
-          <Route exact path="jordy/about" element={<About />} />
-          <Route exact path="jordy/events" element={<Events />} />
-          <Route exact path="jordy/home" element={<Home />} />
-          <Route exact path="jordy/members" element={<Members />} />
-          <Route exact path="jordy/podcasts" element={<Podcasts />} />
+          <Route exact path="/jordy/about" element={<About />} />
+          <Route exact path="/jordy/events" element={<Events />} />
+          <Route exact path="/jordy/home" element={<Home />} />
+          <Route exact path="/jordy/members" element={<Members />} />
+          <Route exact path="/jordy/podcasts" element={<Podcasts />} />
         </Routes>
         <Footer />
       </Router>

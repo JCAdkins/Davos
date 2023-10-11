@@ -6,14 +6,13 @@ const AudioPlayerII = (props) => {
   const [currentTime, setCurrentTime] = useState("0:00");
   const [pause, setPause] = useState(false);
   const podcastList = props.podcastList;
-  const setPodcastList = props.setList;
+  const currentPodcast = podcastList[index];
 
   const playerRef = useRef(null);
   const timelineRef = useRef(null);
   const playheadRef = useRef(null);
   const hoverPlayheadRef = useRef(null);
 
-  const currentPodcast = podcastList[index];
   const back = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -160,6 +159,7 @@ const AudioPlayerII = (props) => {
   };
 
   const clickAudio = (key) => {
+    console.log("clickAudio");
     setIndex(key);
     updatePlayer();
     if (pause) {
@@ -167,7 +167,17 @@ const AudioPlayerII = (props) => {
     }
   };
 
+  const removePodcast = (key) => {
+    if (currentPodcast === podcastList[key] && key > 0) prevPodcast();
+    else if (currentPodcast === podcastList[podcastList.length - 1])
+      setIndex(index - 1);
+
+    props.removePodcast(key);
+  };
+
   useEffect(() => {
+    const myPlayer = playerRef.current;
+    const myTimeline = timelineRef.current;
     playerRef.current.addEventListener("timeupdate", timeUpdate, false);
     playerRef.current.addEventListener("ended", nextPodcast, false);
     timelineRef.current.addEventListener("click", changeCurrentTime, false);
@@ -175,11 +185,11 @@ const AudioPlayerII = (props) => {
     timelineRef.current.addEventListener("mouseout", resetTimeLine, false);
 
     return () => {
-      playerRef.current.removeEventListener("timeupdate", timeUpdate);
-      playerRef.current.removeEventListener("ended", nextPodcast);
-      timelineRef.current.removeEventListener("click", changeCurrentTime);
-      timelineRef.current.removeEventListener("mousemove", hoverTimeLine);
-      timelineRef.current.removeEventListener("mouseout", resetTimeLine);
+      myPlayer.removeEventListener("timeupdate", timeUpdate);
+      myPlayer.removeEventListener("ended", nextPodcast);
+      myTimeline.removeEventListener("click", changeCurrentTime);
+      myTimeline.removeEventListener("mousemove", hoverTimeLine);
+      myTimeline.removeEventListener("mouseout", resetTimeLine);
     };
   }, [podcastList]);
 
@@ -261,21 +271,22 @@ const AudioPlayerII = (props) => {
         <div className="play-list flex flex-col bg-blue-900 rounded-lg p-2 mt-5 space-y-2 h-48 overflow-y-scroll">
           {podcastList.map((podcast, key) => {
             return (
-              <button
+              <div
                 key={key}
                 onClick={() => clickAudio(key)}
                 className={`track relative flex items-center p-2 hover:bg-blue-600 rounded-lg transition ${
                   index === key ? "bg-blue-700" : ""
                 }`}
               >
-                <div
-                  className="absolute visible top-3 right-3 bottom-autio left-absolute"
-                  onClick={() => {
-                    setPodcastList(podcastList.filter((pc) => pc !== podcast));
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    removePodcast(key);
                   }}
+                  className="absolute visible top-3 right-3 bottom-autio left-absolute"
                 >
                   <Xicon />
-                </div>
+                </button>
                 <img
                   className="w-16 h-16 overflow-hidden rounded-lg shadow-lg"
                   src={podcast.speaker.img}
@@ -290,7 +301,7 @@ const AudioPlayerII = (props) => {
                   </span>
                 </div>
                 <span className="ml-auto">{podcast.duration}</span>
-              </button>
+              </div>
             );
           })}
         </div>
