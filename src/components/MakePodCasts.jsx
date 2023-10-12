@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { Accordion } from "flowbite-react";
+import { Accordion, Spinner } from "flowbite-react";
 import SnapCenterCard from "./SnapCenterCard";
 
-function MakePodCasts(text, playPodCast) {
+function MakePodCasts(tag, playPodCast) {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -24,12 +24,12 @@ function MakePodCasts(text, playPodCast) {
 
   return (
     <Accordion.Content className="py-2">
-      {loading && <li>Loading...</li>}
+      {loading && <Spinner aria-label="Default status example" />}
       {!loading && (
         <div className="snap-x">
           <ul className="mt-10 pb-2 w-full flex overflow-x-auto gap-4 snap-x">
             {list
-              .filter((podcast) => podcast.tag === text)
+              .filter((podcast) => podcast.tag === tag)
               .map((podcast, index) => {
                 return (
                   <SnapCenterCard

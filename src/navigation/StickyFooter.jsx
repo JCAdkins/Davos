@@ -17,10 +17,10 @@ const StickyFooter = () => {
           height="100"
           viewBox="0 0 200 100"
         >
-          <text x="10" y="20" font-family="Arial" font-size="24" fill="black">
+          <text x="10" y="20" fontFamily="Arial" fontSize="24" fill="black">
             Adkins
           </text>
-          <text x="10" y="35" font-family="Arial" font-size="18" fill="black">
+          <text x="10" y="35" fontFamily="Arial" fontSize="18" fill="black">
             Industrial
           </text>
         </svg>

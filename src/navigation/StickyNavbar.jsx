@@ -1,24 +1,33 @@
-import React, { useState } from "react";
-import { DefaultImage } from "./DefaultImage";
+import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import { DefaultImage } from "../components/DefaultImage";
 import {
   Navbar,
   MobileNav,
   Typography,
   Button,
   IconButton,
+  Collapse,
 } from "@material-tailwind/react";
-import MemberSignInModal from "./Modals/MemberSignInModal";
+import DropDownButton from "../components/DropDownButton";
+import MemberSignInModal from "../components/Modals/MemberSignInModal";
+import UserContext from "../contexts/UserContext";
 
-export function StickyNavbar() {
+const StickyNavbar = (props) => {
   const [openNav, setOpenNav] = React.useState(false);
-  const [openSignIn, setOpenSignIn] = useState(false);
+  const [openSignInModal, setOpenSignInModal] = useState(false);
+  const { user, setUser } = useContext(UserContext);
 
   const signIn = (props) => {
-    setOpenSignIn(true);
+    setOpenSignInModal(true);
   };
 
   const resetModal = () => {
-    setOpenSignIn(false);
+    setOpenSignInModal(false);
+  };
+
+  const logOut = () => {
+    setUser();
   };
 
   React.useEffect(() => {
@@ -36,9 +45,9 @@ export function StickyNavbar() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="/members" className="flex items-center">
+        <Link className="flex items-center" to="/jordy/members">
           Members
-        </a>
+        </Link>
       </Typography>
       <Typography
         as="li"
@@ -46,9 +55,9 @@ export function StickyNavbar() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="/events" className="flex items-center">
+        <Link className="flex items-center" to="/jordy/events">
           Events
-        </a>
+        </Link>
       </Typography>
       <Typography
         as="li"
@@ -56,9 +65,9 @@ export function StickyNavbar() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="/podcasts" className="flex items-center">
+        <Link className="flex items-center" to="/jordy/podcasts">
           Podcasts
-        </a>
+        </Link>
       </Typography>
       <Typography
         as="li"
@@ -66,9 +75,9 @@ export function StickyNavbar() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="/about" className="flex items-center">
+        <Link className="flex items-center" to="/jordy/about">
           About
-        </a>
+        </Link>
       </Typography>
     </ul>
   );
@@ -76,11 +85,7 @@ export function StickyNavbar() {
   return (
     <Navbar className="sticky bg-[#E1E3E4] top-0 z-10 h-max max-w-full rounded-none py-1 px-4 lg:px-8 lg:py-1">
       <div className="flex items-center justify-between text-blue-gray-900">
-        <Typography
-          as="a"
-          href="home"
-          className="mr-4 cursor-pointer py-1.5 font-medium"
-        >
+        <Link className="fmr-4 cursor-pointer py-1.5 font-medium" to="/jordy/">
           <div className="invert relative rounded-md w-full overflow-hidden bg-cover bg-[50%] bg-no-repeat">
             <DefaultImage
               className=""
@@ -89,18 +94,22 @@ export function StickyNavbar() {
             ></DefaultImage>
             <div className="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-fixed opacity-50"></div>
           </div>
-        </Typography>
+        </Link>
 
         <div className="flex items-center gap-4">
           <div className="mr-4 hidden lg:block">{navList}</div>
-          <Button
-            variant="gradient"
-            size="sm"
-            className="hidden lg:inline-block"
-            onClick={signIn}
-          >
-            <span>Sign In</span>
-          </Button>
+          {user ? (
+            <DropDownButton onClick={logOut} />
+          ) : (
+            <Button
+              variant="gradient"
+              size="sm"
+              className="hidden lg:inline-block"
+              onClick={signIn}
+            >
+              <span>Sign In</span>
+            </Button>
+          )}
           <IconButton
             variant="text"
             className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
@@ -140,7 +149,7 @@ export function StickyNavbar() {
           </IconButton>
         </div>
       </div>
-      <MobileNav open={openNav}>
+      <Collapse open={openNav}>
         {navList}
         <Button
           onClick={signIn}
@@ -151,8 +160,10 @@ export function StickyNavbar() {
         >
           <span>Sign In</span>
         </Button>
-      </MobileNav>
-      {openSignIn && <MemberSignInModal resetModal={resetModal} />}
+      </Collapse>
+      {openSignInModal && <MemberSignInModal resetModal={resetModal} />}
     </Navbar>
   );
-}
+};
+
+export default StickyNavbar;
