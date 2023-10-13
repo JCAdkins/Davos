@@ -12,13 +12,13 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import UserContext from "./contexts/UserContext";
 import ProtectedRoute from "./navigation/ProtectedRoute";
+import NewAccount from "./pages/NewAccount";
 
 function App() {
   const [user, setUser] = useState();
 
   return (
     <div className="bg-cover bg-fixed w-fit">
-      {console.log(user)}
       <UserContext.Provider value={{ user, setUser }}>
         <Router>
           <StickyNavbar />
@@ -26,6 +26,7 @@ function App() {
             <Route exact path="/jordy/about" element={<About />} />
             <Route exact path="/jordy/events" element={<Events />} />
             <Route exact path="/jordy" element={<Home />} />
+            <Route exact path="/jordy/new_account" element={<NewAccount />} />
             <Route
               exact
               path="/jordy/members"

@@ -1,6 +1,7 @@
 import { Button, Label, Modal, TextInput } from "flowbite-react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 
 const URL = "http://127.0.0.1:3000/podcast_subscribers";
 
@@ -17,6 +18,7 @@ const PodcastSignInModal = (props) => {
   );
 
   const onSubmit = async (data) => {
+    console.log(JSON.stringify(data));
     const response = await fetch(URL, {
       method: "POST",
       headers: {
@@ -85,12 +87,12 @@ const PodcastSignInModal = (props) => {
             </div>
             <div className="flex justify-between text-sm font-medium text-gray-500 dark:text-gray-300">
               Not registered?&nbsp;
-              <a
-                href="/modal"
+              <Link
+                to="/jordy/new_account"
                 className="text-cyan-700 hover:underline dark:text-cyan-500"
               >
                 Create account
-              </a>
+              </Link>
             </div>
           </div>
         </Modal.Body>

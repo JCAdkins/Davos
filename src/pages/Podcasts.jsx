@@ -2,15 +2,17 @@ import AudioPlayerII from "../components/AudioPlayer/AudioPlayerII";
 import CardDefault from "../components/CardDefault";
 import PodcastSignInModal from "../components/Modals/PodcastSignUpModal";
 import VerticalAccordion from "../components/VerticalAccordion";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import UserContext from "../contexts/UserContext";
 
 const Podcasts = () => {
+  const { user } = useContext(UserContext);
   const [haveAudio, setHaveAudio] = useState(null);
   const [podcastList, setPodcastList] = useState([]);
   const [modal, setModal] = useState(false);
 
   setTimeout(() => {
-    setModal(true);
+    setModal(!user);
   }, 3000);
 
   const addPodcast = (podcast) => {

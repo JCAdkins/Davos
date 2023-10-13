@@ -11,6 +11,9 @@ export default withMT({
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        cool: 'url("https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg")',
+      },
       color: {
         skyblue: "#87CEEB",
         shadowblue: "#274684",

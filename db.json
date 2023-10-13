@@ -291,85 +291,33 @@
   ],
   "users": [
     {
-      "userID": 1,
       "credentials": {
-        "userName": "jordan.adkins111@gmail.com",
-        "password": "!Q2w3e4r5t"
+        "userName": "the_bears_54@hotmail.com",
+        "password": "1q1q1q1q1q"
       },
       "name": {
         "firstName": "Jordan",
         "lastName": "Adkins"
       },
       "profile": {
-        "image": "./images/juice_wrld.webp",
-        "occupation": "El Creator",
+        "dob": "1990-01-30T07:00:00.000Z",
+        "image": "",
+        "background_image": "",
+        "organization": "",
+        "occupation": "",
+        "experience": "",
+        "responsibilities": "",
+        "company_url": "",
+        "number_employees": "",
+        "industry": "",
         "email": "jordan.adkins111@gmail.com",
-        "address": "8416 W Gardenia Ave, Phoenix, AZ",
-        "phone": "3092307966"
-      },
-      "roles": ["admin"],
-      "permissions": [],
-      "subscribed": true,
-      "events": [],
-      "playlists": [
-        {
-          "name": "current",
-          "podcasts": []
+        "education": "",
+        "location": {
+          "city": "Phoenix",
+          "state": "AZ"
         },
-        {
-          "name": "Tony's Listens",
-          "podcasts": []
-        }
-      ]
-    },
-    {
-      "userID": 2,
-      "credentials": {
-        "userName": "themiddlest@live.com",
-        "password": "basketball"
-      },
-      "name": {
-        "firstName": "Anthony",
-        "lastName": "Adkins"
-      },
-      "profile": {
-        "image": "./images/bro_tank_guy.jpeg",
-        "occupation": "California Bro",
-        "email": "themiddlest@live.com",
-        "address": "Somewhere, Beach City, Sun",
-        "phone": "1234567890"
-      },
-      "roles": [],
-      "permissions": [],
-      "subscribed": false,
-      "events": [],
-      "playlists": [
-        {
-          "name": "current",
-          "podcasts": []
-        },
-        {
-          "name": "Tony's Listens",
-          "podcasts": []
-        }
-      ]
-    },
-    {
-      "userID": 3,
-      "credentials": {
-        "userName": "tester@test.edu",
-        "password": "testington"
-      },
-      "name": {
-        "firstName": "Tester",
-        "lastName": "McTestington"
-      },
-      "profile": {
-        "image": "./images/tester_mctestington.png",
-        "occupation": "Tests Things",
-        "email": "tester@test.edu",
-        "address": "123 Fake Ln, Faketown, Fk",
-        "phone": "5558675309"
+        "phone": "3092307966",
+        "about": ""
       },
       "roles": [],
       "permissions": [],
@@ -379,17 +327,8 @@
         {
           "name": "current",
           "podcasts": []
-        },
-        {
-          "name": "Tony's Listens",
-          "podcasts": []
         }
-      ]
-    }
-  ],
-  "podcast_subscribers": [
-    {
-      "email": "the_bears_54@live.com",
+      ],
       "id": 1
     }
   ]

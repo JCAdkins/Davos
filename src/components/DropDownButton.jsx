@@ -11,14 +11,14 @@ export default function DropDownButton(props) {
   const { user } = useContext(UserContext);
   return (
     <>
-      <BaseAvatar img={user.profile.image} />
+      <BaseAvatar image={user.profile.image} />
       <Dropdown label={user.name.firstName + " " + user.name.lastName}>
-        <DropdownItem>
-          <Link to="/profile">Profile</Link>
-        </DropdownItem>
-        <DropdownItem>
-          <Link to="/profile/settings">Settings</Link>
-        </DropdownItem>
+        <Link to="/profile">
+          <DropdownItem>Profile</DropdownItem>
+        </Link>
+        <Link to="/profile/settings">
+          <DropdownItem>Settings</DropdownItem>
+        </Link>
 
         <DropdownItem onClick={props.onClick}>Sign out</DropdownItem>
       </Dropdown>

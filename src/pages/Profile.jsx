@@ -1,10 +1,12 @@
 import ProfileCard from "../components/ProfileCard";
+import ProfileDisplay from "../components/ProfileDisplay";
+import CardDefault from "../components/CardDefault";
 
 const Profile = ({ user }) => {
   return (
-    <div className="flex flex-row text-black">
-      <ProfileCard user={user} />
-    </div>
+    <CardDefault>
+      <ProfileDisplay user={user} />
+    </CardDefault>
   );
 };
 
