@@ -171,6 +171,7 @@ const AudioPlayerII = (props) => {
     if (currentPodcast === podcastList[key] && key > 0) prevPodcast();
     else if (currentPodcast === podcastList[podcastList.length - 1])
       setIndex(index - 1);
+    else if (key < index) setIndex(index - 1);
 
     props.removePodcast(key);
   };

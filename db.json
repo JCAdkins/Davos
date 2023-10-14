@@ -75,7 +75,8 @@
         "What are some examples of China retaliating against those who point out examples of CCP propaganda?",
         "How has China tried to influence U.S. policy by gaining control of supra-governmental organizations such as the World Health Organization?",
         "What is particularly troubling about Chinese companies becoming so dominant in producing, installing and managing surveillance cameras?"
-      ]
+      ],
+      "disabled": false
     },
     {
       "title": "Insights into Anti-Aging Technologies",
@@ -103,7 +104,8 @@
         "What are the prospects for blood filtering?",
         "Is cryo preservation regulated by the FDA?",
         "What precautions are in place so that bad actors do not collect huge upfront fees to cryo-freeze bodies and then abscond with the money?"
-      ]
+      ],
+      "disabled": false
     },
     {
       "title": "Paving the Way for Regime Change in North Korea",
@@ -126,7 +128,8 @@
         "How much influence does China have in directing North Korea's nuclear weapons program? Why would China like to see North Korea invade South Korea?",
         "Are there any influential figures in North Korea with whom regime change can be negotiated? Is there an Idi Amin option for the North Korean regime?",
         "What is the current plight of North Koreans? Is daily life getting slightly better or worse?"
-      ]
+      ],
+      "disabled": false
     },
     {
       "title": "Social Credit Scoring in America",
@@ -147,7 +150,8 @@
         "ESG scoring has metastasized all over corporate America. Politically correct companies are rewarded with lower interest rate loans. In some cases, conservative Americans are being cut off from social media, banks and payment platforms. Democrat lawmakers tried to place siting Republican Senators on the no-fly list in January of 2021. Woke America is allowed to contest elections. When Republicans do so, they are charged with criminal behavior.",
         "This fascinating session discusses breaking issues such as the subjectiveness of ESG scoring, so-called predictive ESG modeling and wokeness being programmed into AI technologies. We discuss the adequacy of Congressional investigations into biases being baked into AI.",
         "We also broach technologies that the woke mob wants to roll out. One such technology is climate tracing with satellites. A truly frightening bioengineering technology could insert genes into people that would cause them to dislike meat."
-      ]
+      ],
+      "disabled": false
     },
     {
       "title": "A Primer on the Diamond Industry",
@@ -175,7 +179,8 @@
         "To what extent are there diamond trading platforms similar to stock markets? What are the challenges in so commoditizing diamonds?",
         "How much of an effort has the diamond industry taken to guard against child/slave labor?",
         "How prevalent are lab grown diamonds?"
-      ]
+      ],
+      "disabled": false
     },
     {
       "title": "Data Driven Political Campaigns",
@@ -195,7 +200,8 @@
       "issues_discussed": [
         "The program explores the reliability of surveys, how they should be best crafted and the related expenses. We chat about the extent to which some survey companies may intentionally skew survey results so as to affect the motivation of campaign staffers and contributors as well as cause the misallocation of rival candidates' campaign resources.",
         "Despite Arizona's and the nation's compromised elections, George remains resolute. He is as optimistic and as hard-working as ever. He is dedicated to using his talents to ensure that America remains a vibrant democracy as well as a beacon to people from the world over."
-      ]
+      ],
+      "disabled": false
     },
     {
       "title": "The World Health Organization's Power Grab",
@@ -215,7 +221,8 @@
       "issues_discussed": [
         "Dr. Nass discusses how the WHO is degrading humans to the level of animals and plants in its self-proclaimed stewardship of the Earth. She talks about how 85% of the WHO's budget is privately funded, and therefore beholden to individuals, businesses and foundations who look at the WHO as a conduit to implement their own self-serving policies. Dr. Nass sheds light on consequences countries may face for failing to comply with WHO mandates and illuminates the fact that countries that adopt WHO mandates will be locked in the WHO framework for at least three years.",
         "Dr. Nass also discusses how vicious and vindictive state board medical licensing regulators caused her to have her medical license suspended."
-      ]
+      ],
+      "disabled": false
     },
     {
       "title": "Investing in the Hotel Industry",
@@ -245,7 +252,8 @@
         "How do refugees impact a hotel's profits?",
         "Would declining popularity of temporary office providers be a boon for hotels?",
         "To what extent could more restrictions on Airbnb-type services impact the hotel industry?"
-      ]
+      ],
+      "disabled": false
     },
     {
       "title": "Lessons in City Management",
@@ -265,7 +273,8 @@
       "issues_discussed": [
         "Listen to this intriguing podcast to learn how Chandler manages its finances, is reducing the incidence of homelessness, civilianizing elements of its police force so that officers can spend more time policing and recycles every drop of water multiple times.",
         "You will also hear about the quality of schools in Chandler, hotel and airport capacity and expansions, testing autonomous driving in Chandler and the diligent planning for a casino."
-      ]
+      ],
+      "disabled": false
     },
     {
       "title": "The American Government's Landgrab",
@@ -286,38 +295,139 @@
         "Under the Conservation Reserve Program, the government pays farmers to refrain from using portions of their land for a term. This creates a federal connection to the land that can lead to more federal requirements, such as when critical habitat for an endangered species is declared. No further compensation is directed towards landowners. Expensive studies, biologists and attorneys must be engaged to protect the landowner. Most cannot afford to do this, forcing them to voluntarily enroll in more programs and give up more of their property rights to the government to survive.",
         "This podcast discusses the Biden Administration's 30 by 30 program, under which the government will control 30% of America's lands and waters by 2030. There are no guarantees that the federal government will be satiated with control of 30% of our nation's lands and waters. This 30 by 30 landgrab should be viewed in the context of other efforts to displace farmers and ranchers around the world, thereby further threatening the food supply.",
         "Listen to this program to glean insight into the motivation of some of the wealthiest people in world who are buying up vast tracks of farmland. Further, dispossessing farmers and ranchers from their land reduces all of their rights, and risks sending them into serfdom."
-      ]
+      ],
+      "disabled": false
     }
   ],
   "users": [
     {
+      "userID": 1,
       "credentials": {
-        "userName": "the_bears_54@hotmail.com",
-        "password": "1q1q1q1q1q"
+        "userName": "jordan.adkins111@gmail.com",
+        "password": "!Q2w3e4r5t"
       },
       "name": {
         "firstName": "Jordan",
         "lastName": "Adkins"
       },
       "profile": {
-        "dob": "1990-01-30T07:00:00.000Z",
-        "image": "",
-        "background_image": "",
-        "organization": "",
-        "occupation": "",
-        "experience": "",
+        "dob": "12/19/1990",
+        "image": "./images/juice_wrld.webp",
+        "background_image": "https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg",
+        "organization": "The Earth",
+        "occupation": "El Creator",
+        "experience": "12",
         "responsibilities": "",
         "company_url": "",
         "number_employees": "",
         "industry": "",
         "email": "jordan.adkins111@gmail.com",
-        "education": "",
+        "education": {
+          "school": "Glendale Community College",
+          "degree": "Bachelor's of Science"
+        },
         "location": {
-          "city": "Phoenix",
-          "state": "AZ"
+          "city": "Glendale",
+          "state": "Arizona"
         },
         "phone": "3092307966",
-        "about": ""
+        "about": "Hello, I'm Jordan Adkins, an experienced web designer with a passion for creating outstanding digital experiences. I've dedicated 12 years to transforming creative concepts into attractive and functional websites. \n\nDesign Philosophy: \nMy approach centers on the fusion of form and function. I believe that a successful website should be both visually appealing and user-friendly. Every project I undertake, whether it's a simple portfolio or a complex e-commerce platform, is executed with a focus on excellence. \n\nCreative Innovator: \nCreativity fuels my work. I view the digital landscape as a canvas for innovative ideas. Staying current with design trends and technologies ensures that each project I handle is on the cutting edge. \n\nProblem Solver: \nWeb design involves problem-solving, whether it's optimizing performance, enhancing engagement, or improving functionality. I embrace challenges with a problem-solving mindset. \n\nUser-Centric Approach: \nUnderstanding the audience is paramount. I adopt a user-centric approach, striving to develop websites that not only represent your brand but also resonate with your intended users. Key priorities include accessibility, responsiveness, and a seamless user experience. \n\nWork & Experience: \nMy portfolio encompasses a diverse array of clients, ranging from startups to well-established brands. Notable projects and clients include [mention some relevant examples, if applicable]. These experiences have honed my skills and broadened my design perspective. \n\nLet's Collaborate: \nIf you're in search of a dedicated web designer to bring your digital aspirations to life, let's get in touch. I'm eager to learn about your project, objectives, and how I can assist you in achieving online success. Don't hesitate to reach out, and together, we can embark on a creative journey."
+      },
+      "roles": ["admin"],
+      "permissions": [],
+      "subscribed": true,
+      "events": [],
+      "playlists": [
+        {
+          "name": "current",
+          "podcasts": []
+        },
+        {
+          "name": "Tony's Listens",
+          "podcasts": []
+        }
+      ]
+    },
+    {
+      "userID": 2,
+      "credentials": {
+        "userName": "themiddlest@live.com",
+        "password": "basketball"
+      },
+      "name": {
+        "firstName": "Anthony",
+        "lastName": "Adkins"
+      },
+      "profile": {
+        "dob": "11/17/1989",
+        "image": "./images/bro_tank_guy.jpeg",
+        "background_image": "",
+        "organization": "Best Buy",
+        "occupation": "California Bro",
+        "experience": "",
+        "responsibilities": "",
+        "company_url": "",
+        "number_employees": "",
+        "industry": "",
+        "email": "themiddlest@live.com",
+        "education": {
+          "school": "Arizona State University",
+          "degree": "Bachelor's of Science"
+        },
+        "location": {
+          "city": "Marina Del Rey",
+          "state": "California"
+        },
+        "phone": "1234567890",
+        "about": "Hi there it's a me Mario!"
+      },
+      "roles": [],
+      "permissions": [],
+      "subscribed": false,
+      "events": [],
+      "playlists": [
+        {
+          "name": "current",
+          "podcasts": []
+        },
+        {
+          "name": "Tony's Listens",
+          "podcasts": []
+        }
+      ]
+    },
+    {
+      "userID": 3,
+      "credentials": {
+        "userName": "tester@test.edu",
+        "password": "testington"
+      },
+      "name": {
+        "firstName": "Tester",
+        "lastName": "McTestington"
+      },
+      "profile": {
+        "dob": "11/20/2020",
+        "image": "./images/tester_mctestington.png",
+        "background_image": "",
+        "organization": "Test City",
+        "occupation": "Tests Things",
+        "experience": "",
+        "responsibilities": "",
+        "company_url": "",
+        "number_employees": "",
+        "industry": "",
+        "email": "tester@test.edu",
+        "education": {
+          "school": "University of Computer Science",
+          "degree": "Bachelor's of Science"
+        },
+        "location": {
+          "city": "Test City",
+          "state": "Testes"
+        },
+        "phone": "5558675309",
+        "about": "Hi there it's a me Mario!"
       },
       "roles": [],
       "permissions": [],
@@ -327,9 +437,26 @@
         {
           "name": "current",
           "podcasts": []
+        },
+        {
+          "name": "Tony's Listens",
+          "podcasts": []
         }
-      ],
+      ]
+    }
+  ],
+  "podcast_subscribers": [
+    {
+      "email": "the_bears_54@live.com",
       "id": 1
+    },
+    {
+      "email": "the_bears_54@hotmail.com",
+      "id": 2
+    },
+    {
+      "email": "jordan.adkins111@gmail.com",
+      "id": 3
     }
   ]
 }

@@ -16,7 +16,9 @@ const Podcasts = () => {
   }, 3000);
 
   const addPodcast = (podcast) => {
-    setPodcastList([...podcastList, podcast]);
+    const updatedPodcast = { ...podcast, index: Math.random() };
+
+    setPodcastList([...podcastList, updatedPodcast]);
   };
 
   const playAudio = (podcast) => {
@@ -27,7 +29,7 @@ const Podcasts = () => {
   const removePodcast = (indexToRemove) => {
     const updatedPodcastList = [...podcastList];
     updatedPodcastList.splice(indexToRemove, 1);
-    if (updatedPodcastList.length == 0) setHaveAudio(false);
+    if (updatedPodcastList.length === 0) setHaveAudio(false);
     setPodcastList(updatedPodcastList);
     1;
   };

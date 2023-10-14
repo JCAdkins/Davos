@@ -18,7 +18,7 @@ function App() {
   const [user, setUser] = useState();
 
   return (
-    <div className="bg-cover bg-fixed w-fit">
+    <div className="bg-cover bg-fixed w-screen">
       <UserContext.Provider value={{ user, setUser }}>
         <Router>
           <StickyNavbar />
@@ -26,7 +26,15 @@ function App() {
             <Route exact path="/jordy/about" element={<About />} />
             <Route exact path="/jordy/events" element={<Events />} />
             <Route exact path="/jordy" element={<Home />} />
-            <Route exact path="/jordy/new_account" element={<NewAccount />} />
+            <Route
+              exact
+              path="/jordy/new_account"
+              element={
+                <ProtectedRoute isAllowed={!user}>
+                  <NewAccount />
+                </ProtectedRoute>
+              }
+            />
             <Route
               exact
               path="/jordy/members"

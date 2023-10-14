@@ -31,6 +31,9 @@ export default withMT({
           950: "#222a49",
         },
       },
+      flex: {
+        150: "1 1 150px",
+      },
     },
   },
   plugins: [require("flowbite/plugin"), percentageWidth],

@@ -10,19 +10,8 @@ function getAge(dateString) {
 }
 
 const ProfileDisplay = ({ user }) => {
-  //   const classname = `h-500 w-auto bg-cover bg-[url(${user.profile.background_image})]`;
   return (
     <>
-      {/* <div className="absolute text-gray-700 top-0 h-500 w-full -skew-y-6 bg-gray-700">
-        oijoijoij
-        <p className="text-gray-700">j</p>
-        <p className="text-gray-700">j</p>
-        <p className="text-gray-700">j</p>
-        <p className="text-gray-700">j</p>
-        <p className="text-gray-700">j</p>
-        <p className="text-gray-700">j</p>
-        <p className="text-gray-700">j</p>
-      </div> */}
       <div class="p-16 bg-gray-300">
         <div class="p-8 bg-white shadow mt-24">
           {" "}
@@ -45,7 +34,7 @@ const ProfileDisplay = ({ user }) => {
               {" "}
               <div class="w-48 h-48 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center">
                 <img
-                  className="rounded-full"
+                  className="rounded-full w-48 h-48"
                   src={user.profile.image}
                   alt={user.name}
                 />
