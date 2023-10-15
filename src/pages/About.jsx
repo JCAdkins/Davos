@@ -31,7 +31,7 @@ const About = () => {
   ];
 
   return (
-    <div className="flex flex-row justify-evenly">
+    <div className="flex flex-row bg-black justify-evenly">
       <SideBar
         list={list}
         side="left"

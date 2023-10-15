@@ -1,12 +1,11 @@
-import ProfileCard from "../components/ProfileCard";
+import { Card } from "flowbite-react";
 import ProfileDisplay from "../components/ProfileDisplay";
-import CardDefault from "../components/CardDefault";
 
 const Profile = ({ user }) => {
   return (
-    <CardDefault>
+    <Card className="bg-black">
       <ProfileDisplay user={user} />
-    </CardDefault>
+    </Card>
   );
 };
 

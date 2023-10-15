@@ -11,61 +11,65 @@ import UserSettings from "./pages/UserSettings";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import UserContext from "./contexts/UserContext";
+import PodcastProvider from "./contexts/PodcastProvider";
 import ProtectedRoute from "./navigation/ProtectedRoute";
 import NewAccount from "./pages/NewAccount";
 
 function App() {
   const [user, setUser] = useState();
+  const [podcast, setPodcast] = useState();
 
   return (
     <div className="bg-cover bg-fixed w-screen">
       <UserContext.Provider value={{ user, setUser }}>
-        <Router>
-          <StickyNavbar />
-          <Routes>
-            <Route exact path="/jordy/about" element={<About />} />
-            <Route exact path="/jordy/events" element={<Events />} />
-            <Route exact path="/jordy" element={<Home />} />
-            <Route
-              exact
-              path="/jordy/new_account"
-              element={
-                <ProtectedRoute isAllowed={!user}>
-                  <NewAccount />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              exact
-              path="/jordy/members"
-              element={
-                <ProtectedRoute isAllowed={!!user}>
-                  <Members />
-                </ProtectedRoute>
-              }
-            />
-            <Route exact path="/jordy/podcasts" element={<Podcasts />} />
-            <Route
-              exact
-              path="/profile"
-              element={
-                <ProtectedRoute isAllowed={!!user}>
-                  <Profile user={user} />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              exact
-              path="/profile/settings"
-              element={
-                <ProtectedRoute isAllowed={!!user}>
-                  <UserSettings user={user} />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-          <StickyFooter />
-        </Router>
+        <PodcastProvider.Provider value={{ podcast, setPodcast }}>
+          <Router>
+            <StickyNavbar />
+            <Routes>
+              <Route exact path="/jordy/about" element={<About />} />
+              <Route exact path="/jordy/events" element={<Events />} />
+              <Route exact path="/jordy" element={<Home />} />
+              <Route
+                exact
+                path="/jordy/new_account"
+                element={
+                  <ProtectedRoute isAllowed={!user}>
+                    <NewAccount />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                exact
+                path="/jordy/members"
+                element={
+                  <ProtectedRoute isAllowed={!!user}>
+                    <Members />
+                  </ProtectedRoute>
+                }
+              />
+              <Route exact path="/jordy/podcasts" element={<Podcasts />} />
+              <Route
+                exact
+                path="/profile"
+                element={
+                  <ProtectedRoute isAllowed={!!user}>
+                    <Profile user={user} />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                exact
+                path="/profile/settings"
+                element={
+                  <ProtectedRoute isAllowed={!!user}>
+                    <UserSettings user={user} />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+            <StickyFooter />
+          </Router>
+        </PodcastProvider.Provider>
       </UserContext.Provider>
     </div>
   );

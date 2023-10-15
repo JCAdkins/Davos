@@ -36,5 +36,9 @@ export default withMT({
       },
     },
   },
-  plugins: [require("flowbite/plugin"), percentageWidth],
+  plugins: [
+    require("flowbite/plugin"),
+    percentageWidth,
+    require("@tailwindcss/typography"),
+  ],
 });

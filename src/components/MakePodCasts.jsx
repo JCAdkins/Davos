@@ -33,7 +33,7 @@ function MakePodCasts(tag, playPodCast) {
               .map((podcast, index) => {
                 return (
                   <SnapCenterCard
-                    display="first:pl-14 last:pr-14"
+                    display="first:pl-6 last:pr-6"
                     key={index}
                     tag={podcast.tag}
                     podcast={podcast}
