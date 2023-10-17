@@ -9,7 +9,7 @@ const StickyFooter = () => {
           href="#"
           className="cursor-pointer text-center font-medium"
         >
-          ©2023 ALL RIGHTS RESERVED – DAVOS IN THE DESERT
+          ©2023 ALL RIGHTS RESERVED - DAVOS IN THE DESERT
         </Typography>
         <svg
           xmlns="http://www.w3.org/2000/svg"

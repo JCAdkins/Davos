@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { DefaultImage } from "../components/DefaultImage";
 import {
   Navbar,
-  MobileNav,
   Typography,
   Button,
   IconButton,

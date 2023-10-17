@@ -10,7 +10,6 @@ const AudioPlayerII = (props) => {
 
   const showInfo = () => {
     !currentPodcast.disabled ? props.showPodcastInfo(podcastList[index]) : {};
-    console.log(podcastList[index]);
   };
 
   const playerRef = useRef(null);

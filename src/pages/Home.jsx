@@ -1,16 +1,149 @@
 import DefaultCarousel from "../components/DefaultCarousel.jsx";
+import { Button } from "flowbite-react";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
+  const goToEvents = () => {};
+
+  const goToPodcasts = () => {};
+
+  const signUp = () => {};
+
   return (
-    <div className="flex flex-col justify-center">
-      <div className="">
-        <DefaultCarousel className="rounded-none" />
-      </div>
-      <div className="items-center content-center">
-        <div className="absolute mt-8 mx-16  font-serif border-solid text-5xl">
-          The <em className="text-black">premier</em> forum for elite business,
-          thought & government leaders to collaborate and build the future.
+    <div className="bg-white">
+      <div className="justify-center align-center bg-black">
+        <div className="w-full h-full top-20 bottom-0 left-0 right-0 -z-10">
+          <DefaultCarousel className="h-screen w-screen object-cover transition-opacity duration-300 visible opacity-100" />
         </div>
+        <div className="absolute z-0 top-28 left-16">
+          <div className="relative text-5xl max-w-[35ch] text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] left-15 right-0 z-20">
+            The{" "}
+            <em className="italic text-black drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)] text-7xl">
+              premier
+            </em>{" "}
+            forum for elite business, thought & government leaders to
+            collaborate and build the future.
+          </div>
+        </div>
+      </div>
+      <div className="justify-center mt-24 align-center bg-gray-500">
+        <div className="flex flex-row">
+          <div className="flex grow-0 ml-20 shrink w-1/2">
+            <img
+              src="../../images/podcast_home_1.jpeg"
+              alt="podcast picture"
+            ></img>
+          </div>
+          <div className="">
+            <div className="text-5xl font-sans not-italic">
+              <p className="-ml-12 mt-12">
+                <em className="text-black drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
+                  Davos On Air
+                </em>{" "}
+                - The
+              </p>
+              <p className="ml-6 mt-2">
+                best <strong>conservative</strong>
+              </p>
+              <p className="ml-24 mt-2">podcast on the web.</p>
+            </div>
+            <div className="flex max-w-[50ch] text-lg mt-10">
+              <p>
+                "I listen to the Davos On Air podcast all the time! They talk
+                about current events and bring on the best guest speakers with a
+                wide variety of expertise."{" "}
+                <strong className="italic">-Nancy A. </strong>
+              </p>
+            </div>
+            <div className="mt-4 justify-end mx-auto">
+              <Link to="/jordy/podcasts">
+                <Button className="ml-48" color="light" pill>
+                  Listen Now
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="justify-center align-center bg-gray-500">
+        <div className="flex flex-row">
+          <div className="ml-28 mt-12 text-5xl font-sans justify-items-center">
+            <p>
+              Become a{" "}
+              <em className="italic text-black drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
+                Davos In
+              </em>
+            </p>
+            <p className="ml-20 mt-2">
+              <em className="italic text-black drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
+                The Desert
+              </em>{" "}
+              member
+            </p>
+            <div className="flex max-w-[45ch] text-lg ml-10 mt-12">
+              <p>
+                ...and join thousands of people just like you! Have your voice
+                heard by those that want to <em>DO</em> something about it. Now
+                is the time to take actions.
+              </p>
+            </div>
+            <div className="mt-4 content-center mx-auto">
+              <Link to="/jordy/new_account">
+                <Button className="ml-52" color="dark" pill>
+                  Sign Up
+                </Button>
+              </Link>
+            </div>
+          </div>
+          <div className="w-1/2 ml-6">
+            <img
+              src="../../images/member_home_1.jpeg"
+              alt="Member picture"
+            ></img>
+          </div>
+        </div>
+      </div>
+      <div className="justify-center align-center bg-gray-500">
+        <div className="flex flex-row">
+          <div className="flex grow-0 ml-20 shrink w-43%">
+            <img
+              src="../../images/event_home_2.webp"
+              alt="Events picture"
+            ></img>
+          </div>
+          <div className="">
+            <div className="text-5xl font-sans not-italic">
+              <p className="ml-20 mt-12">Party and mingle</p>
+              <p className="ml-40 mt-2">
+                with your{" "}
+                <em className="italic text-black drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
+                  Davos
+                </em>{" "}
+                pals
+              </p>
+            </div>
+            <div className="flex max-w-[50ch] text-lg mt-10 ml-24">
+              <p>
+                ...events are held frequently and you do not want to miss out on
+                all of the fun. Socialize and grow your political network. What
+                can you achieve with your newfound connections?
+              </p>
+            </div>
+            <div className="mt-4 justify-end mx-auto">
+              <Link to="/jordy/events">
+                <Button className="ml-72" color="light" pill>
+                  View Events
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="w-screen bg-black justify-center mt-24">
+        <img
+          src="../../images/reagan_home_2.jpeg"
+          alt="Ronald Reagan Quote"
+        ></img>
       </div>
     </div>
   );

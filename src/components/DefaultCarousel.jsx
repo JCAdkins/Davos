@@ -2,7 +2,12 @@ import { Carousel } from "flowbite-react";
 
 const DefaultCarousel = () => {
   return (
-    <Carousel className="h-screen">
+    <Carousel
+      className="h-screen"
+      indicators={false}
+      leftControl=" "
+      rightControl=" "
+    >
       <img
         className="aspect-auto"
         alt=""

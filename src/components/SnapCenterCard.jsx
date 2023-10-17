@@ -16,8 +16,8 @@ const SnapCenterCard = (props) => {
   };
 
   return (
-    <li key={props.index} className={`snap-center ${props.display}`}>
-      <div className="relative scale-90 hover:scale-95 flex-shrink-1 max-w-[60vw] duration-100 overflow-hidden rounded-3xl">
+    <li key={props.index} className="snap-center first:pl-6 last:pr-6">
+      <div className="relative scale-90 hover:scale-95 flex-shrink-1 duration-100 overflow-hidden rounded-3xl">
         <div className="absolute inset-0 w-full h-full bg-gradient-to-tr from-red-300 to-yellow-200 object-cover object-bottom"></div>
         <div className="absolute inset-0 h-full w-full bg-gradient-to-br from-gray-800"></div>
         <div className="relative h-62 w-96 p-6 flex flex-col justify-between items-center">
@@ -26,7 +26,7 @@ const SnapCenterCard = (props) => {
             srcSet={props.podcast.speaker.img}
             alt="Picture of Speaker"
           ></img>
-          <h1 className="mt-4 flex-1 text-black text-lg font-bold">
+          <h1 className="mt-4 text-center flex-1 text-black text-lg font-bold">
             {props.podcast.title}
           </h1>
           <div className="mt-4">

@@ -11,7 +11,7 @@ const VerticalAccordion = (props) => {
   const governmentPodcasts = MakePodCasts("government_leaders", playAudio);
 
   return (
-    <Accordion>
+    <Accordion collapseAll>
       <Accordion.Panel>
         <Accordion.Title>Thought Leaders</Accordion.Title>
         {thoughtPodCasts}
