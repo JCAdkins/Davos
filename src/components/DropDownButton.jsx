@@ -1,5 +1,3 @@
-"use client";
-
 import { Dropdown } from "flowbite-react";
 import { DropdownItem } from "flowbite-react/lib/esm/components/Dropdown/DropdownItem";
 import { Link } from "react-router-dom";

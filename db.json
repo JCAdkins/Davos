@@ -312,7 +312,7 @@
       },
       "profile": {
         "dob": "12/19/1990",
-        "image": "./images/juice_wrld.webp",
+        "image": "src/images/juice_wrld.webp",
         "background_image": "https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg",
         "organization": "The Earth",
         "occupation": "El Creator",
@@ -360,7 +360,7 @@
       },
       "profile": {
         "dob": "11/17/1989",
-        "image": "./images/bro_tank_guy.jpeg",
+        "image": "src/images/bro_tank_guy.jpeg",
         "background_image": "",
         "organization": "Best Buy",
         "occupation": "California Bro",
@@ -408,7 +408,7 @@
       },
       "profile": {
         "dob": "11/20/2020",
-        "image": "./images/tester_mctestington.png",
+        "image": "src/images/tester_mctestington.png",
         "background_image": "",
         "organization": "Test City",
         "occupation": "Tests Things",

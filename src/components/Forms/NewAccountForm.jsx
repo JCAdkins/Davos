@@ -6,9 +6,13 @@ import {
   Datepicker,
   Textarea,
 } from "flowbite-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useContext, useRef } from "react";
+import addUser from "../../services/addUser";
+import UserContext from "../../contexts/UserContext";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../utils/firebase";
 
 const emailRegex = new RegExp(
   /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,})$/
@@ -19,7 +23,11 @@ const phoneRegex = new RegExp(
 const URL = "http://127.0.0.1:3000/users";
 
 const NewAccountForm = () => {
+  const navigate = useNavigate();
+  const { _, setUser } = useContext(UserContext);
   const [page, setPage] = useState(0);
+  const uidRef = useRef();
+  const [userTaken, setUserTaken] = useState();
   const {
     control,
     register,
@@ -29,7 +37,7 @@ const NewAccountForm = () => {
   } = useForm();
 
   const submitForm = async (event) => {
-    const userData = JSON.stringify({
+    const userData = {
       credentials: {
         userName: event.email,
         password: event.password,
@@ -65,22 +73,43 @@ const NewAccountForm = () => {
           podcasts: [],
         },
       ],
-    });
-    console.log(userData);
-    const response = await fetch(URL, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: userData,
-    });
-    const resData = response;
-    console.log(resData);
+    };
+
+    const docRef = addUser(userData, uidRef.current);
+    console.log(docRef);
+    setUser(userData);
+    navigate("/profile");
+
     // Implement logic to check for a successful post code here
   };
 
-  const checkPage = (event) => {
-    setPage(page + 1);
+  const checkPage = (user) => {
+    if (page === 0) {
+      const newUser = createUserEmailAndPassword(
+        auth,
+        user.email,
+        user.password
+      );
+
+      newUser.then((data) => {
+        uidRef.current = data;
+        if (data) setPage(page + 1);
+      });
+    } else setPage(page + 1);
+  };
+
+  const createUserEmailAndPassword = async (auth, email, password) => {
+    const uid = await createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        return user.uid;
+      })
+      .catch((error) => {
+        setUserTaken("Username is taken.");
+        console.log(error);
+      });
+    return uid;
   };
 
   return (
@@ -91,7 +120,7 @@ const NewAccountForm = () => {
             <div>
               <div>
                 <div className="mb-2 block">
-                  <Label htmlFor="email" value="Email" />
+                  <Label htmlFor="email" value="Email (username)" />
                 </div>
                 <TextInput
                   id="email"
@@ -104,8 +133,12 @@ const NewAccountForm = () => {
                       value: emailRegex,
                       message: "Invalid email address.",
                     },
+                    onChange: () => {
+                      userTaken ? setUserTaken() : {};
+                    },
                   })}
                 />
+                <p className="text-red-600 text-sm">{userTaken}</p>
                 <p className="text-red-600 text-sm">{errors.email?.message}</p>
               </div>
               <div>
@@ -205,9 +238,6 @@ const NewAccountForm = () => {
                         const eighteen = new Date(
                           today.setFullYear(today.getFullYear() - 18)
                         );
-                        console.log(date);
-                        console.log(eighteen);
-                        console.log(date > eighteen);
                         return date > eighteen
                           ? "Must be older than 18."
                           : true;

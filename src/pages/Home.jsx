@@ -1,14 +1,9 @@
 import DefaultCarousel from "../components/DefaultCarousel.jsx";
 import { Button } from "flowbite-react";
 import { Link } from "react-router-dom";
+import IMAGES from "../images/Images.jsx";
 
 const HomePage = () => {
-  const goToEvents = () => {};
-
-  const goToPodcasts = () => {};
-
-  const signUp = () => {};
-
   return (
     <div className="bg-white">
       <div className="justify-center align-center bg-black">
@@ -16,7 +11,7 @@ const HomePage = () => {
           <DefaultCarousel className="h-screen w-screen object-cover transition-opacity duration-300 visible opacity-100" />
         </div>
         <div className="absolute z-0 top-28 left-16">
-          <div className="relative text-5xl max-w-[35ch] text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] left-15 right-0 z-20">
+          <div className="relative text-5xl max-w-[35ch] leading-tight text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] left-15 right-0 z-20">
             The{" "}
             <em className="italic text-black drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)] text-7xl">
               premier
@@ -29,10 +24,7 @@ const HomePage = () => {
       <div className="justify-center mt-24 align-center bg-gray-500">
         <div className="flex flex-row">
           <div className="flex grow-0 ml-20 shrink w-1/2">
-            <img
-              src="../../images/podcast_home_1.jpeg"
-              alt="podcast picture"
-            ></img>
+            <img src={IMAGES.podcast_home_1} alt="podcast picture"></img>
           </div>
           <div className="">
             <div className="text-5xl font-sans not-italic">
@@ -87,7 +79,7 @@ const HomePage = () => {
                 is the time to take actions.
               </p>
             </div>
-            <div className="mt-4 content-center mx-auto">
+            <div className="mt-4 justify-center mx-auto">
               <Link to="/jordy/new_account">
                 <Button className="ml-52" color="dark" pill>
                   Sign Up
@@ -96,20 +88,14 @@ const HomePage = () => {
             </div>
           </div>
           <div className="w-1/2 ml-6">
-            <img
-              src="../../images/member_home_1.jpeg"
-              alt="Member picture"
-            ></img>
+            <img src={IMAGES.member_home_1} alt="Member picture"></img>
           </div>
         </div>
       </div>
       <div className="justify-center align-center bg-gray-500">
         <div className="flex flex-row">
           <div className="flex grow-0 ml-20 shrink w-43%">
-            <img
-              src="../../images/event_home_2.webp"
-              alt="Events picture"
-            ></img>
+            <img src={IMAGES.event_home_2} alt="Events picture"></img>
           </div>
           <div className="">
             <div className="text-5xl font-sans not-italic">
@@ -119,12 +105,12 @@ const HomePage = () => {
                 <em className="italic text-black drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
                   Davos
                 </em>{" "}
-                pals
+                pals.
               </p>
             </div>
             <div className="flex max-w-[50ch] text-lg mt-10 ml-24">
               <p>
-                ...events are held frequently and you do not want to miss out on
+                Events are held frequently and you do not want to miss out on
                 all of the fun. Socialize and grow your political network. What
                 can you achieve with your newfound connections?
               </p>
@@ -140,10 +126,7 @@ const HomePage = () => {
         </div>
       </div>
       <div className="w-screen bg-black justify-center mt-24">
-        <img
-          src="../../images/reagan_home_2.jpeg"
-          alt="Ronald Reagan Quote"
-        ></img>
+        <img src={IMAGES.reagan_home_2} alt="Ronald Reagan Quote"></img>
       </div>
     </div>
   );
