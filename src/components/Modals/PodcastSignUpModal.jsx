@@ -54,7 +54,11 @@ const PodcastSignInModal = (props) => {
         <Modal.Body>
           <div className="space-y-6">
             <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-              Subscribe To Our Podcast.
+              Subscribe To{" "}
+              <em className="drop-shadow-[0_1.2px_1.2px_rgba(125,125,125)]">
+                Davos On Air
+              </em>
+              .
             </h3>
             <div>
               <div className="mb-2 block">
@@ -88,7 +92,7 @@ const PodcastSignInModal = (props) => {
             <div className="flex justify-between text-sm font-medium text-gray-500 dark:text-gray-300">
               Not registered?&nbsp;
               <Link
-                to="/jordy/new_account"
+                to="/new_account"
                 className="text-cyan-700 hover:underline dark:text-cyan-500"
               >
                 Create account

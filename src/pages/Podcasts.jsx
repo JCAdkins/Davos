@@ -2,9 +2,10 @@ import { Card } from "flowbite-react";
 import AudioPlayerII from "../components/AudioPlayer/AudioPlayerII";
 import PodcastSignInModal from "../components/Modals/PodcastSignUpModal";
 import VerticalAccordion from "../components/VerticalAccordion";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import UserContext from "../contexts/UserContext";
 import MakePodCasts from "../components/MakePodCasts";
+import { Transition } from "react-transition-group";
 
 const emptyPodcastList = {
   title: "",
@@ -25,16 +26,32 @@ const emptyPodcastList = {
   disabled: true,
 };
 
+const duration = 15000;
+
+const defaultStyle = {
+  transition: `opacity ${duration}ms ease-in-out`,
+  opacity: 0,
+};
+
+const transitionStyles = {
+  entering: { opacity: 0.5 },
+  entered: { opacity: 1 },
+  exiting: { opacity: 0.5 },
+  exited: { opacity: 0 },
+};
+
 const Podcasts = () => {
   const { user } = useContext(UserContext);
   const [currentPodcast, setCurrentPodcast] = useState(emptyPodcastList);
+  const [inProp, setInProp] = useState(false);
   const [haveAudio, setHaveAudio] = useState(null);
   const [podcastList, setPodcastList] = useState([]);
   const [modal, setModal] = useState(false);
+  const nodeRef = useRef(null);
 
-  setTimeout(() => {
-    setModal(!user);
-  }, 3000);
+  useEffect(() => {
+    setTimeout(setModal(!user), 3000);
+  }, []);
 
   const addPodcast = (podcast) => {
     const updatedPodcast = { ...podcast, uniqueId: Math.random() };
@@ -42,6 +59,7 @@ const Podcasts = () => {
   };
 
   const playAudio = (podcast) => {
+    setInProp(true);
     addPodcast(podcast);
     setHaveAudio(true);
   };
@@ -50,6 +68,7 @@ const Podcasts = () => {
     const updatedPodcastList = [...podcastList];
     updatedPodcastList.splice(indexToRemove, 1);
     if (updatedPodcastList.length === 0) {
+      setInProp(false);
       setHaveAudio(false);
       setCurrentPodcast(emptyPodcastList);
     }
@@ -58,11 +77,8 @@ const Podcasts = () => {
 
   const showPodcastInfo = (podcast) => {
     const curPodcast = podcast;
-    console.log(curPodcast);
     setCurrentPodcast(curPodcast);
   };
-
-  const recentPodcasts = MakePodCasts();
 
   return (
     <div className="bg-black bg-cover">
@@ -97,37 +113,48 @@ const Podcasts = () => {
             <div>{MakePodCasts(null, playAudio)}</div>
           </div>
         </div>
+
         {!currentPodcast.disabled && (
-          <Card className="flex grow-1 shrink bg-opacity-0 border-none gap-2 min-w-0 text-white mb-7 prose">
-            <Card>
-              <div className="text-black divide-y-2 divide-black">
-                <p>Speaker: {currentPodcast.speaker.name}</p>
-                <p>Position: {currentPodcast.speaker.position}</p>
-                <p>Company: {currentPodcast.speaker.company}</p>
-              </div>
-              <div className="text-black">
-                <p>{currentPodcast.speaker.about}</p>
-              </div>
-            </Card>
-            <h5 className="text-xl text-center bg-gray-400 rounded-md font-bold tracking-tight text-gray-900 dark:text-white">
-              <p>{currentPodcast.title}</p>
-            </h5>
-            <div className="divide-y -mt-6">
-              <p className="font-normal dark:text-gray-400">
-                <p className="">{currentPodcast.description}</p>
-              </p>
-              <p className="font-normal dark:text-gray-400">
-                <h2 class="mb-2 text-lg text-center font-semibold text-white dark:text-white">
-                  Discussion Topics
-                </h2>
-                <ul class="max-w-md space-y-1 text-gray-200 list-disc list-inside dark:text-gray-400">
-                  {currentPodcast.issues_discussed.map((issue) => (
-                    <li>{issue}</li>
-                  ))}
-                </ul>
-              </p>
-            </div>
-          </Card>
+          <Transition nodeRef={nodeRef} in={inProp} timeout={duration}>
+            {(state) => {
+              console.log(state);
+              return (
+                <Card
+                  ref={nodeRef}
+                  className={`${defaultStyle} ${transitionStyles[state]} flex grow-1 shrink bg-opacity-0 border-none gap-2 min-w-0 text-white mb-7 prose`}
+                >
+                  <Card>
+                    <div className="text-black divide-y-2 divide-black">
+                      <p>Speaker: {currentPodcast.speaker.name}</p>
+                      <p>Position: {currentPodcast.speaker.position}</p>
+                      <p>Company: {currentPodcast.speaker.company}</p>
+                    </div>
+                    <div className="text-black">
+                      <p>{currentPodcast.speaker.about}</p>
+                    </div>
+                  </Card>
+                  <h5 className="text-xl text-center bg-gray-400 rounded-md font-bold tracking-tight text-gray-900 dark:text-white">
+                    <p>{currentPodcast.title}</p>
+                  </h5>
+                  <div className="divide-y -mt-6">
+                    <p className="font-normal dark:text-gray-400">
+                      <p className="">{currentPodcast.description}</p>
+                    </p>
+                    <div className="font-normal dark:text-gray-400">
+                      <h2 class="mb-2 text-lg text-center font-semibold text-white dark:text-white">
+                        Discussion Topics
+                      </h2>
+                      <ul class="max-w-md space-y-1 text-gray-200 list-disc list-inside dark:text-gray-400">
+                        {currentPodcast.issues_discussed.map((issue) => (
+                          <li>{issue}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </Card>
+              );
+            }}
+          </Transition>
         )}
       </div>
       {modal && <PodcastSignInModal />}

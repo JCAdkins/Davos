@@ -47,7 +47,7 @@ const NewAccountForm = () => {
         lastName: event.lastName,
       },
       profile: {
-        dob: event.dob,
+        dob: new Date(event.dob),
         image: "",
         background_image: "",
         organization: event.organization,

@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 
-const ProtectedRoute = ({ isAllowed, redirectPath = "/jordy/", children }) => {
+const ProtectedRoute = ({ isAllowed, redirectPath = "/", children }) => {
   if (!isAllowed) {
     return <Navigate to={redirectPath} replace />;
   }

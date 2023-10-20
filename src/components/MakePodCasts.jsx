@@ -1,21 +1,22 @@
 import { useState, useEffect } from "react";
 import { Accordion, Spinner } from "flowbite-react";
 import SnapCenterCard from "./SnapCenterCard";
+import getAllPodcasts from "../services/getAllPodcasts";
+import addPodcast from "../services/addPodcast";
 
 function MakePodCasts(tag, playPodCast) {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:3000/podcasts")
-      .then((response) => response.json())
-      .then((data) => {
-        setList(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("An error occurred: ${err}");
+    var pcList = [];
+    getAllPodcasts().then((snapshot) => {
+      snapshot.docs.forEach((doc) => {
+        pcList = [...pcList, doc.data().podcast];
+        setList(pcList);
       });
+    });
+    setLoading(false);
   }, []);
 
   const handlePlayPodcast = (audio) => {

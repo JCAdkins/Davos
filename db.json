@@ -333,7 +333,9 @@
         "phone": "3092307966",
         "about": "Hello, I'm Jordan Adkins, an experienced web designer with a passion for creating outstanding digital experiences. I've dedicated 12 years to transforming creative concepts into attractive and functional websites. \n\nDesign Philosophy: \nMy approach centers on the fusion of form and function. I believe that a successful website should be both visually appealing and user-friendly. Every project I undertake, whether it's a simple portfolio or a complex e-commerce platform, is executed with a focus on excellence. \n\nCreative Innovator: \nCreativity fuels my work. I view the digital landscape as a canvas for innovative ideas. Staying current with design trends and technologies ensures that each project I handle is on the cutting edge. \n\nProblem Solver: \nWeb design involves problem-solving, whether it's optimizing performance, enhancing engagement, or improving functionality. I embrace challenges with a problem-solving mindset. \n\nUser-Centric Approach: \nUnderstanding the audience is paramount. I adopt a user-centric approach, striving to develop websites that not only represent your brand but also resonate with your intended users. Key priorities include accessibility, responsiveness, and a seamless user experience. \n\nWork & Experience: \nMy portfolio encompasses a diverse array of clients, ranging from startups to well-established brands. Notable projects and clients include [mention some relevant examples, if applicable]. These experiences have honed my skills and broadened my design perspective. \n\nLet's Collaborate: \nIf you're in search of a dedicated web designer to bring your digital aspirations to life, let's get in touch. I'm eager to learn about your project, objectives, and how I can assist you in achieving online success. Don't hesitate to reach out, and together, we can embark on a creative journey."
       },
-      "roles": ["admin"],
+      "roles": [
+        "admin"
+      ],
       "permissions": [],
       "subscribed": true,
       "events": [],
@@ -457,6 +459,10 @@
     {
       "email": "jordan.adkins111@gmail.com",
       "id": 3
+    },
+    {
+      "email": "the_bears_54@hotmail.com",
+      "id": 4
     }
   ]
 }

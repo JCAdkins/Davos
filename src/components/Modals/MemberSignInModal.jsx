@@ -3,6 +3,9 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import UserContext from "../../contexts/UserContext";
 import { Link } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../utils/firebase";
+import getUser from "../../services/getUser";
 
 const MemberSignInModal = (props) => {
   const [openModal, setOpenModal] = useState("form-elements");
@@ -17,24 +20,21 @@ const MemberSignInModal = (props) => {
     formState: { errors },
   } = useForm();
 
-  const logInClick = async (event) => {
-    fetch("http://127.0.0.1:3000/users")
-      .then((response) => response.json())
-      .then((users) => {
-        users.filter((user) => {
-          user.credentials.userName === event.email &&
-          user.credentials.password === event.password
-            ? logInAuthorized(user)
-            : logInDenied();
-        });
+  const logInClick = async (creds) => {
+    signInWithEmailAndPassword(auth, creds.email, creds.password)
+      .then((userCredential) => {
+        // Signed in
+        logInAuthorized(userCredential.user);
       })
-      .catch((err) => {
-        console.error("An error occurred: ", err);
+      .catch((error) => {
+        logInDenied();
+        console.log(error.errorCode, error.errorMessage);
       });
   };
 
-  const logInAuthorized = (user) => {
-    setUser(user);
+  const logInAuthorized = (u) => {
+    const tmpUser = getUser(u.uid);
+    tmpUser.then((data) => setUser(data));
     props.resetModal();
   };
 
@@ -58,7 +58,10 @@ const MemberSignInModal = (props) => {
       <Modal.Body>
         <div className="space-y-6">
           <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-            Sign in to our platform
+            Sign in to{" "}
+            <em className="drop-shadow-[0_1.2px_1.2px_rgba(125,125,125)]">
+              Davos
+            </em>
           </h3>
           <form>
             <div>
@@ -122,7 +125,7 @@ const MemberSignInModal = (props) => {
             <div className="flex justify-between text-sm font-medium text-gray-500 dark:text-gray-300">
               Not registered?&nbsp;
               <Link
-                to="/jordy/new_account"
+                to="/new_account"
                 className="text-cyan-700 hover:underline dark:text-cyan-500"
                 onClick={() => props.resetModal()}
               >

@@ -11,13 +11,15 @@ import {
 import DropDownButton from "../components/DropDownButton";
 import MemberSignInModal from "../components/Modals/MemberSignInModal";
 import UserContext from "../contexts/UserContext";
+import { signOut } from "firebase/auth";
+import { auth } from "../utils/firebase";
 
 const StickyNavbar = (props) => {
   const [openNav, setOpenNav] = React.useState(false);
   const [openSignInModal, setOpenSignInModal] = useState(false);
   const { user, setUser } = useContext(UserContext);
 
-  const signIn = (props) => {
+  const signIn = () => {
     setOpenSignInModal(true);
   };
 
@@ -26,6 +28,13 @@ const StickyNavbar = (props) => {
   };
 
   const logOut = () => {
+    signOut(auth)
+      .then(() => {
+        console.log("Signed out successfully");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     setUser();
   };
 
@@ -44,7 +53,7 @@ const StickyNavbar = (props) => {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <Link className="flex items-center" to="/jordy/members">
+        <Link className="flex items-center" to="/members">
           Members
         </Link>
       </Typography>
@@ -54,7 +63,7 @@ const StickyNavbar = (props) => {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <Link className="flex items-center" to="/jordy/events">
+        <Link className="flex items-center" to="/events">
           Events
         </Link>
       </Typography>
@@ -64,7 +73,7 @@ const StickyNavbar = (props) => {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <Link className="flex items-center" to="/jordy/podcasts">
+        <Link className="flex items-center" to="/podcasts">
           Podcasts
         </Link>
       </Typography>
@@ -74,7 +83,7 @@ const StickyNavbar = (props) => {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <Link className="flex items-center" to="/jordy/about">
+        <Link className="flex items-center" to="/about">
           About
         </Link>
       </Typography>
@@ -84,7 +93,7 @@ const StickyNavbar = (props) => {
   return (
     <Navbar className="sticky bg-[#E1E3E4] top-0 z-10 h-max max-w-full rounded-none py-1 px-4 lg:px-8 lg:py-1">
       <div className="flex items-center justify-between text-blue-gray-900">
-        <Link className="fmr-4 cursor-pointer py-1.5 font-medium" to="/jordy/">
+        <Link className="fmr-4 cursor-pointer py-1.5 font-medium" to="/">
           <div className="invert relative rounded-md w-full overflow-hidden bg-cover bg-[50%] bg-no-repeat">
             <DefaultImage
               className=""
