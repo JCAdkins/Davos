@@ -8,9 +8,9 @@ import { auth } from "../../utils/firebase";
 import getUser from "../../services/getUser";
 
 const MemberSignInModal = (props) => {
-  const [openModal, setOpenModal] = useState("form-elements");
+  const [openModal, _] = useState("form-elements");
   const [errorMessage, setErrorMessage] = useState();
-  const { user, setUser } = useContext(UserContext);
+  const { __, setUser } = useContext(UserContext);
   const emailRegex = new RegExp(
     /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,})$/
   );

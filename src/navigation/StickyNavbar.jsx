@@ -15,7 +15,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 
 const StickyNavbar = (props) => {
-  const [openNav, setOpenNav] = React.useState(false);
+  const [openNav, setOpenNav] = useState(false);
   const [openSignInModal, setOpenSignInModal] = useState(false);
   const { user, setUser } = useContext(UserContext);
 

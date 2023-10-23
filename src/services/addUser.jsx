@@ -5,7 +5,7 @@ const addUser = async (user, id) => {
   try {
     console.log(id);
     const docRef = await setDoc(doc(db, "users", id), {
-      user: user,
+      ...user,
     });
     return docRef;
   } catch (error) {

@@ -13,6 +13,9 @@ import addUser from "../../services/addUser";
 import UserContext from "../../contexts/UserContext";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../utils/firebase";
+import { EDUCATION } from "../../assets/EDUCATION";
+import SelectInput from "../Input/SelectInput";
+import { STATES_LIST } from "../../assets/STATES_LIST";
 
 const emailRegex = new RegExp(
   /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,})$/
@@ -48,7 +51,8 @@ const NewAccountForm = () => {
       },
       profile: {
         dob: new Date(event.dob),
-        image: "",
+        image:
+          "https://firebasestorage.googleapis.com/v0/b/davos-57f96.appspot.com/o/tester_mctestington.png?alt=media&token=0c4ad935-6a4a-4424-b064-b47bebf25871&_gl=1*80ywfm*_ga*MTUzMzk2MTg0MC4xNjk3NTM3Mzk3*_ga_CW55HF8NVT*MTY5Nzc3MzE2OS4xNS4xLjE2OTc3NzMyOTQuNDMuMC4w",
         background_image: "",
         organization: event.organization,
         occupation: event.occupation,
@@ -58,7 +62,7 @@ const NewAccountForm = () => {
         number_employees: event.number_employees,
         industry: event.industry,
         email: event.company_email,
-        education: event.education,
+        education: { school: event.school, degree: event.degree },
         location: { city: event.city, state: event.state },
         phone: event.phone,
         about: "",
@@ -67,6 +71,8 @@ const NewAccountForm = () => {
       permissions: [],
       subscribed: true,
       events: [],
+      created: new Date(),
+      new: true,
       playlists: [
         {
           name: "current",
@@ -421,10 +427,11 @@ const NewAccountForm = () => {
                 <div className="mb-2 block">
                   <Label htmlFor="state" value="State" />
                 </div>
-                <TextInput
+                <SelectInput
                   id="state"
                   shadow
                   type="name"
+                  options={STATES_LIST}
                   {...register("state")}
                 />
                 <p className="text-red-600 text-sm">
@@ -433,13 +440,26 @@ const NewAccountForm = () => {
               </div>
               <div>
                 <div className="mb-2 block">
-                  <Label htmlFor="education" value="Education" />
+                  <Label htmlFor="school" value="School" />
                 </div>
                 <TextInput
-                  id="education"
+                  id="school"
                   shadow
                   type="name"
-                  {...register("education")}
+                  {...register("school")}
+                />
+                <p className="text-red-600 text-sm">{errors.school?.message}</p>
+              </div>
+              <div>
+                <div className="mb-2 block">
+                  <Label htmlFor="degree" value="Degree" />
+                </div>
+                <SelectInput
+                  id="degree"
+                  shadow
+                  type="name"
+                  options={EDUCATION}
+                  {...register("degree")}
                 />
                 <p className="text-red-600 text-sm">
                   {errors.education?.message}

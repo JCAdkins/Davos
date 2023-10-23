@@ -3,7 +3,10 @@ import { initializeApp } from "firebase/app";
 //import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import { getStorage } from "firebase/storage";
+//import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 //import { getDataBase } from "firebase/database";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -26,3 +29,13 @@ export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 //const analytics = getAnalytics(app);
 export const auth = getAuth(app);
+export const cloudStorage = getStorage(app);
+// Pass your reCAPTCHA v3 site key (public key) to activate(). Make sure this
+// key is the counterpart to the secret key you set in the Firebase console.
+// export const appCheck = initializeAppCheck(app, {
+//   provider: new ReCaptchaV3Provider("6LdZ-sAoAAAAAHDSB_HvkN625kF7FO-ANXfa9Z1j"),
+
+//   // Optional argument. If true, the SDK automatically refreshes App Check
+//   // tokens as needed.
+//   isTokenAutoRefreshEnabled: true,
+// });

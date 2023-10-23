@@ -31,6 +31,7 @@ export default withMT({
           950: "#222a49",
         },
       },
+      display: ["group-hover"],
       flex: {
         150: "1 1 150px",
       },

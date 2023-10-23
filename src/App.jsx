@@ -79,7 +79,7 @@ function App() {
                 path="/profile"
                 element={
                   <ProtectedRoute isAllowed={!!user}>
-                    <Profile user={user} />
+                    <Profile />
                   </ProtectedRoute>
                 }
               />
@@ -88,7 +88,7 @@ function App() {
                 path="/profile/settings"
                 element={
                   <ProtectedRoute isAllowed={!!user}>
-                    <UserSettings user={user} />
+                    <UserSettings />
                   </ProtectedRoute>
                 }
               />
