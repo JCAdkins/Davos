@@ -21,7 +21,7 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-      <div className="justify-center mt-24 align-center bg-gray-500">
+      <div className="justify-center mt-24 align-center bg-sky-900">
         <div className="flex flex-row">
           <div className="flex grow-0 ml-20 shrink w-1/2">
             <img src={IMAGES.podcast_home_1} alt="podcast picture"></img>
@@ -48,7 +48,7 @@ const HomePage = () => {
               </p>
             </div>
             <div className="mt-4 justify-end mx-auto">
-              <Link to="/jordy/podcasts">
+              <Link to="/podcasts">
                 <Button className="ml-48" color="light" pill>
                   Listen Now
                 </Button>
@@ -57,7 +57,7 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-      <div className="justify-center align-center bg-gray-500">
+      <div className="justify-center align-center bg-sky-900">
         <div className="flex flex-row">
           <div className="ml-28 mt-12 text-5xl font-sans justify-items-center">
             <p>
@@ -80,7 +80,7 @@ const HomePage = () => {
               </p>
             </div>
             <div className="mt-4 justify-center mx-auto">
-              <Link to="/jordy/new_account">
+              <Link to="/new_account">
                 <Button className="ml-52" color="dark" pill>
                   Sign Up
                 </Button>
@@ -92,7 +92,7 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-      <div className="justify-center align-center bg-gray-500">
+      <div className="justify-center align-center bg-sky-900">
         <div className="flex flex-row">
           <div className="flex grow-0 ml-20 shrink w-43%">
             <img src={IMAGES.event_home_2} alt="Events picture"></img>
@@ -116,7 +116,7 @@ const HomePage = () => {
               </p>
             </div>
             <div className="mt-4 justify-end mx-auto">
-              <Link to="/jordy/events">
+              <Link to="/events">
                 <Button className="ml-72" color="light" pill>
                   View Events
                 </Button>

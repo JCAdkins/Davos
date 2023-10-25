@@ -18,8 +18,8 @@ const CarouselCard = (props) => {
   });
 
   return (
-    <div className="-mt-52 container px-4 flex-grow w-full mx-auto px-0">
-      <div className="mx-auto bg-[#ffc3a0] w-full md:w-4/5 px-4">
+    <div className="-mt-52 rounded-lg container bg-orange-300/100 px-4 flex-grow w-full mx-auto">
+      <div className="mx-auto bg-orange-300/100 w-full px-4">
         <div className="container">
           <button
             className="absolute border-solid border-2 rounded-md mr-1 border-gray-950"

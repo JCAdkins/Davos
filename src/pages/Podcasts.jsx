@@ -83,7 +83,7 @@ const Podcasts = () => {
   return (
     <div className="bg-black bg-cover">
       <div className="flex flex-wrap m-auto justify-evenly gap-0">
-        <div className="flex-start shrink divide-y divide-gray-200">
+        <div className="flex-start basis-1/4 shrink divide-y divide-gray-200">
           {!haveAudio && (
             <AudioPlayerII
               podcastList={[emptyPodcastList]}
@@ -99,29 +99,19 @@ const Podcasts = () => {
             />
           )}
         </div>
-        <div className="flex-col flexgrow-1 shrink basis-1/3 min-w-[400px] max-w-[35%] mt-5 mb-7 overflow-hidden">
-          <div className="bg-gray-300 rounded-md text-lg">
-            <p className="text-black text-center text-2xl font-mono">
-              Davos On Air - Featured Podcasts
-            </p>
-            <VerticalAccordion playAudio={playAudio}></VerticalAccordion>
-          </div>
-          <div className="bg-gray-300 rounded-md mt-3 text-lg">
-            <p className="text-black text-center text-2xl font-mono">
-              Davos On Air - Recent Podcasts
-            </p>
-            <div>{MakePodCasts(null, playAudio)}</div>
-          </div>
-        </div>
-
         {!currentPodcast.disabled && (
-          <Transition nodeRef={nodeRef} in={inProp} timeout={duration}>
+          <Transition
+            className="flex grow-1 basis-1/2"
+            nodeRef={nodeRef}
+            in={inProp}
+            timeout={duration}
+          >
             {(state) => {
               console.log(state);
               return (
                 <Card
                   ref={nodeRef}
-                  className={`${defaultStyle} ${transitionStyles[state]} flex grow-1 shrink bg-opacity-0 border-none gap-2 min-w-0 text-white mb-7 prose`}
+                  className={`${defaultStyle} ${transitionStyles[state]} flex grow-1 basis-1/2 shrink bg-opacity-0 border-none gap-2 min-w-0 text-white mb-7 prose`}
                 >
                   <Card>
                     <div className="text-black divide-y-2 divide-black">
@@ -156,6 +146,20 @@ const Podcasts = () => {
             }}
           </Transition>
         )}
+        <div className="flex-col flexgrow-1 shrink basis-1/4 min-w-[400px] max-w-[35%] mt-5 mb-7 overflow-hidden">
+          <div className="bg-gray-300 rounded-md text-lg">
+            <p className="text-black text-center text-2xl font-mono">
+              Davos On Air - Featured Podcasts
+            </p>
+            <VerticalAccordion playAudio={playAudio}></VerticalAccordion>
+          </div>
+          <div className="bg-gray-300 rounded-md mt-3 text-lg">
+            <p className="text-black text-center text-2xl font-mono">
+              Davos On Air - Recent Podcasts
+            </p>
+            <div>{MakePodCasts(null, playAudio)}</div>
+          </div>
+        </div>
       </div>
       {modal && <PodcastSignInModal />}
     </div>

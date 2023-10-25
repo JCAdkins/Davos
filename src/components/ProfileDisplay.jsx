@@ -207,7 +207,7 @@ const ProfileDisplay = () => {
   }, []);
 
   return (
-    <div className="p-16 bg-gray-300">
+    <div className="p-16 bg-sky-900">
       <div className="p-8 bg-white shadow mt-24">
         {/* <div className="flex items-center justify-center w-full -mb-40">
           <div className="flex flex-col items-center justify-center pt-5 pb-6">
@@ -475,14 +475,14 @@ const ProfileDisplay = () => {
         </div>{" "}
         <div className="group mt-12 flex justify-center">
           {" "}
-          <div className="flex-col justify-center">
+          <div className="flex items-center flex-col basis-3/4">
             <button
               className="hidden group-hover:inline-block text-center text-black"
               onClick={editAboutMe}
             >
               <EllipsisCircle />
             </button>
-            <div className="flex-row justify-start text-gray-600 text-center font-light lg:px-16 whitespace-pre-line">
+            <div className="w-full justify-center items-center content-center flex-row text-gray-600 text-center font-light lg:px-16 whitespace-pre-line">
               {addAboutMe && (
                 <>
                   <a
@@ -505,6 +505,7 @@ const ProfileDisplay = () => {
                   defaultValue={
                     user.profile.about ? user.profile.about : "[About ME]"
                   }
+                  className="max-w-[65ch] w-full text-xl text-center justify-center"
                 ></Textarea>
               )}
               {!editingAboutMe && (

@@ -4,7 +4,7 @@ const OverlayCard = (props) => {
   date = date.toLocaleString();
   const name =
     props.className +
-    " max-w-sm text-sm p-6 bg-white mb-2.5 mt-2 divide-y border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700";
+    " max-w-sm text-sm p-6 bg-white mb-2.5 mt-2 divide-y text-center border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700";
   return (
     <div className={name}>
       <a href="#">
@@ -16,7 +16,7 @@ const OverlayCard = (props) => {
         {date}
       </div>
       <div
-        className={`${props.overflow} mb-3 py-4 bg-gray-100 font-normal text-gray-700 dark:text-gray-400`}
+        className={`${props.overflow} mb-3 py-4 bg-gray-100 font-normal text-center text-gray-700 dark:text-gray-400`}
       >
         {props.description}
       </div>

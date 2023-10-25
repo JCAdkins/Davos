@@ -31,6 +31,8 @@ const NewAccountForm = () => {
   const [page, setPage] = useState(0);
   const uidRef = useRef();
   const [userTaken, setUserTaken] = useState();
+  const [degree, setDegree] = useState("");
+  const [state, setState] = useState("");
   const {
     control,
     register,
@@ -40,6 +42,7 @@ const NewAccountForm = () => {
   } = useForm();
 
   const submitForm = async (event) => {
+    console.log(event);
     const userData = {
       credentials: {
         userName: event.email,
@@ -62,8 +65,8 @@ const NewAccountForm = () => {
         number_employees: event.number_employees,
         industry: event.industry,
         email: event.company_email,
-        education: { school: event.school, degree: event.degree },
-        location: { city: event.city, state: event.state },
+        education: { school: event.school, degree: degree },
+        location: { city: event.city, state: state },
         phone: event.phone,
         about: "",
       },
@@ -430,9 +433,11 @@ const NewAccountForm = () => {
                 <SelectInput
                   id="state"
                   shadow
-                  type="name"
+                  type="state"
+                  name="state"
+                  onChange={(event) => setState(event.target.value)}
+                  defaultValue={state}
                   options={STATES_LIST}
-                  {...register("state")}
                 />
                 <p className="text-red-600 text-sm">
                   {errors.education_state?.message}
@@ -458,12 +463,11 @@ const NewAccountForm = () => {
                   id="degree"
                   shadow
                   type="name"
+                  defaultValue={degree}
+                  onChange={(event) => setDegree(event.target.value)}
                   options={EDUCATION}
-                  {...register("degree")}
                 />
-                <p className="text-red-600 text-sm">
-                  {errors.education?.message}
-                </p>
+                <p className="text-red-600 text-sm">{errors.degree?.message}</p>
               </div>
             </div>
           </div>

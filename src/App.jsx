@@ -35,7 +35,7 @@ function App() {
         // https://firebase.google.com/docs/reference/js/firebase.User
         const uid = user.uid;
         getUser(uid).then((data) => {
-          setUser(data);
+          data ? setUser(data) : {};
         });
       } else {
         // User is signed out

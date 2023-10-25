@@ -14,7 +14,7 @@ import UserContext from "../contexts/UserContext";
 import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 
-const StickyNavbar = (props) => {
+const StickyNavbar = () => {
   const [openNav, setOpenNav] = useState(false);
   const [openSignInModal, setOpenSignInModal] = useState(false);
   const { user, setUser } = useContext(UserContext);
@@ -91,9 +91,9 @@ const StickyNavbar = (props) => {
   );
 
   return (
-    <Navbar className="sticky bg-[#E1E3E4] top-0 z-10 h-max max-w-full rounded-none py-1 px-4 lg:px-8 lg:py-1">
+    <Navbar className="sticky bg-orange-300 top-0 z-10 h-max max-w-full rounded-none py-1 px-4 lg:px-8 lg:py-1">
       <div className="flex items-center justify-between text-blue-gray-900">
-        <Link className="fmr-4 cursor-pointer py-1.5 font-medium" to="/">
+        <Link className="cursor-pointer py-1.5 font-medium" to="/">
           <div className="invert relative rounded-md w-full overflow-hidden bg-cover bg-[50%] bg-no-repeat">
             <DefaultImage
               className=""

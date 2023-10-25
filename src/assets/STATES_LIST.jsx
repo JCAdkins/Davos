@@ -1,4 +1,5 @@
 export const STATES_LIST = [
+  "",
   "Alabama",
   "Alaska",
   "Arizona",

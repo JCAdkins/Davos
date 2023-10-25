@@ -5,7 +5,7 @@ const addPodcast = async (podcast, id) => {
   console.log(podcast);
   try {
     const docRef = await setDoc(doc(db, "podcasts", id), {
-      podcast: podcast,
+      ...podcast,
     });
     return docRef;
   } catch (error) {

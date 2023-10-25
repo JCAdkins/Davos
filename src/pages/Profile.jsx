@@ -3,7 +3,7 @@ import ProfileDisplay from "../components/ProfileDisplay";
 
 const Profile = () => {
   return (
-    <Card className="bg-black">
+    <Card className="-m-6">
       <ProfileDisplay />
     </Card>
   );

@@ -10,6 +10,7 @@ const IMAGES = {
   reagan_homepage: new URL("./reagan_homepage.jpeg", import.meta.url).href,
   tester_mctestington: new URL("./tester_mctestington.png", import.meta.url)
     .href,
+  social_event_page: new URL("./social_event.jpeg", import.meta.url).href,
 };
 
 export default IMAGES;

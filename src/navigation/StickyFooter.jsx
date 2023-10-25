@@ -2,8 +2,8 @@ import { Navbar, Typography } from "@material-tailwind/react";
 
 const StickyFooter = () => {
   return (
-    <Navbar className="sticky bottom-0 bg-[#E1E3E4] border-y-black text-center h-16 max-w-full rounded-none px-4 lg:px-8">
-      <div className="flex text-center justify-between text-blue-gray-900">
+    <Navbar className=" bottom-0 bg-orange-300 border-y-black text-center h-16 max-w-full rounded-none px-4 lg:px-8">
+      <div className="h-10 flex text-center justify-between text-blue-gray-900">
         <Typography
           as="a"
           href="#"
@@ -14,7 +14,7 @@ const StickyFooter = () => {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="200"
-          height="100"
+          height="47"
           viewBox="0 0 200 100"
         >
           <text x="10" y="20" fontFamily="Arial" fontSize="24" fill="black">
