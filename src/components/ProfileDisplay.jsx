@@ -5,7 +5,7 @@ import "react-tooltip/dist/react-tooltip.css";
 import { auth } from "../utils/firebase";
 import updateUser from "../services/updateUser";
 import UserContext from "../contexts/UserContext";
-import EllipsisCircle from "./EllipsisCircle";
+import EditIcon from "./Icons/EditIcon";
 import { Textarea, TextInput } from "flowbite-react";
 import { STATES_LIST } from "../assets/STATES_LIST";
 import SelectInput from "./Input/SelectInput";
@@ -288,7 +288,7 @@ const ProfileDisplay = () => {
                 editLocation();
               }}
             >
-              <EllipsisCircle />
+              <EditIcon />
             </button>
 
             {editingLocation && (
@@ -348,7 +348,7 @@ const ProfileDisplay = () => {
               class="hidden -mt-3 group-hover:inline-block text-black"
               onClick={editCareer}
             >
-              <EllipsisCircle />
+              <EditIcon />
             </button>
             {editingCareer && (
               <form
@@ -424,7 +424,7 @@ const ProfileDisplay = () => {
               class="hidden group-hover:inline-block text-black"
               onClick={editEducation}
             >
-              <EllipsisCircle />
+              <EditIcon />
             </button>
             {editingEducation && (
               <form
@@ -480,7 +480,7 @@ const ProfileDisplay = () => {
               className="hidden group-hover:inline-block text-center text-black"
               onClick={editAboutMe}
             >
-              <EllipsisCircle />
+              <EditIcon />
             </button>
             <div className="w-full justify-center items-center content-center flex-row text-gray-600 text-center font-light lg:px-16 whitespace-pre-line">
               {addAboutMe && (

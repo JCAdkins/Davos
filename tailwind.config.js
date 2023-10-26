@@ -11,9 +11,6 @@ export default withMT({
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        cool: 'url("https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg")',
-      },
       colors: {
         sb_blue: "#000080",
         bg_orange: "#fd9e02",
@@ -33,9 +30,6 @@ export default withMT({
         },
       },
       display: ["group-hover"],
-      flex: {
-        150: "1 1 150px",
-      },
     },
   },
   plugins: [

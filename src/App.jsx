@@ -3,6 +3,7 @@ import StickyNavbar from "./navigation/StickyNavbar";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Events from "./pages/Events";
+import Admin from "./pages/Admin";
 import Podcasts from "./pages/Podcasts";
 import Members from "./pages/Members";
 import StickyFooter from "./navigation/StickyFooter";
@@ -61,6 +62,19 @@ function App() {
                 element={
                   <ProtectedRoute isAllowed={!user}>
                     <NewAccount />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                exact
+                path="/admin"
+                element={
+                  <ProtectedRoute
+                    isAllowed={
+                      user ? user.permissions.includes("admin") : false
+                    }
+                  >
+                    <Admin />
                   </ProtectedRoute>
                 }
               />

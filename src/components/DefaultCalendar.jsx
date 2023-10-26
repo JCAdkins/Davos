@@ -25,10 +25,11 @@ export default function DefaultCalendar(props) {
             <Calendar
               tileContent={({ date }) => {
                 const temp = props.events.filter((event) => {
+                  const eventDate = event.date.toDate();
                   return (
-                    date.getDate() == event.date.getDate() &&
-                    date.getMonth() == event.date.getMonth() &&
-                    date.getFullYear() == event.date.getFullYear()
+                    date.getDate() == eventDate.getDate() &&
+                    date.getMonth() == eventDate.getMonth() &&
+                    date.getFullYear() == eventDate.getFullYear()
                   );
                 });
                 const retArray = temp.map((event) => {
@@ -49,7 +50,7 @@ export default function DefaultCalendar(props) {
                   else if (event.type === "course")
                     return (
                       <span
-                        className={`flex w-full h-1 mt-0.5 bg-blue-600 rounded-full m-${margin}`}
+                        className={`flex w-full h-1 mt-0.5 bg-blue-400 rounded-full m-${margin}`}
                       ></span>
                     );
                 });
@@ -91,7 +92,7 @@ export default function DefaultCalendar(props) {
                 {
                   title: "There Are No Events This Day",
                   description: "No description available.",
-                  date: new Date(value),
+                  date: value,
                   type: "cocktail_party",
                   link: "course",
                 },

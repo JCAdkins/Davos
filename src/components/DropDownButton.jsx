@@ -17,6 +17,13 @@ export default function DropDownButton(props) {
         <Link to="/profile/settings">
           <DropdownItem>Settings</DropdownItem>
         </Link>
+        {user.permissions.includes("admin") ? (
+          <Link to="/admin">
+            <DropdownItem>Admin Panel</DropdownItem>
+          </Link>
+        ) : (
+          <></>
+        )}
 
         <DropdownItem onClick={props.onClick}>Sign out</DropdownItem>
       </Dropdown>

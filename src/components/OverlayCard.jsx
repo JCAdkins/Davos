@@ -1,22 +1,34 @@
 /* eslint-disable react/prop-types */
+const getHours = (hour) => {
+  if (hour === 0) return "12";
+  if (hour > 12) return hour - 12;
+  return hour;
+};
+
 const OverlayCard = (props) => {
-  let date = new Date(props.date);
-  date = date.toLocaleString();
+  const date = new Date(props.date);
   const name =
     props.className +
-    " max-w-sm text-sm p-6 bg-white mb-2.5 mt-2 divide-y text-center border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700";
+    " max-w-sm text-sm p-6 bg-sky-900 mb-2.5 mt-2 divide-y text-center border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700";
   return (
     <div className={name}>
       <a href="#">
-        <h5 className="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
+        <h5 className="mb-2 text-lg font-bold tracking-tight dark:text-white">
           {props.title}
         </h5>
       </a>
-      <div className="mb-1 py-2 font-normal text-gray-700 dark:text-gray-400">
-        {date}
+      <div className="mb-1 py-2 min-w-[16ch] font-normal">
+        <p>
+          {date.getMonth() + 1}/{date.getDate()}/{date.getFullYear()}
+        </p>
+        <p>
+          {getHours(date.getHours())}:
+          {date.getMinutes().toString().padStart(2, "0")}
+          {date.getHours() > 12 ? "PM" : "AM"}
+        </p>
       </div>
       <div
-        className={`${props.overflow} mb-3 py-4 bg-gray-100 font-normal text-center text-gray-700 dark:text-gray-400`}
+        className={`${props.overflow} mb-3 py-4 bg-gray-100 rounded-lg font-normal text-center text-gray-700 dark:text-gray-400`}
       >
         {props.description}
       </div>

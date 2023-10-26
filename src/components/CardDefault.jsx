@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 const CardDefault = (props) => {
-  const divClassName = `${props.display} p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 bg-opacity-90 " +
+  const divClassName = `${props.display} p-6 bg-white border border-gray-200 m-auto rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 bg-opacity-90 " +
     ${props.ml}`;
   return (
     <div className={divClassName}>

@@ -10,7 +10,7 @@ function MakePodCasts(tag, playPodCast) {
 
   useEffect(() => {
     var pcList = [];
-    getAllPodcasts().then((snapshot) => {
+    getAllPodcasts({ exclude: false }).then((snapshot) => {
       snapshot.docs.forEach((doc) => {
         pcList = [...pcList, doc.data().podcast];
         setList(pcList);
