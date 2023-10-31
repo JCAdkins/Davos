@@ -6,9 +6,13 @@ const VerticalAccordion = (props) => {
     props.playAudio(audio);
   };
 
-  const thoughtPodCasts = MakePodCasts("thought_leaders", playAudio);
-  const businessPodCasts = MakePodCasts("business_leaders", playAudio);
-  const governmentPodcasts = MakePodCasts("government_leaders", playAudio);
+  const thoughtPodCasts = MakePodCasts("thought_leaders", playAudio, false);
+  const businessPodCasts = MakePodCasts("business_leaders", playAudio, false);
+  const governmentPodcasts = MakePodCasts(
+    "government_leaders",
+    playAudio,
+    false
+  );
 
   return (
     <Accordion collapseAll>

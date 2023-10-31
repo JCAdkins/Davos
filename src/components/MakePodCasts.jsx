@@ -2,9 +2,8 @@ import { useState, useEffect } from "react";
 import { Accordion, Spinner } from "flowbite-react";
 import SnapCenterCard from "./SnapCenterCard";
 import getAllPodcasts from "../services/getAllPodcasts";
-import addPodcast from "../services/addPodcast";
 
-function MakePodCasts(tag, playPodCast) {
+function MakePodCasts(tag, playPodCast, isFeatured) {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -31,6 +30,9 @@ function MakePodCasts(tag, playPodCast) {
           <div className="snap-x">
             <ul className="mt-10 pb-2 w-full flex overflow-x-auto gap-4 snap-x">
               {list
+                .filter((podcast) => {
+                  isFeatured === true ? podcast.featured === true : true;
+                })
                 .filter((podcast) => podcast.tag === tag)
                 .map((podcast, index) => {
                   return (
@@ -55,6 +57,9 @@ function MakePodCasts(tag, playPodCast) {
           <div className="snap-x">
             <ul className="mt-10 pb-2 w-full flex overflow-x-auto gap-4 snap-x">
               {list
+                .filter((podcast) => {
+                  isFeatured === true ? podcast.featured === true : true;
+                })
                 .sort((podA, podB) => {
                   const dateA = new Date(podA.date);
                   const dateB = new Date(podB.date);

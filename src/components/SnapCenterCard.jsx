@@ -18,17 +18,18 @@ const SnapCenterCard = (props) => {
   };
 
   return (
-    <li key={props.index} className="snap-center first:pl-6 last:pr-6">
-      <div className="relative scale-90 hover:scale-95 w-full p-4">
+    <li key={props.index} className="first:pl-6 last:pr-6">
+      <div className="scale-90 hover:scale-95 w-full p-4">
         <Card
-          className="flex-1 w-full"
+          horizontal
+          className="podcast-card w-fit bg-white"
           imgAlt="Guest Speaker"
           imgSrc={props.podcast.speaker.img}
         >
-          <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-            <p>{props.podcast.title}</p>
-          </h5>
-          <div className="flex-col text-black">
+          <div className="flex-wrap">
+            <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
+              <p>{props.podcast.title}</p>
+            </h5>
             <div className="flex gap-2 items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

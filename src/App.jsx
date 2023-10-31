@@ -19,6 +19,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./utils/firebase";
 import getUser from "./services/getUser";
 import MemberSignInModal from "./components/Modals/MemberSignInModal";
+import EventInfo from "./pages/EventInfo";
 
 function App() {
   const [user, setUser] = useState();
@@ -55,6 +56,7 @@ function App() {
             <Routes>
               <Route exact path="/about" element={<About />} />
               <Route exact path="/events" element={<Events />} />
+              <Route exact path="/events/info" element={<EventInfo />} />
               <Route exact path="/" element={<Home />} />
               <Route
                 exact

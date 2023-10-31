@@ -343,7 +343,7 @@ const ProfileDisplay = () => {
               </p>
             )}
           </div>
-          <div className="group justify-cente mb-4">
+          <div className="group justify-center mb-4">
             <button
               class="hidden -mt-3 group-hover:inline-block text-black"
               onClick={editCareer}

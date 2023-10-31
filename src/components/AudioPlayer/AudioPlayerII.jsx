@@ -204,28 +204,34 @@ const AudioPlayerII = (props) => {
   showInfo();
 
   return (
-    // <div className="min-h-screen flex flex-col items-center justify-center text-blue-700">
-    <div className="flex flex-col items-center justify-center mt-5 mb-7 w-min rounded-2xl shadow-2xl shadow-blue-700 bg-blue-900 text-white font-light">
-      <div className="p-5 bg-white items-center justify-center text-center text-blue-900 rounded-2xl">
+    <div className="flex flex-col items-center justify-center my-4 w-min rounded-2xl shadow-lg shadow-blue-700 bg-blue-900 text-white font-light">
+      <div className="relative flex-col p-4 bg-white items-center justify-center text-center text-blue-900 rounded-2xl">
         <audio ref={playerRef}>
           <source src={currentPodcast.embedded_src} type="audio/ogg" />
           Your browser does not support the audio element.
         </audio>
-        <div className="img-wrap shadow-md object-contain shadow-blue-600 mx-auto w-64 h-48 overflow-hidden rounded-lg shadow-lg">
-          <img
-            src={currentPodcast.speaker.img}
-            alt={currentPodcast.speaker.name}
-            className="w-full h-full"
-          />
+        <div>
+          <div className="img-wrap absolute blur  object-contain mx-auto w-48 h-48 overflow-hidden shadow-lg">
+            <div className="absolute h-full w-full bg-blue-400"></div>
+          </div>
+          <div className="img-wrap relative shadow-md object-contain bg-blue-600 mx-auto w-48 h-48 overflow-hidden rounded-lg shadow-lg">
+            <img
+              src={currentPodcast.speaker.img}
+              alt={currentPodcast.speaker.name}
+              className="w-full h-full"
+            />
+          </div>
         </div>
         <div className="justify-center mt-4 max-w-[25ch] text-blue-900 prose m-auto">
-          <p className="text-center m-auto">{currentPodcast.title}</p>
+          <p className="text-center leading-none m-auto">
+            {currentPodcast.title}
+          </p>
         </div>
         <div className="text-center song-author text-blue-400">
           {currentPodcast.speaker.name}
         </div>
 
-        <div className="time flex justify-between mt-4">
+        <div className="time flex justify-between mt-2">
           <div>{currentTime}</div>
           <div>{currentPodcast.duration}</div>
         </div>
@@ -270,7 +276,7 @@ const AudioPlayerII = (props) => {
         </div>
       </div>
 
-      <div className="play-list flex flex-col bg-blue-900 rounded-lg p-2 mt-5 space-y-2 h-48 overflow-y-scroll">
+      <div className="play-list flex flex-col bg-blue-900 rounded-lg p-1 mt-2 space-y-1 h-56 overflow-y-scroll">
         {podcastList.map((podcast, key) => {
           return podcast.disabled ? (
             <div></div>
@@ -278,7 +284,7 @@ const AudioPlayerII = (props) => {
             <div
               key={key}
               onClick={() => clickAudio(key)}
-              className={`track relative w-full flex items-center p-2 hover:bg-blue-600 rounded-lg transition ${
+              className={`track group relative w-full flex cursor-pointer items-center p-2 hover:bg-blue-600 rounded-lg transition ${
                 index === key ? "bg-blue-700" : ""
               }`}
             >
@@ -287,7 +293,7 @@ const AudioPlayerII = (props) => {
                   e.stopPropagation();
                   removePodcast(key);
                 }}
-                className="absolute visible top-3 right-3 bottom-autio left-absolute"
+                className="absolute hidden hover:bg-gray-400 bg-white rounded-md top-2 right-2 bottom-auto left-absolute group-hover:inline-block text-black"
               >
                 <Xicon />
               </button>
@@ -296,13 +302,18 @@ const AudioPlayerII = (props) => {
                 src={podcast.speaker.img}
                 alt={podcast.speaker.name}
               />
-              <div className="track-discr max-w-[25ch] ml-3 flex-1">
-                <span className="block text-white">{podcast.title}</span>
-                <span className="block mt-1 text-blue-300 text-sm">
-                  {podcast.speaker.name}
+              <div className="ml-2">
+                <span className="block text-sm text-white">
+                  {podcast.title}
                 </span>
+                <div className="track-discr flex justify-evenly items-center">
+                  <span className="text-blue-300 text-sm">
+                    {podcast.speaker.name}
+                  </span>
+
+                  <span className="ml-auto text-sm">{podcast.duration}</span>
+                </div>
               </div>
-              <span className="ml-auto">{podcast.duration}</span>
             </div>
           );
         })}

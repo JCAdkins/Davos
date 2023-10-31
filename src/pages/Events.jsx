@@ -7,7 +7,7 @@ import getAllEvents from "../services/getAllEvents";
 import getAllUserEvents from "../services/getAllUserEvents";
 import "../customcss/CustomCardCss.css";
 import UserContext from "../contexts/UserContext";
-import { ListGroupItem } from "flowbite-react/lib/esm/components/ListGroup/ListGroupItem";
+import EventsModal from "../components/Modals/EventsModal";
 
 const getHours = (hour) => {
   if (hour === 0) return "12";
@@ -16,11 +16,12 @@ const getHours = (hour) => {
 };
 
 const Events = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [daysEvents, setDaysEvents] = useState([]);
   const [eventList, setEventList] = useState([]);
   const [userEvents, setUserEvents] = useState([]);
-  const [loadingEvents, setLoadingEvents] = useState(true);
+  const [showEvent, setShowEvent] = useState(false);
+  const [event, setEvent] = useState();
 
   useEffect(() => {
     let temp = [];
@@ -29,7 +30,13 @@ const Events = () => {
           event.then((data) => {
             temp = [
               ...temp,
-              <ListGroupItem className="flex-col text-black whitespace-pre overflow-hidden hover:text-sky-900">
+              <ListGroup.Item
+                onClick={() => {
+                  setEvent(data);
+                  setShowEvent(true);
+                }}
+                className="flex-col text-black whitespace-pre overflow-hidden focus:text-sky-900 hover:text-sky-900"
+              >
                 <p>
                   {data.title}
                   {" - "}
@@ -37,13 +44,12 @@ const Events = () => {
                   {data.date.toDate().getDate()}/
                   {data.date.toDate().getFullYear()}
                 </p>
-              </ListGroupItem>,
+              </ListGroup.Item>,
             ];
             setUserEvents(temp);
           });
         })
       : {};
-    console.log(userEvents);
   }, [user]);
 
   useEffect(() => {
@@ -54,7 +60,6 @@ const Events = () => {
         setEventList(evList);
       });
     });
-    setLoadingEvents(false);
   }, []);
 
   const events =
@@ -68,34 +73,48 @@ const Events = () => {
   todaysDate.setHours(0, 0, 0, 0);
 
   const upcomingEvents = events
-    .filter((event, index) => {
-      return event.date.toDate() >= todaysDate && index <= 6;
+    .filter((event) => {
+      return event.date.toDate() >= todaysDate;
     })
+    .slice(0, 6)
     .map((event) => (
-      <div className="w-full flex lg:flex-col hover:drop-shadow-xl hover:scale-105 p-4 sm:w-1/2 lg:w-1/3">
+      <div className="w-full flex lg:flex-col p-4 sm:w-1/2 lg:w-1/3">
         <Card
-          className="event-card flex-1 h-full border-none drop-shadow-md"
+          className="event-card flex-1 h-full border-none hover:shadow-blue-600 hover:scale-105 shadow-lg shadow-blue-600"
           imgAlt="Guest Speaker"
           imgSrc={event.img}
         >
           <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
             <p>{event.title}</p>
           </h5>
-          <div className="flex text-gray-900 text-xs whitespace-pre">
+          <div className="flex-col text-gray-900 text-xs">
+            <div className="flex whitespace-pre">
+              <p>
+                {event.date.toDate().getMonth() + 1}/
+                {event.date.toDate().getDate()}/
+                {event.date.toDate().getFullYear()}
+              </p>
+              {" @ "}
+              <p>
+                {getHours(event.date.toDate().getHours())}:
+                {event.date.toDate().getMinutes().toString().padStart(2, "0")}
+                {event.date.toDate().getHours() > 12 ? "PM" : "AM"}
+              </p>
+            </div>
             <p>
-              {event.date.toDate().getMonth() + 1}/
-              {event.date.toDate().getDate()}/
-              {event.date.toDate().getFullYear()}
-            </p>
-            {" @ "}
-            <p>
-              {getHours(event.date.toDate().getHours())}:
-              {event.date.toDate().getMinutes().toString().padStart(2, "0")}
-              {event.date.toDate().getHours() > 12 ? "PM" : "AM"}
+              {event.location.city}, {event.location.state}
             </p>
           </div>
           <div className="flex items-end justify-center h-full">
-            <Button className="w-full" color="blue" size="xs">
+            <Button
+              onClick={() => {
+                setEvent(event);
+                setShowEvent(true);
+              }}
+              className="w-full"
+              color="blue"
+              size="xs"
+            >
               Details
             </Button>
           </div>
@@ -117,7 +136,7 @@ const Events = () => {
   };
 
   return (
-    <div className="bg-gray-300 lg:grid lg:auto-cols-max lg:grid-cols-4">
+    <div className="bg-[#dee2fc] lg:grid lg:auto-cols-max lg:grid-cols-4">
       <div className="flex flex-col lg:col-span-3">
         <div className="lg:flex-1 lg:w-full">
           <div className="lg:hidden p-4 bg-sky-900">
@@ -127,15 +146,20 @@ const Events = () => {
                   Upcoming Events
                 </Accordion.Title>
                 <Accordion.Content>
-                  <div className="flex overflow-auto h-full bg-orange-300 justify-content text-center">
-                    <div className="flex-1 min-w-[25ch] h-full">
-                      {/* <div className="flex-1 h-full lg:rounded-none lg:px-4 lg:justify-start lg:items-center lg:h-full lg:w-fill">
-                        <div class="max-w-screen-xl mx-auto px-4">
-                          <div class="-mx-4 flex flex-wrap"> */}
-                      {...upcomingEvents}
-                      {/* </div>
-                        </div>
-                      </div> */}
+                  <div className="flex-col">
+                    <div className="flex overflow-auto h-full bg-orange-300 justify-content text-center">
+                      <div className="flex-1 min-w-[25ch] h-full">
+                        {...upcomingEvents}
+                      </div>
+                    </div>
+                    <div>
+                      <Button
+                        className="w-full rounded-none"
+                        size="xs"
+                        color="blue"
+                      >
+                        <p>Load All Events</p>
+                      </Button>
                     </div>
                   </div>
                 </Accordion.Content>
@@ -165,6 +189,10 @@ const Events = () => {
                       <div className="px-4">
                         <CardDefault>
                           <DefaultCalendar
+                            setEvent={(event) => {
+                              setEvent(event);
+                              setShowEvent(true);
+                            }}
                             events={events}
                             daysEvents={daysEvents}
                             setTileContent={setTileContent}
@@ -180,22 +208,33 @@ const Events = () => {
                   Your Events
                 </Accordion.Title>
                 <Accordion.Content>
-                  <div className="divide-y px-4 divide-black">
-                    <CardDefault display="mt-4 justify-center">
-                      Log in to see your events.
-                    </CardDefault>
+                  <div className="divide-y mb-4 divide-black">
+                    {!user && (
+                      <Card className="mt-4 text-black text-center justify-center">
+                        Log in to see your events.
+                      </Card>
+                    )}
+                    {user && (
+                      <div className="text-center text-black text-xl font-bold">
+                        <h1 className="mb-2">My Events</h1>
+                        <ListGroup>{...userEvents}</ListGroup>
+                      </div>
+                    )}
                   </div>
                 </Accordion.Content>
               </Accordion.Panel>
             </Accordion>
           </div>
-          {/* <div className="sticky h-[38%] left-0 top-20 hidden lg:block"> */}
           <div className="hidden lg:block">
             <div className="h-full lg:rounded-none lg:justify-start lg:items-center lg:h-full lg:w-fill">
-              <div class="max-w-screen-xl mx-4">
-                <div class="-mx-4 flex flex-wrap">{...upcomingEvents}</div>
+              <div className="max-w-screen-xl mx-4 my-4">
+                <div className="-mx-4 flex flex-wrap">{...upcomingEvents}</div>
 
-                <Button className="w-full rounded-none" size="xs" color="blue">
+                <Button
+                  className="w-full rounded-none mt-6"
+                  size="xs"
+                  color="blue"
+                >
                   <p>Load All Events</p>
                 </Button>
               </div>
@@ -270,7 +309,7 @@ const Events = () => {
               <div className="flex flex-col mx-6 lg:max-w-[65ch]">
                 <ol
                   role="list"
-                  className="marker:text-white bg-orange-300 lg:bg-sky-900 text-white rounded list-disc pl-5 space-y-3"
+                  className="marker:text-white bg-sky-900 text-white rounded list-disc pl-5 space-y-3"
                 >
                   <li className="mt-2">Expand your knowledge</li>
                   <li> Build meaningful connections </li>
@@ -313,18 +352,18 @@ const Events = () => {
           )}
         </div>
         <div className="">
-          <div className="rounded-md bg-sky-900">
+          <div className="rounded-t-md bg-[#c8b28a]">
             <div className="flex">
-              <div className="flex items-center justify-center gap-1 text-center text-sm w-full h-full">
-                <p className="flex-none w-3 h-3 bg-yellow-400 rounded-full dark:bg-gray-700 "></p>
+              <div className="flex items-center justify-center gap-1 text-black text-center text-sm w-full h-full">
+                <p className="flex-none w-3 h-3 bg-yellow-200 rounded-full dark:bg-gray-700 "></p>
                 <p> Luncheon</p>
               </div>
 
-              <div className="flex items-center justify-center gap-1 text-center text-sm w-full h-full">
+              <div className="flex items-center justify-center gap-1 text-black text-center text-sm w-full h-full">
                 <p className="flex-none w-3 h-3 bg-red-400 rounded-full dark:bg-gray-700 "></p>
                 <p>Social</p>
               </div>
-              <div className="flex items-center justify-center gap-1 text-center text-sm w-full h-full">
+              <div className="flex items-center justify-center gap-1 text-black text-center text-sm w-full h-full">
                 <p className="flex-none w-3 h-3 bg-blue-400 rounded-full dark:bg-gray-700 "></p>
                 <p> Courses</p>
               </div>
@@ -333,6 +372,10 @@ const Events = () => {
           <div className="shrink-0 justify-center">
             <div className="text-black w-full rounded-lg">
               <DefaultCalendar
+                setEvent={(event) => {
+                  setEvent(event);
+                  setShowEvent(true);
+                }}
                 events={events}
                 daysEvents={daysEvents}
                 setTileContent={setTileContent}
@@ -341,6 +384,14 @@ const Events = () => {
           </div>
         </div>
       </div>
+      {showEvent && (
+        <EventsModal
+          clearEventsModal={() => {
+            setShowEvent(false);
+          }}
+          event={event}
+        />
+      )}
     </div>
   );
 };

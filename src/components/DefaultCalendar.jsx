@@ -38,7 +38,7 @@ export default function DefaultCalendar(props) {
                   if (event.type === "luncheon")
                     return (
                       <span
-                        className={`flex mt-0.5 w-full h-1 bg-yellow-400 rounded-full m-${margin}`}
+                        className={`flex mt-0.5 w-full h-1 bg-yellow-200 rounded-full m-${margin}`}
                       ></span>
                     );
                   else if (event.type === "cocktail_party")
@@ -82,12 +82,14 @@ export default function DefaultCalendar(props) {
           (props.daysEvents.length > 0 ? (
             <div className="bg-orange-400 rounded-lg z-10">
               <CarouselCard
+                setEvent={(event) => props.setEvent(event)}
                 events={props.daysEvents}
                 onButtonClick={closeOverlay}
               ></CarouselCard>
             </div>
           ) : (
             <CarouselCard
+              setEvent={{}}
               events={[
                 {
                   title: "There Are No Events This Day",

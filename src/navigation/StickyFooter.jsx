@@ -2,7 +2,7 @@ import { Navbar, Typography } from "@material-tailwind/react";
 
 const StickyFooter = () => {
   return (
-    <Navbar className=" bottom-0 bg-orange-300 border-y-black text-center h-16 max-w-full rounded-none px-4 lg:px-8">
+    <Navbar className="bottom-0 bg-[#c8b28a] border-y-black text-center h-16 max-w-full rounded-none px-4 lg:px-8">
       <div className="h-10 flex text-center justify-between text-blue-gray-900">
         <Typography
           as="a"

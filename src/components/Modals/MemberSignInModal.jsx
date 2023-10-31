@@ -112,13 +112,17 @@ const MemberSignInModal = (props) => {
               </div>
               <a
                 href="/modal"
-                className="text-sm text-cyan-700 hover:underline dark:text-cyan-500"
+                className="text-sm text-blue-700 hover:underline dark:text-blue-500"
               >
                 Lost Password?
               </a>
             </div>
             <div className="w-full">
-              <Button type="submit" onClick={handleSubmit(logInClick)}>
+              <Button
+                type="submit"
+                color="blue"
+                onClick={handleSubmit(logInClick)}
+              >
                 Log in to your account
               </Button>
             </div>
@@ -126,7 +130,7 @@ const MemberSignInModal = (props) => {
               Not registered?&nbsp;
               <Link
                 to="/new_account"
-                className="text-cyan-700 hover:underline dark:text-cyan-500"
+                className="text-blue-700 hover:underline dark:text-blue-500"
                 onClick={() => props.resetModal()}
               >
                 Create account

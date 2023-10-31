@@ -5,7 +5,7 @@ import IMAGES from "../images/Images.jsx";
 
 const HomePage = () => {
   return (
-    <div className="bg-white">
+    <div className="bg-gray-400">
       <div className="justify-center align-center bg-black">
         <div className="w-full h-full top-20 bottom-0 left-0 right-0 -z-10">
           <DefaultCarousel className="h-screen w-screen object-cover transition-opacity duration-300 visible opacity-100" />

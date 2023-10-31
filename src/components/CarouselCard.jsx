@@ -14,7 +14,6 @@ const CarouselCard = (props) => {
       event.date instanceof Timestamp
         ? event.date.toDate()
         : new Date(event.date);
-    console.log(date);
     return (
       <Card
         className="event-card flex-1 h-full border-none drop-shadow-md"
@@ -37,7 +36,12 @@ const CarouselCard = (props) => {
           </p>
         </div>
         <div className="flex items-end justify-center h-full">
-          <Button className="w-full" color="blue" size="xs">
+          <Button
+            className="w-full"
+            color="blue"
+            size="xs"
+            onClick={() => props.setEvent(event)}
+          >
             Details
           </Button>
         </div>
@@ -46,9 +50,9 @@ const CarouselCard = (props) => {
   });
 
   return (
-    <div className="-mt-72 rounded-lg min-w-full container bg-orange-300 px-4 pt-2 flex-grow w-full mx-auto">
+    <div className="group -mt-72 rounded-lg min-w-full container bg-orange-300 px-4 pt-2 flex-grow w-full mx-auto">
       <button
-        className="absolute top-1 left-1 border-solid border-2 rounded-md mr-1 z-10 border-black"
+        className="absolute hidden group-hover:inline-block bg-white hover:bg-gray-400 top-1 right-0 border-solid border-2 rounded-md mr-1 z-10 border-black"
         type="button"
         onClick={props.onButtonClick}
       >

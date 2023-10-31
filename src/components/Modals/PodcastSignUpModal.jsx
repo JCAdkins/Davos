@@ -1,5 +1,5 @@
 import { Button, Label, Modal, TextInput } from "flowbite-react";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
@@ -80,20 +80,24 @@ const PodcastSignInModal = (props) => {
             </div>
             <div className="flex flex-row justify-between">
               <div className="w-fit">
-                <Button type="submit" onClick={handleSubmit(onSubmit)}>
+                <Button
+                  type="submit"
+                  color="blue"
+                  onClick={handleSubmit(onSubmit)}
+                >
                   Subscribe
                 </Button>
               </div>
               <p className="text-black">OR</p>
               <div className="w-fit">
-                <Button>Log In</Button>
+                <Button color="blue">Log In</Button>
               </div>
             </div>
             <div className="flex justify-between text-sm font-medium text-gray-500 dark:text-gray-300">
               Not registered?&nbsp;
               <Link
                 to="/new_account"
-                className="text-cyan-700 hover:underline dark:text-cyan-500"
+                className="text-blue-700 hover:underline dark:text-cyan-500"
               >
                 Create account
               </Link>

@@ -2,6 +2,7 @@
 
 const withMT = require("@material-tailwind/react/utils/withMT");
 const percentageWidth = require("tailwindcss-percentage-width");
+const plugin = require("tailwindcss/plugin");
 
 export default withMT({
   content: [
@@ -11,6 +12,12 @@ export default withMT({
   ],
   theme: {
     extend: {
+      textShadow: {
+        sm: "0 1px 2px var(--tw-shadow-color)",
+        DEFAULT: "0 2px 4px var(--tw-shadow-color)",
+        lg: "0 8px 16px var(--tw-shadow-color)",
+      },
+      fontFamily: { dmserif: ["DM Serif Display", "serif"] },
       colors: {
         sb_blue: "#000080",
         bg_orange: "#fd9e02",
@@ -36,5 +43,15 @@ export default withMT({
     require("flowbite/plugin"),
     percentageWidth,
     require("@tailwindcss/typography"),
+    plugin(function ({ matchUtilities, theme }) {
+      matchUtilities(
+        {
+          "text-shadow": (value) => ({
+            textShadow: value,
+          }),
+        },
+        { values: theme("textShadow") }
+      );
+    }),
   ],
 });

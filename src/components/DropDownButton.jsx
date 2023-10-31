@@ -10,7 +10,10 @@ export default function DropDownButton(props) {
   return (
     <>
       <BaseAvatar image={user.profile.image} />
-      <Dropdown label={user.name.firstName + " " + user.name.lastName}>
+      <Dropdown
+        color="blue"
+        label={user.name.firstName + " " + user.name.lastName}
+      >
         <Link to="/profile">
           <DropdownItem>Profile</DropdownItem>
         </Link>

@@ -11,6 +11,9 @@ const IMAGES = {
   tester_mctestington: new URL("./tester_mctestington.png", import.meta.url)
     .href,
   social_event_page: new URL("./social_event.jpeg", import.meta.url).href,
+
+  parking_location: new URL("./parking-location.png", import.meta.url).href,
+  event_location: new URL("./event-location.png", import.meta.url).href,
 };
 
 export default IMAGES;
