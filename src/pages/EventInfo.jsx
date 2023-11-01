@@ -31,7 +31,6 @@ const EventInfo = () => {
   const markerRefs = useRef([]);
   const { user } = useContext(UserContext);
   const [mapRef, setMapRef] = useState();
-  //   const [isOpen, setIsOpen] = useState(false);
   const [infoWindowData, setInfoWindowData] = useState();
   const [showModal, setShowModal] = useState(false);
   const { isLoaded } = useLoadScript({
@@ -123,7 +122,7 @@ const EventInfo = () => {
         >
           <BackIcon />
         </Button>
-      </div>{" "}
+      </div>
       <img className="flex h-[60%]" src={event.img} alt="Event Image"></img>
       <div className="flex-col m-6 font-dmserif text-5xl items-center text-center">
         <div className="flex w-full h-full justify-center p-6">

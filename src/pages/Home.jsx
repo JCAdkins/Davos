@@ -5,7 +5,7 @@ import IMAGES from "../images/Images.jsx";
 
 const HomePage = () => {
   return (
-    <div className="bg-gray-400">
+    <div className="bg-[#dee2fc]">
       <div className="justify-center align-center bg-black">
         <div className="w-full h-full top-20 bottom-0 left-0 right-0 -z-10">
           <DefaultCarousel className="h-screen w-screen object-cover transition-opacity duration-300 visible opacity-100" />
@@ -49,7 +49,7 @@ const HomePage = () => {
             </div>
             <div className="mt-4 justify-end mx-auto">
               <Link to="/podcasts">
-                <Button className="ml-48" color="light" pill>
+                <Button className="ml-48" color="light" size="sm" pill>
                   Listen Now
                 </Button>
               </Link>
@@ -81,7 +81,7 @@ const HomePage = () => {
             </div>
             <div className="mt-4 justify-center mx-auto">
               <Link to="/new_account">
-                <Button className="ml-52" color="dark" pill>
+                <Button className="ml-52" color="dark" size="sm" pill>
                   Sign Up
                 </Button>
               </Link>
@@ -117,7 +117,7 @@ const HomePage = () => {
             </div>
             <div className="mt-4 justify-end mx-auto">
               <Link to="/events">
-                <Button className="ml-72" color="light" pill>
+                <Button className="ml-72" color="light" size="sm" pill>
                   View Events
                 </Button>
               </Link>

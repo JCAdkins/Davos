@@ -1,24 +1,14 @@
-import { Accordion, Button } from "flowbite-react";
+import { Accordion, Button, Pagination, Spinner } from "flowbite-react";
 import AudioPlayerII from "../components/AudioPlayer/AudioPlayerII";
 import PodcastSignInModal from "../components/Modals/PodcastSignUpModal";
 import { useState, useContext, useEffect } from "react";
 import UserContext from "../contexts/UserContext";
 import { Transition } from "react-transition-group";
 import getAllPodcasts from "../services/getAllPodcasts";
-import ClockIcon from "../components/Icons/ClockIcon";
-import PodcastCalendar from "../components/Icons/PodcastCalendar";
-import MegaphoneIcon from "../components/Icons/MegaphoneIcon";
-
-const formatDate = (date) => {
-  return [
-    padTo2Digits(date.getMonth() + 1),
-    padTo2Digits(date.getDate()),
-    date.getFullYear(),
-  ].join("/");
-};
-const padTo2Digits = (num) => {
-  return num.toString().padStart(2, "0");
-};
+import PodcastCard from "../components/PodcastCard";
+import paginatedCollection from "../services/paginatedCollection";
+import BackIcon from "../components/Icons/BackIcon";
+import PodcastDetails from "../components/PodcastDetails";
 
 const emptyPodcastList = {
   title: "",
@@ -61,6 +51,11 @@ const Podcasts = () => {
   const [modal, setModal] = useState(false);
   const [featuredPC, setFeaturedPC] = useState([]);
   const [allPC, setAllPC] = useState([]);
+  const [paginatedPodcasts, setPaginatedPodcasts] = useState();
+  const [currentPage, setCurrentPage] = useState();
+  const [loadingAllPCS, setLoadingAllPCS] = useState(false);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [pcDetailsPodcast, setPCDetailsPodcast] = useState();
 
   useEffect(() => {
     var pcList = [];
@@ -77,53 +72,12 @@ const Podcasts = () => {
       .filter((pc) => pc.featured === true)
       .map((podcast) => {
         return (
-          <div className="speaker-div snap-center w-fit flex flex-col items-center bg-white rounded-lg shadow-lg shadow-blue-600 md:flex-row md:max-w-xl hover:scale-105 hover:shadow-blue-600 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-            <img
-              className="rounded-l-lg h-fit"
-              src={podcast.speaker.img}
-              alt=""
-            />
-            <div className="flex flex-col justify-between p-4 leading-normal">
-              <h5 className="mb-2 text-md font-bold max-w-[16ch] tracking-tight text-gray-900 dark:text-white">
-                {podcast.title}
-              </h5>
-              <div className="flex-col w-full mb-3 text-xs text-gray-700 dark:text-gray-400">
-                <div className="flex w-fit gap-2 items-center">
-                  <ClockIcon />
-                  <p className="text-black">{podcast.duration}</p>
-                </div>
-                <div className="flex w-fit gap-2 items-center text-black">
-                  <PodcastCalendar />
-                  <p className="text-black">
-                    {formatDate(new Date(podcast.date))}
-                  </p>
-                </div>
-
-                <div className="flex w-fit gap-2 items-center text-black">
-                  <MegaphoneIcon />
-                  <p className="min-w-[15 ch] text-black">
-                    {podcast.speaker.name}
-                  </p>
-                </div>
-              </div>
-              <div className="flex w-full gap-4">
-                <Button
-                  className="w-full"
-                  size="xs"
-                  color="blue"
-                  onClick={() => {
-                    playAudio(podcast);
-                  }}
-                >
-                  Listen
-                </Button>
-
-                <Button className="w-full" size="xs" color="blue">
-                  Details
-                </Button>
-              </div>
-            </div>
-          </div>
+          <PodcastCard
+            shadowColor={"blue-600"}
+            podcast={podcast}
+            playAudio={playAudio}
+            showDetails={(podcast) => showDetails(podcast)}
+          />
         );
       });
     setFeaturedPC(featureds);
@@ -157,56 +111,196 @@ const Podcasts = () => {
     setCurrentPodcast(curPodcast);
   };
 
+  const loadAllPodcasts = () => {
+    setLoadingAllPCS(true);
+    paginatedCollection("podcasts", "podcast.date", 6, "desc").then((data) => {
+      console.log(data);
+      setPaginatedPodcasts(data);
+    });
+  };
+
+  useEffect(() => {
+    paginatedPodcasts ? setCurrentPage(paginatedPodcasts[0]) : {};
+  }, [paginatedPodcasts]);
+
+  const showDetails = (podcast) => {
+    setPCDetailsPodcast(<PodcastDetails podcast={podcast} />);
+  };
+
   return (
     <div className="bg-[#dee2fc]">
-      <div className="flex flex-col justify-start lg:grid lg:grid-cols-4">
-        <div className="flex flex-col items-center mt-8 px-4 lg:col-span-3">
-          <div className="flex-col w-full justify-center  mb-8">
-            <div className="flex flex-wrap gap-8 justify-evenly mb-12">
-              {...featuredPC}
+      <div className="flex flex-col lg:grid lg:grid-cols-4">
+        {!pcDetailsPodcast && (
+          <>
+            <div className="flex flex-col items-center mt-8 px-4 lg:col-span-3">
+              <div className="flex-col w-full justify-center  mb-8">
+                {!paginatedPodcasts && (
+                  <>
+                    <div className="flex flex-wrap gap-8 justify-evenly mb-12">
+                      {...featuredPC}
+                    </div>
+
+                    <Button
+                      className="w-full rounded-none mt-6"
+                      size="xs"
+                      color="blue"
+                      onClick={loadAllPodcasts}
+                    >
+                      <p>{loadingAllPCS ? <Spinner /> : "Load All Podcasts"}</p>
+                    </Button>
+                  </>
+                )}
+                {currentPage && (
+                  <div className="flex flex-wrap gap-8 justify-evenly mb-12">
+                    {currentPage.map((podcast) => {
+                      return (
+                        <PodcastCard
+                          shadowColor={"blue-600"}
+                          podcast={podcast.podcast}
+                          playAudio={playAudio}
+                          showDetails={(podcast) => showDetails(podcast)}
+                        />
+                      );
+                    })}
+                  </div>
+                )}
+                {currentPage && (
+                  <div className="flex w-full justify-center">
+                    <Pagination
+                      currentPage={pageNumber}
+                      onPageChange={(page) => {
+                        setCurrentPage(paginatedPodcasts[page - 1]);
+                        setPageNumber(page);
+                      }}
+                      totalPages={paginatedPodcasts.length}
+                    />
+                  </div>
+                )}
+              </div>
+              <div className="w-full bg-gray-300 rounded-md text-lg mb-6">
+                <p className="text-black text-center text-2xl my-4 font-mono">
+                  Categories
+                </p>
+                <Accordion collapseAll>
+                  <Accordion.Panel>
+                    <Accordion.Title className="text-black">
+                      Thought Leaders
+                    </Accordion.Title>
+                    <Accordion.Content className="overflow-x-scroll">
+                      <div className="flex rounded-lg min-w-max w-full gap-6">
+                        {allPC
+                          .filter(
+                            (podcast) => podcast.tag === "thought_leaders"
+                          )
+                          .map((podcast) => (
+                            <PodcastCard
+                              shadowColor={"gray-800"}
+                              podcast={podcast}
+                              playAudio={playAudio}
+                              showDetails={(podcast) => showDetails(podcast)}
+                            />
+                          ))}
+                      </div>
+                    </Accordion.Content>
+                  </Accordion.Panel>
+                  <Accordion.Panel>
+                    <Accordion.Title className="text-black">
+                      Business Leaders
+                    </Accordion.Title>
+                    <Accordion.Content className="overflow-x-scroll">
+                      <div className="flex rounded-lg min-w-max w-full gap-6">
+                        {allPC
+                          .filter(
+                            (podcast) => podcast.tag === "business_leaders"
+                          )
+                          .map((podcast) => (
+                            <PodcastCard
+                              shadowColor={"gray-800"}
+                              podcast={podcast}
+                              playAudio={playAudio}
+                              showDetails={(podcast) => showDetails(podcast)}
+                            />
+                          ))}
+                      </div>
+                    </Accordion.Content>
+                  </Accordion.Panel>
+                  <Accordion.Panel>
+                    <Accordion.Title className="text-black">
+                      Government Leaders
+                    </Accordion.Title>
+                    <Accordion.Content className="overflow-x-scroll">
+                      <div className="flex rounded-lg min-w-max w-full gap-6">
+                        {allPC
+                          .filter(
+                            (podcast) => podcast.tag === "government_leaders"
+                          )
+                          .map((podcast) => (
+                            <PodcastCard
+                              shadowColor={"gray-800"}
+                              podcast={podcast}
+                              playAudio={playAudio}
+                              showDetails={(podcast) => showDetails(podcast)}
+                            />
+                          ))}
+                      </div>
+                    </Accordion.Content>
+                  </Accordion.Panel>
+                </Accordion>
+              </div>
             </div>
-            <Button className="w-full rounded-none mt-6" size="xs" color="blue">
-              <p>Load All Podcasts</p>
-            </Button>
+          </>
+        )}
+        {pcDetailsPodcast && (
+          <div className="relative flex mt-4 px-4 lg:col-span-3">
+            <div className="sticky w-[9px] h-[9px] top-24 z-10">
+              <Button
+                color="blue"
+                className="shadow-md bg-opacity-80 z-10"
+                size="sm"
+                onClick={() => setPCDetailsPodcast(null)}
+              >
+                <BackIcon />
+              </Button>
+            </div>
+            <div className="relative flex flex-col text-center w-full font-dmserif">
+              {pcDetailsPodcast}
+            </div>
           </div>
-          <div className="w-full bg-gray-300 rounded-md text-lg">
-            <p className="text-black text-center text-2xl font-mono">
-              Davos On Air - Categories
-            </p>
-            <Accordion collapseAll>
-              <Accordion.Panel>
-                <Accordion.Title>Thought Leaders</Accordion.Title>
-                <Accordion.Content>hrhr</Accordion.Content>
-              </Accordion.Panel>
-              <Accordion.Panel>
-                <Accordion.Title>Business Leaders</Accordion.Title>
-                <Accordion.Content>hrhr</Accordion.Content>
-              </Accordion.Panel>
-              <Accordion.Panel>
-                <Accordion.Title>Government Leaders</Accordion.Title>
-                <Accordion.Content>hrhr</Accordion.Content>
-              </Accordion.Panel>
-            </Accordion>
+        )}
+        <div className="flex-col sticky top-24 h-fit mt-4 items-center">
+          <div className="w-fit mx-auto">
+            {!user && (
+              <Button
+                color="blue"
+                size="sm"
+                className="w-full"
+                onClick={() => setModal(true)}
+              >
+                Subscribe
+              </Button>
+            )}
+            {!haveAudio && (
+              <AudioPlayerII
+                podcastList={[emptyPodcastList]}
+                removePodcast={removePodcast}
+                showPodcastInfo={showPodcastInfo}
+              />
+            )}
+            {haveAudio && (
+              <div className="w-min">
+                <AudioPlayerII
+                  podcastList={podcastList}
+                  removePodcast={removePodcast}
+                  showPodcastInfo={showPodcastInfo}
+                />
+              </div>
+            )}
           </div>
-        </div>
-        <div className="flex sticky top-20 h-fit mt-4 justify-center">
-          {!haveAudio && (
-            <AudioPlayerII
-              podcastList={[emptyPodcastList]}
-              removePodcast={removePodcast}
-              showPodcastInfo={showPodcastInfo}
-            />
-          )}
-          {haveAudio && (
-            <AudioPlayerII
-              podcastList={podcastList}
-              removePodcast={removePodcast}
-              showPodcastInfo={showPodcastInfo}
-            />
-          )}
         </div>
       </div>
-      {modal && <PodcastSignInModal />}
+      {modal && (
+        <PodcastSignInModal clearPodcastSignUpModal={() => setModal(false)} />
+      )}
     </div>
   );
 };

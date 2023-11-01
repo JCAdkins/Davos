@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const URL = "http://127.0.0.1:3000/podcast_subscribers";
 
-const PodcastSignInModal = (props) => {
+const PodcastSignInModal = ({ clearPodcastSignUpModal }) => {
   const {
     register,
     handleSubmit,
@@ -40,13 +40,18 @@ const PodcastSignInModal = (props) => {
     setTimeout(() => setOpenModal(undefined), 1500);
   };
 
+  const clearModal = () => {
+    clearPodcastSignUpModal();
+    setOpenModal(undefined);
+  };
+
   return (
     <Modal
-      show={openModal === true}
       size="md"
       popup
       dismissible
-      onClose={() => setOpenModal(undefined)}
+      show={openModal}
+      onClose={() => clearModal()}
     >
       <Modal.Header />
       {content && content}

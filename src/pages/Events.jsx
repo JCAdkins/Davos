@@ -1,19 +1,22 @@
 import CardDefault from "../components/CardDefault";
 import DefaultCalendar from "../components/DefaultCalendar";
 import IMAGES from "../images/Images";
-import { Accordion, Card, Button, ListGroup } from "flowbite-react";
+import {
+  Accordion,
+  Card,
+  Button,
+  ListGroup,
+  Pagination,
+  Spinner,
+} from "flowbite-react";
 import { useEffect, useState, useContext } from "react";
 import getAllEvents from "../services/getAllEvents";
 import getAllUserEvents from "../services/getAllUserEvents";
 import "../customcss/CustomCardCss.css";
 import UserContext from "../contexts/UserContext";
 import EventsModal from "../components/Modals/EventsModal";
-
-const getHours = (hour) => {
-  if (hour === 0) return "12";
-  if (hour > 12) return hour - 12;
-  return hour;
-};
+import EventCard from "../components/EventCard";
+import paginatedCollection from "../services/paginatedCollection";
 
 const Events = () => {
   const { user } = useContext(UserContext);
@@ -22,6 +25,10 @@ const Events = () => {
   const [userEvents, setUserEvents] = useState([]);
   const [showEvent, setShowEvent] = useState(false);
   const [event, setEvent] = useState();
+  const [paginatedEvents, setPaginatedEvents] = useState();
+  const [currentPage, setCurrentPage] = useState();
+  const [loadingAllEvents, setLoadingAllEvents] = useState(false);
+  const [pageNumber, setPageNumber] = useState(1);
 
   useEffect(() => {
     let temp = [];
@@ -78,49 +85,20 @@ const Events = () => {
     })
     .slice(0, 6)
     .map((event) => (
-      <div className="w-full flex lg:flex-col p-4 sm:w-1/2 lg:w-1/3">
-        <Card
-          className="event-card flex-1 h-full border-none hover:shadow-blue-600 hover:scale-105 shadow-lg shadow-blue-600"
-          imgAlt="Guest Speaker"
-          imgSrc={event.img}
-        >
-          <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-            <p>{event.title}</p>
-          </h5>
-          <div className="flex-col text-gray-900 text-xs">
-            <div className="flex whitespace-pre">
-              <p>
-                {event.date.toDate().getMonth() + 1}/
-                {event.date.toDate().getDate()}/
-                {event.date.toDate().getFullYear()}
-              </p>
-              {" @ "}
-              <p>
-                {getHours(event.date.toDate().getHours())}:
-                {event.date.toDate().getMinutes().toString().padStart(2, "0")}
-                {event.date.toDate().getHours() > 12 ? "PM" : "AM"}
-              </p>
-            </div>
-            <p>
-              {event.location.city}, {event.location.state}
-            </p>
-          </div>
-          <div className="flex items-end justify-center h-full">
-            <Button
-              onClick={() => {
-                setEvent(event);
-                setShowEvent(true);
-              }}
-              className="w-full"
-              color="blue"
-              size="xs"
-            >
-              Details
-            </Button>
-          </div>
-        </Card>
-      </div>
+      <EventCard
+        event={event}
+        setEvent={setEvent}
+        setShowEvent={setShowEvent}
+      />
     ));
+
+  const loadAllEvents = () => {
+    setLoadingAllEvents(true);
+    paginatedCollection("events", "date", 6).then((data) => {
+      console.log(data);
+      setPaginatedEvents(data);
+    });
+  };
 
   const setTileContent = (date) => {
     setDaysEvents(
@@ -135,32 +113,84 @@ const Events = () => {
     );
   };
 
+  useEffect(() => {
+    paginatedEvents ? setCurrentPage(paginatedEvents[0]) : {};
+  }, [paginatedEvents]);
+
   return (
     <div className="bg-[#dee2fc] lg:grid lg:auto-cols-max lg:grid-cols-4">
       <div className="flex flex-col lg:col-span-3">
         <div className="lg:flex-1 lg:w-full">
           <div className="lg:hidden p-4 bg-sky-900">
-            <Accordion collapseAll className="bg-orange-300">
+            <Accordion collapseAll className="">
               <Accordion.Panel>
                 <Accordion.Title className="text-gray-900 bg-white">
                   Upcoming Events
                 </Accordion.Title>
-                <Accordion.Content>
+                <Accordion.Content className="bg-gray-400">
                   <div className="flex-col">
-                    <div className="flex overflow-auto h-full bg-orange-300 justify-content text-center">
-                      <div className="flex-1 min-w-[25ch] h-full">
-                        {...upcomingEvents}
+                    {!currentPage && (
+                      <>
+                        <div className="flex overflow-x-scroll justify-content text-center mb-6">
+                          <div className="flex-1 min-w-[25ch] h-full">
+                            {...upcomingEvents}
+                          </div>
+                        </div>
+                        <div>
+                          <Button
+                            className="w-full rounded-none"
+                            size="xs"
+                            color="blue"
+                            onClick={loadAllEvents}
+                          >
+                            <p>
+                              {loadingAllEvents ? (
+                                <Spinner />
+                              ) : (
+                                "Load All Events"
+                              )}
+                            </p>
+                          </Button>
+                        </div>
+                      </>
+                    )}
+                    {currentPage && (
+                      <div className="flex w-full justify-center mb-4">
+                        <Pagination
+                          currentPage={pageNumber}
+                          onPageChange={(page) => {
+                            setCurrentPage(paginatedEvents[page - 1]);
+                            setPageNumber(page);
+                          }}
+                          totalPages={paginatedEvents.length}
+                        />
                       </div>
-                    </div>
-                    <div>
-                      <Button
-                        className="w-full rounded-none"
-                        size="xs"
-                        color="blue"
-                      >
-                        <p>Load All Events</p>
-                      </Button>
-                    </div>
+                    )}
+                    {currentPage && (
+                      <div className="-mx-4 flex flex-wrap justify-evenly mb-4">
+                        {currentPage.map((event) => {
+                          return (
+                            <EventCard
+                              event={event}
+                              setEvent={setEvent}
+                              setShowEvent={setShowEvent}
+                            />
+                          );
+                        })}
+                      </div>
+                    )}
+                    {currentPage && (
+                      <div className="flex w-full justify-center mb-4">
+                        <Pagination
+                          currentPage={pageNumber}
+                          onPageChange={(page) => {
+                            setCurrentPage(paginatedEvents[page - 1]);
+                            setPageNumber(page);
+                          }}
+                          totalPages={paginatedEvents.length}
+                        />
+                      </div>
+                    )}
                   </div>
                 </Accordion.Content>
               </Accordion.Panel>
@@ -168,12 +198,12 @@ const Events = () => {
                 <Accordion.Title className="text-gray-900 bg-white">
                   Calendar
                 </Accordion.Title>
-                <Accordion.Content>
+                <Accordion.Content className="bg-gray-400">
                   <div className="lg:items-center lg:flex-1">
-                    <div className="bg-sky-900 border border-gray-200 shadow-lg dark:border-gray-700 dark:bg-gray-800 rounded-none h-full justify-start">
+                    <div className="bg-[#c98d26] border border-gray-200 shadow-lg dark:border-gray-700 dark:bg-gray-800 rounded-none h-full justify-start">
                       <div className="flex flex-row gap-4 p-6 justify-evenly">
                         <div className="flex flex-row gap-4 w-fit">
-                          <span className="flex-none w-3 h-3 bg-yellow-400 rounded-full mr-1 my-2"></span>
+                          <span className="flex-none w-3 h-3 bg-yellow-200 rounded-full mr-1 my-2"></span>
                           <p>Luncheon</p>
                         </div>
 
@@ -182,7 +212,7 @@ const Events = () => {
                           <p>Cocktail Party</p>
                         </div>
                         <div className="flex flex-row w-fit">
-                          <span className="flex-none w-3 h-3 bg-blue-600 rounded-full mr-1 my-2"></span>
+                          <span className="flex-none w-3 h-3 bg-blue-400 rounded-full mr-1 my-2"></span>
                           <p>Courses</p>
                         </div>
                       </div>
@@ -207,7 +237,7 @@ const Events = () => {
                 <Accordion.Title className="text-gray-900 bg-white">
                   Your Events
                 </Accordion.Title>
-                <Accordion.Content>
+                <Accordion.Content className="bg-gray-400">
                   <div className="divide-y mb-4 divide-black">
                     {!user && (
                       <Card className="mt-4 text-black text-center justify-center">
@@ -228,15 +258,49 @@ const Events = () => {
           <div className="hidden lg:block">
             <div className="h-full lg:rounded-none lg:justify-start lg:items-center lg:h-full lg:w-fill">
               <div className="max-w-screen-xl mx-4 my-4">
-                <div className="-mx-4 flex flex-wrap">{...upcomingEvents}</div>
+                {!currentPage && (
+                  <>
+                    <div className="-mx-4 flex flex-wrap">
+                      {...upcomingEvents}
+                    </div>
 
-                <Button
-                  className="w-full rounded-none mt-6"
-                  size="xs"
-                  color="blue"
-                >
-                  <p>Load All Events</p>
-                </Button>
+                    <Button
+                      className="w-full rounded-none mt-6"
+                      size="xs"
+                      color="blue"
+                      onClick={loadAllEvents}
+                    >
+                      <p>
+                        {loadingAllEvents ? <Spinner /> : "Load All Events"}
+                      </p>
+                    </Button>
+                  </>
+                )}
+                {currentPage && (
+                  <div className="-mx-4 flex flex-wrap justify-evenly mb-12">
+                    {currentPage.map((event) => {
+                      return (
+                        <EventCard
+                          event={event}
+                          setEvent={setEvent}
+                          setShowEvent={setShowEvent}
+                        />
+                      );
+                    })}
+                  </div>
+                )}
+                {currentPage && (
+                  <div className="flex w-full justify-center">
+                    <Pagination
+                      currentPage={pageNumber}
+                      onPageChange={(page) => {
+                        setCurrentPage(paginatedEvents[page - 1]);
+                        setPageNumber(page);
+                      }}
+                      totalPages={paginatedEvents.length}
+                    />
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -352,7 +416,7 @@ const Events = () => {
           )}
         </div>
         <div className="">
-          <div className="rounded-t-md bg-[#c8b28a]">
+          <div className="rounded-t-md bg-[#c98d26] bg-opacity-90">
             <div className="flex">
               <div className="flex items-center justify-center gap-1 text-black text-center text-sm w-full h-full">
                 <p className="flex-none w-3 h-3 bg-yellow-200 rounded-full dark:bg-gray-700 "></p>

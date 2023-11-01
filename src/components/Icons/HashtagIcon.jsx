@@ -1,20 +1,20 @@
-const ClockIcon = ({ text }) => {
+const HashtagIcon = ({ text }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className={`h-4 w-4 text-${text} mb-0.5`}
       fill="none"
       viewBox="0 0 24 24"
+      strokeWidth={1.5}
       stroke="currentColor"
+      className={`w-4 h-4 text-${text}`}
     >
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth="2"
-        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+        d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5l-3.9 19.5m-2.1-19.5l-3.9 19.5"
       />
     </svg>
   );
 };
 
-export default ClockIcon;
+export default HashtagIcon;

@@ -16,8 +16,6 @@ function EventInfoModal({ user, clearEventInfoModal }) {
     setOpenModal(undefined);
   };
 
-  console.log(user);
-
   return (
     <>
       <Modal

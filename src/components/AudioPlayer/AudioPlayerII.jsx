@@ -7,6 +7,7 @@ const AudioPlayerII = (props) => {
   const [pause, setPause] = useState(false);
   const podcastList = props.podcastList;
   const currentPodcast = podcastList[index];
+  const [zInd, setZInd] = useState(0);
 
   const showInfo = () => {
     !currentPodcast.disabled ? props.showPodcastInfo(podcastList[index]) : {};
@@ -16,6 +17,7 @@ const AudioPlayerII = (props) => {
   const timelineRef = useRef(null);
   const playheadRef = useRef(null);
   const hoverPlayheadRef = useRef(null);
+  const containerRef = useRef(null);
 
   const back = (
     <svg
@@ -87,9 +89,8 @@ const AudioPlayerII = (props) => {
     const duration = playerRef.current.duration;
     const playheadWidth = timelineRef.current.offsetWidth;
     const offsetWidth = timelineRef.current.offsetLeft;
-    const userClickWidth = e.clientX - offsetWidth;
-    // if UI isn't displayed correctly within parent container (e.g. it overflows parent) then
-    // userClickWidth will be incorrect and will mess up all subsequent calculations.
+    const userClickWidth =
+      e.clientX - offsetWidth - containerRef.current.getBoundingClientRect().x;
     const userClickWidthInPercent = (userClickWidth * 100) / playheadWidth;
     playheadRef.current.style.width = userClickWidthInPercent + "%";
     playerRef.current.currentTime = (duration * userClickWidthInPercent) / 100;
@@ -99,7 +100,9 @@ const AudioPlayerII = (props) => {
     const duration = playerRef.current.duration;
     const playheadWidth = timelineRef.current.offsetWidth;
     const offsetWidth = timelineRef.current.offsetLeft;
-    const userClickWidth = e.clientX - offsetWidth;
+    const userClickWidth =
+      e.clientX - offsetWidth - containerRef.current.getBoundingClientRect().x;
+
     const userClickWidthInPercent = (userClickWidth * 100) / playheadWidth;
     if (userClickWidthInPercent <= 100) {
       hoverPlayheadRef.current.style.width = userClickWidthInPercent + "%";
@@ -109,6 +112,9 @@ const AudioPlayerII = (props) => {
     if (time >= 0 && time <= duration) {
       hoverPlayheadRef.current.dataset.content = formatTime(time);
     }
+    hoverPlayheadRef.current.style.width < playheadRef.current.style.width
+      ? setZInd(10)
+      : setZInd(0);
   };
 
   const resetTimeLine = () => {
@@ -184,8 +190,6 @@ const AudioPlayerII = (props) => {
   };
 
   useEffect(() => {
-    const myPlayer = playerRef.current;
-    const myTimeline = timelineRef.current;
     playerRef.current.addEventListener("timeupdate", timeUpdate, false);
     playerRef.current.addEventListener("ended", nextPodcast, false);
     timelineRef.current.addEventListener("click", changeCurrentTime, false);
@@ -193,18 +197,23 @@ const AudioPlayerII = (props) => {
     timelineRef.current.addEventListener("mouseout", resetTimeLine, false);
 
     return () => {
-      myPlayer.removeEventListener("timeupdate", timeUpdate);
-      myPlayer.removeEventListener("ended", nextPodcast);
-      myTimeline.removeEventListener("click", changeCurrentTime);
-      myTimeline.removeEventListener("mousemove", hoverTimeLine);
-      myTimeline.removeEventListener("mouseout", resetTimeLine);
+      playerRef?.current?.removeEventListener("timeupdate", timeUpdate);
+      playerRef?.current?.removeEventListener("ended", nextPodcast);
+      timelineRef?.current?.removeEventListener("click", changeCurrentTime);
+      timelineRef?.current?.removeEventListener("mousemove", hoverTimeLine);
+      timelineRef?.current?.removeEventListener("mouseout", resetTimeLine);
     };
   }, [podcastList]);
 
-  showInfo();
+  useEffect(() => {
+    showInfo();
+  }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center my-4 w-min rounded-2xl shadow-lg shadow-blue-700 bg-blue-900 text-white font-light">
+    <div
+      ref={containerRef}
+      className="flex flex-col items-center justify-center my-4 w-min rounded-2xl shadow-lg shadow-blue-700 bg-blue-900 text-white font-light"
+    >
       <div className="relative flex-col p-4 bg-white items-center justify-center text-center text-blue-900 rounded-2xl">
         <audio ref={playerRef}>
           <source src={currentPodcast.embedded_src} type="audio/ogg" />
@@ -242,7 +251,7 @@ const AudioPlayerII = (props) => {
         >
           <div
             ref={hoverPlayheadRef}
-            className="absolute h-3 bg-blue-700 rounded-full"
+            className={`absolute h-3 bg-blue-700 rounded-full z-${zInd}`}
           ></div>
           <div
             ref={playheadRef}

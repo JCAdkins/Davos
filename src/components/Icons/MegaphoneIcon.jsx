@@ -1,4 +1,4 @@
-const MegaphoneIcon = () => {
+const MegaphoneIcon = ({ text }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -6,7 +6,7 @@ const MegaphoneIcon = () => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="w-4 h-4 text-black mb-0.5"
+      className={`h-4 w-4 text-${text} mb-0.5`}
     >
       <path
         strokeLinecap="round"
