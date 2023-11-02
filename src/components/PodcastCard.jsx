@@ -31,7 +31,7 @@ const PodcastCard = ({ podcast, playAudio, shadowColor, showDetails }) => {
           </div>
           <div className="flex w-fit gap-2 items-center text-black">
             <PodcastCalendar />
-            <p className="text-black">{formatDate(new Date(podcast.date))}</p>
+            <p className="text-black">{formatDate(podcast.date.toDate())}</p>
           </div>
 
           <div className="flex w-fit gap-2 items-center text-black">

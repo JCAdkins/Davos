@@ -1,11 +1,14 @@
 import { Button, Label, Modal, TextInput } from "flowbite-react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-
-const URL = "http://127.0.0.1:3000/podcast_subscribers";
+import getSubscriber from "../../services/getSubscriber";
+import addSubscriber from "../../services/addSubscriber";
 
 const PodcastSignInModal = ({ clearPodcastSignUpModal }) => {
+  const emailRef = useRef(null);
+  const [userExists, setUserExists] = useState(null);
+
   const {
     register,
     handleSubmit,
@@ -18,27 +21,29 @@ const PodcastSignInModal = ({ clearPodcastSignUpModal }) => {
   );
 
   const onSubmit = async (data) => {
-    console.log(JSON.stringify(data));
-    const response = await fetch(URL, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(data),
+    getSubscriber(data.email).then((promiseData) => {
+      return setUserExists({ data: data, exists: promiseData.exists });
     });
-    const resData = await response.json();
-    // Implement logic to check for a successful post code here
-    setContent(
-      <Modal.Body>
-        <div className="flex space-y-6 justify-center">
-          <div className="text-xl justify-center w-fit font-medium text-gray-900 dark:text-white">
-            Thank you for subscribing!
-          </div>
-        </div>
-      </Modal.Body>
-    );
-    setTimeout(() => setOpenModal(undefined), 1500);
   };
+
+  useEffect(() => {
+    if (userExists)
+      if (!userExists.exists) {
+        const { data } = userExists;
+        console.log(data);
+        console.log(addSubscriber(data));
+        setContent(
+          <Modal.Body>
+            <div className="flex space-y-6 justify-center">
+              <div className="text-xl justify-center w-fit font-medium text-gray-900 dark:text-white">
+                Thank you for subscribing!
+              </div>
+            </div>
+          </Modal.Body>
+        );
+        setTimeout(() => setOpenModal(undefined), 1500);
+      }
+  }, [userExists]);
 
   const clearModal = () => {
     clearPodcastSignUpModal();
@@ -70,18 +75,25 @@ const PodcastSignInModal = ({ clearPodcastSignUpModal }) => {
                 <Label htmlFor="email" value="Your email" />
               </div>
               <TextInput
+                ref={emailRef}
                 id="email"
                 type="email"
                 placeholder="name@company.com"
                 {...register("email", {
                   required: "Email address is required.",
+                  onChange: () => {
+                    userExists ? setUserExists(null) : {};
+                  },
                   pattern: {
                     value: emailRegex,
                     message: "Invalid email adress.",
                   },
                 })}
               />
-              <p className="text-red-600 text-sm">{errors.email?.message}</p>
+              <p className="text-red-600 text-sm">
+                {userExists && "Email is already subscribed."}
+                {errors.email?.message}
+              </p>
             </div>
             <div className="flex flex-row justify-between">
               <div className="w-fit">

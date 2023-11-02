@@ -70,9 +70,11 @@ const Podcasts = () => {
   useEffect(() => {
     const featureds = allPC
       .filter((pc) => pc.featured === true)
-      .map((podcast) => {
+      .splice(0, 6)
+      .map((podcast, ind) => {
         return (
           <PodcastCard
+            key={ind}
             shadowColor={"blue-600"}
             podcast={podcast}
             playAudio={playAudio}
@@ -114,7 +116,6 @@ const Podcasts = () => {
   const loadAllPodcasts = () => {
     setLoadingAllPCS(true);
     paginatedCollection("podcasts", "podcast.date", 6, "desc").then((data) => {
-      console.log(data);
       setPaginatedPodcasts(data);
     });
   };
@@ -124,7 +125,12 @@ const Podcasts = () => {
   }, [paginatedPodcasts]);
 
   const showDetails = (podcast) => {
-    setPCDetailsPodcast(<PodcastDetails podcast={podcast} />);
+    setPCDetailsPodcast(
+      <PodcastDetails
+        podcast={podcast}
+        addToPlaylist={() => playAudio(podcast)}
+      />
+    );
   };
 
   return (

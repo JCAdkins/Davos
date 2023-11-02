@@ -21,7 +21,7 @@ const MemberSignInModal = (props) => {
   } = useForm();
 
   const logInClick = async (creds) => {
-    signInWithEmailAndPassword(auth, creds.email, creds.password)
+    signInWithEmailAndPassword(auth, creds.email, creds[`current-password`])
       .then((userCredential) => {
         // Signed in
         logInAuthorized(userCredential.user);
@@ -86,13 +86,13 @@ const MemberSignInModal = (props) => {
             </div>
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="password" value="Your password" />
+                <Label htmlFor="current-password" value="Your password" />
               </div>
               <TextInput
-                id="password"
-                type="password"
+                id="current-password"
+                type="current-password"
                 onChange={clearErrorMessage}
-                {...register("password", {
+                {...register("current-password", {
                   required: "Password is required.",
                   minLength: { value: 10, message: "Minimum 10 characters" },
                   onChange: () => clearErrorMessage(),
@@ -102,7 +102,9 @@ const MemberSignInModal = (props) => {
               {errorMessage && (
                 <p className="text-red-600 text-sm">{errorMessage}</p>
               )}
-              <p className="text-red-600 text-sm">{errors.password?.message}</p>
+              <p className="text-red-600 text-sm">
+                {errors[`current-password`]?.message}
+              </p>
               <p className="text-white">Easter Egg!</p>
             </div>
             <div className="flex justify-between">

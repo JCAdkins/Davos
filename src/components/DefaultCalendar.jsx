@@ -32,24 +32,27 @@ export default function DefaultCalendar(props) {
                     date.getFullYear() == eventDate.getFullYear()
                   );
                 });
-                const retArray = temp.map((event) => {
+                const retArray = temp.map((event, ind) => {
                   const margin = () => (event.length === 3 ? 0.5 : 1);
 
                   if (event.type === "luncheon")
                     return (
                       <span
+                        key={ind}
                         className={`flex mt-0.5 w-full h-1 bg-yellow-200 rounded-full m-${margin}`}
                       ></span>
                     );
                   else if (event.type === "cocktail_party")
                     return (
                       <span
+                        key={ind}
                         className={`flex w-full h-1 mt-0.5  bg-red-400 rounded-full dark:bg-gray-700 m-${margin}`}
                       ></span>
                     );
                   else if (event.type === "course")
                     return (
                       <span
+                        key={ind}
                         className={`flex w-full h-1 mt-0.5 bg-blue-400 rounded-full m-${margin}`}
                       ></span>
                     );

@@ -1,10 +1,8 @@
 import "../customcss/CustomCardCss.css";
 import ClockIcon from "./Icons/ClockIcon";
 import PodcastCalendar from "./Icons/PodcastCalendar";
-import MegaphoneIcon from "./Icons/MegaphoneIcon";
-import { ListGroup, Tabs } from "flowbite-react";
+import { Button, Tabs } from "flowbite-react";
 import HashtagIcon from "./Icons/HashtagIcon";
-import { ListGroupItem } from "flowbite-react/lib/esm/components/ListGroup/ListGroupItem";
 
 const formatDate = (date) => {
   return [
@@ -17,7 +15,7 @@ const padTo2Digits = (num) => {
   return num.toString().padStart(2, "0");
 };
 
-const PodcastDetails = ({ podcast }) => {
+const PodcastDetails = ({ podcast, addToPlaylist }) => {
   return (
     <div className="flex-col">
       <div className="pc-details flex items-center gap-8 text-sky-900 my-4 font-dmserif">
@@ -28,7 +26,9 @@ const PodcastDetails = ({ podcast }) => {
             alt="Speaker Image"
           />
           <div className="flex-col mt-4">
-            <p className="w-full text-xl font-bold">{podcast.speaker.name}</p>
+            <p className="w-full text-lg font-bold">
+              {podcast.speaker.name}, {podcast.speaker.company}
+            </p>
             <p className="w-full text-md">{podcast.speaker.position}</p>
           </div>
         </div>
@@ -44,7 +44,7 @@ const PodcastDetails = ({ podcast }) => {
             <div className="flex w-fit gap-2 items-center text-black">
               <PodcastCalendar text={"sky-900"} />
               <p className="text-sky-900">
-                {formatDate(new Date(podcast.date))}
+                {formatDate(podcast.date.toDate())}
               </p>
             </div>
             <div className="flex w-fit items-center">
@@ -53,6 +53,17 @@ const PodcastDetails = ({ podcast }) => {
             </div>
           </div>
           <p className="h-fit text-lg">{podcast.description}</p>
+
+          <Button
+            className="mt-4"
+            color="blue"
+            size="xs"
+            onClick={() => {
+              addToPlaylist(podcast);
+            }}
+          >
+            Add To Playlist
+          </Button>
         </div>
       </div>
       <div>
@@ -63,11 +74,11 @@ const PodcastDetails = ({ podcast }) => {
         >
           <Tabs.Item className="" active title="Topics">
             <div className="flex w-full justify-center bg-sky-900">
-              <ul className="bg-sky-900 list-disc list-inside p-4 max-w-[70ch] text-lg text-left">
+              <ul className="bg-sky-900 border-x-8 border-white border-double list-disc list-inside p-4 max-w-[70ch] text-lg text-left">
                 <p className="text-center">
                   The issues that are discussed during this podcast:
                 </p>
-                {podcast.issues_discussed.map((issue, ind) => {
+                {podcast.issues_discussed?.map((issue, ind) => {
                   return (
                     <li className="m-6" key={ind}>
                       {issue}
@@ -79,8 +90,7 @@ const PodcastDetails = ({ podcast }) => {
           </Tabs.Item>
           <Tabs.Item title="Biography">
             <div className="flex w-full justify-center bg-sky-900">
-              <div className="flex-col bg-sky-900 p-4 max-w-[70ch] text-lg text-left">
-                <p className="m-6">Company: {podcast.speaker.company}</p>
+              <div className="flex-col border-x-8 border-white border-double bg-sky-900 p-4 max-w-[70ch] text-lg text-left">
                 <p className="m-6">{podcast.speaker.about}</p>
               </div>
             </div>
