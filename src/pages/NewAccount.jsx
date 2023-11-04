@@ -1,6 +1,7 @@
 import NewAccountForm from "../components/Forms/NewAccountForm";
 import CardDefault from "../components/CardDefault";
 import { Card } from "flowbite-react";
+import DavosFooter from "../navigation/DavosFooter";
 
 const NewAccount = () => {
   return (

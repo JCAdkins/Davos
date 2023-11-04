@@ -1,25 +1,44 @@
 import { SwitchTransition, CSSTransition } from "react-transition-group";
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import "./PaginatedTransitions.css";
 
-const PaginatedTransitions = () => {
+const PaginatedTransitions = ({ children }) => {
+  const [child1, child2, child3] = children;
   const [state, setState] = useState(false);
-  const helloRef = useRef(null);
-  const goodbyeRef = useRef(null);
-  const nodeRef = state ? goodbyeRef : helloRef;
+  const entRef = useRef(null);
+  const exiRef = useRef(null);
+  const nRef = state ? exiRef : entRef;
+
   return (
-    <SwitchTransition>
+    <SwitchTransition mode={"out-in"}>
       <CSSTransition
-        key={state ? "Goodbye, world!" : "Hello, world!"}
-        nodeRef={nodeRef}
-        addEndListener={(node, done) =>
-          node.addEventListener("transitionend", done, false)
-        }
-        classNames="fade"
+        key={state ? "Exiting" : "Entering"}
+        nodeRef={nRef}
+        timeout={200}
+        addEndListener={(done) => {
+          nRef.current.addEventListener("transitionend", done, false);
+        }}
+        classNames="paginate-fade"
       >
-        <button ref={nodeRef} onClick={() => setState((state) => !state)}>
-          {state ? "Goodbye, world!" : "Hello, world!"}
-        </button>
+        <>
+          <child1.type
+            {...child1.props}
+            onClick={() => {
+              setState((state) => !state);
+              child2.props.onClick;
+            }}
+          />
+          <child2.type {...child2.props} ref={nRef} />
+          <div className="flex w-full justify-center">
+            <child3.type
+              {...child3.props}
+              onClick={() => {
+                setState((state) => !state);
+                child2.props.onClick;
+              }}
+            />
+          </div>
+        </>
       </CSSTransition>
     </SwitchTransition>
   );

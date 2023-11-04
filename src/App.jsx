@@ -6,7 +6,6 @@ import Events from "./pages/Events";
 import Admin from "./pages/Admin";
 import Podcasts from "./pages/Podcasts";
 import Members from "./pages/Members";
-import StickyFooter from "./navigation/StickyFooter";
 import Profile from "./pages/Profile";
 import UserSettings from "./pages/UserSettings";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -20,6 +19,7 @@ import { auth } from "./utils/firebase";
 import getUser from "./services/getUser";
 import MemberSignInModal from "./components/Modals/MemberSignInModal";
 import EventInfo from "./pages/EventInfo";
+import DavosFooter from "./navigation/DavosFooter";
 
 function App() {
   const [user, setUser] = useState();
@@ -109,8 +109,8 @@ function App() {
                 }
               />
             </Routes>
-            <StickyFooter />
             {modal && <MemberSignInModal resetModal={resetModal} />}
+            <DavosFooter />
           </Router>
         </PodcastProvider.Provider>
       </UserContext.Provider>

@@ -2,6 +2,7 @@ import DefaultCarousel from "../components/DefaultCarousel.jsx";
 import { Button } from "flowbite-react";
 import { Link } from "react-router-dom";
 import IMAGES from "../images/Images.jsx";
+import DavosFooter from "../navigation/DavosFooter.jsx";
 
 const HomePage = () => {
   return (

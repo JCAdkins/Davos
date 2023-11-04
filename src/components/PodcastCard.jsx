@@ -17,10 +17,14 @@ const padTo2Digits = (num) => {
 const PodcastCard = ({ podcast, playAudio, shadowColor, showDetails }) => {
   return (
     <div
-      className={`speaker-div snap-center w-fit flex flex-col items-center bg-white rounded-lg shadow-lg shadow-${shadowColor} md:flex-row md:max-w-xl hover:scale-105 hover:shadow-${shadowColor} hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700`}
+      className={`speaker-div snap-center w-fit my-4 flex flex-col items-center bg-white rounded-lg shadow-lg shadow-${shadowColor} md:flex-row md:max-w-xl hover:scale-105 hover:shadow-${shadowColor} hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700`}
     >
-      <img className="rounded-l-lg h-fit" src={podcast.speaker.img} alt="" />
-      <div className="flex flex-col justify-between p-4 leading-normal">
+      <img
+        className="lg:rounded-l-lg md:rounded-l-lg lg:rounded-r-none md:rounded-r-none rounded-t-lg h-fit"
+        src={podcast.speaker.img}
+        alt=""
+      />
+      <div className="flex flex-col h-full justify-between p-4 leading-normal">
         <h5 className="mb-2 text-md font-bold max-w-[16ch] tracking-tight text-gray-900 dark:text-white">
           {podcast.title}
         </h5>
@@ -39,26 +43,28 @@ const PodcastCard = ({ podcast, playAudio, shadowColor, showDetails }) => {
             <p className="min-w-[15 ch] text-black">{podcast.speaker.name}</p>
           </div>
         </div>
-        <div className="flex w-full gap-4">
-          <Button
-            className="w-full"
-            size="xs"
-            color="blue"
-            onClick={() => {
-              playAudio(podcast);
-            }}
-          >
-            Listen
-          </Button>
+        <div className="flex-col justify-stretch">
+          <div className="flex w-full gap-4">
+            <Button
+              className="w-full"
+              size="xs"
+              color="blue"
+              onClick={() => {
+                playAudio(podcast);
+              }}
+            >
+              Listen
+            </Button>
 
-          <Button
-            className="w-full"
-            size="xs"
-            color="blue"
-            onClick={() => showDetails(podcast)}
-          >
-            Details
-          </Button>
+            <Button
+              className="w-full"
+              size="xs"
+              color="blue"
+              onClick={() => showDetails(podcast)}
+            >
+              Details
+            </Button>
+          </div>
         </div>
       </div>
     </div>

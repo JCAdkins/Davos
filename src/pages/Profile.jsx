@@ -1,11 +1,14 @@
 import { Card } from "flowbite-react";
 import ProfileDisplay from "../components/ProfileDisplay";
+import DavosFooter from "../navigation/DavosFooter";
 
 const Profile = () => {
   return (
-    <Card className="-m-6">
-      <ProfileDisplay />
-    </Card>
+    <div className="flex-col">
+      <Card className="-m-6">
+        <ProfileDisplay />
+      </Card>
+    </div>
   );
 };
 

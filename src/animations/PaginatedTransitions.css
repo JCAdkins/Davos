@@ -1,0 +1,16 @@
+.paginate-fade-enter {
+  opacity: 0;
+}
+.paginate-fade-enter {
+  opacity: 1;
+}
+.paginate-fade-enter-active {
+  opacity: 1;
+}
+.paginate-fade-exit-active {
+  opacity: 0;
+}
+.paginate-fade-enter-active,
+.paginate-fade-exit-active {
+  transition: opacity 250ms;
+}

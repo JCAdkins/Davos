@@ -1,6 +1,7 @@
 import CardDefault from "../components/CardDefault";
 import { SideBar } from "../components/SideBar";
 import { useRef } from "react";
+import DavosFooter from "../navigation/DavosFooter";
 
 const About = () => {
   const history = useRef(null);

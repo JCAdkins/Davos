@@ -26,14 +26,48 @@
   }
 }
 
-/* .podcast-card img {
-  height: 200px;
-  width: 40%;
-} */
+@media screen and (max-width: 539px) {
+  .featured-pc-container,
+  .search-pc-container,
+  .all-pc-container,
+  .paginated-pc-container {
+    overflow-x: scroll;
+  }
+  .featured-flex-container,
+  .search-flex-container,
+  .all-flex-container,
+  .paginated-flex-container {
+    min-width: max-content;
+  }
+}
+
+@media screen and (max-width: 629px) {
+  .pc-details-icons-container {
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+.speaker-div {
+  max-width: 207.25px;
+}
 
 .speaker-div img {
   height: 100%;
   width: 120px;
+}
+
+@media screen and (max-width: 719px) {
+  .speaker-div {
+    max-width: 207.25px;
+  }
+
+  .speaker-div img {
+    height: 100%;
+    width: 100%;
+    max-width: 207.25px;
+    max-height: 207.25px;
+  }
 }
 
 .pc-details img {

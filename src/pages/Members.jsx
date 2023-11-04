@@ -1,3 +1,5 @@
+import DavosFooter from "../navigation/DavosFooter";
+
 const Members = (props) => {
   return <div>Members</div>;
 };

@@ -18,7 +18,7 @@ const padTo2Digits = (num) => {
 const PodcastDetails = ({ podcast, addToPlaylist }) => {
   return (
     <div className="flex-col">
-      <div className="pc-details flex items-center gap-8 text-sky-900 my-4 font-dmserif">
+      <div className="pc-details flex flex-col sm:flex-row justify-center items-center gap-8 text-sky-900 my-4 font-dmserif">
         <div className="flex-col">
           <img
             className="rounded-lg shadow-lg shadow-blue-600"
@@ -36,7 +36,7 @@ const PodcastDetails = ({ podcast, addToPlaylist }) => {
           <p className="text-3xl drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)] text-shadow shadow-blue-600">
             {podcast.title}
           </p>
-          <div className="flex w-full justify-evenly my-3 text-xs text-sky-900 dark:text-gray-400">
+          <div className="pc-details-icons-container flex w-full items-center justify-evenly my-3 text-xs text-sky-900 dark:text-gray-400">
             <div className="flex w-fit gap-2 items-center">
               <ClockIcon text={"sky-900"} />
               <p className="text-sky-900">{podcast.duration}</p>

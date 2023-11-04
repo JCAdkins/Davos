@@ -11,6 +11,7 @@ import {
   Marker,
   useLoadScript,
 } from "@react-google-maps/api";
+import DavosFooter from "../navigation/DavosFooter";
 
 const getHours = (hour) => {
   if (hour === 0) return "12";

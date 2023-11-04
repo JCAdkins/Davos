@@ -1,14 +1,19 @@
 import { Accordion, Button, Pagination, Spinner } from "flowbite-react";
 import AudioPlayerII from "../components/AudioPlayer/AudioPlayerII";
 import PodcastSignInModal from "../components/Modals/PodcastSignUpModal";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import UserContext from "../contexts/UserContext";
-import { Transition } from "react-transition-group";
+import PaginatedTransitions from "../animations/PaginatedTransitions";
 import getAllPodcasts from "../services/getAllPodcasts";
 import PodcastCard from "../components/PodcastCard";
 import paginatedCollection from "../services/paginatedCollection";
 import BackIcon from "../components/Icons/BackIcon";
 import PodcastDetails from "../components/PodcastDetails";
+import ArrowTrendingUp from "../components/Icons/ArrowTrendingUp";
+import RectangleStack from "../components/Icons/RectangleStack";
+import { SwitchTransition, CSSTransition } from "react-transition-group";
+import "../animations/PodcastDetailsTransition.css";
+import SearchBar from "../components/SearchBar";
 
 const emptyPodcastList = {
   title: "",
@@ -29,20 +34,6 @@ const emptyPodcastList = {
   disabled: true,
 };
 
-const duration = 15000;
-
-const defaultStyle = {
-  transition: `opacity ${duration}ms ease-in-out`,
-  opacity: 0,
-};
-
-const transitionStyles = {
-  entering: { opacity: 0.5 },
-  entered: { opacity: 1 },
-  exiting: { opacity: 0.5 },
-  exited: { opacity: 0 },
-};
-
 const Podcasts = () => {
   const { user } = useContext(UserContext);
   const [_, setCurrentPodcast] = useState(emptyPodcastList);
@@ -56,6 +47,17 @@ const Podcasts = () => {
   const [loadingAllPCS, setLoadingAllPCS] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
   const [pcDetailsPodcast, setPCDetailsPodcast] = useState();
+  const [transState, setTransState] = useState(false);
+  const [pcDetState, setPCDetState] = useState(true);
+  const [hidden, setHidden] = useState("hidden");
+  const enteringRef = useRef(null);
+  const exitingRef = useRef(null);
+  const enteringDetsRef = useRef(null);
+  const exitingDetsRef = useRef(null);
+  const podcastsRef = transState ? exitingRef : enteringRef;
+  const pcDetailsRef = pcDetState ? exitingDetsRef : enteringDetsRef;
+  const searchRef = useRef(null);
+  const [searchPCs, setSearchPCs] = useState(null);
 
   useEffect(() => {
     var pcList = [];
@@ -78,7 +80,11 @@ const Podcasts = () => {
             shadowColor={"blue-600"}
             podcast={podcast}
             playAudio={playAudio}
-            showDetails={(podcast) => showDetails(podcast)}
+            showDetails={(podcast) => {
+              setTransState((transState) => !transState);
+              setPCDetState((pcDetState) => !pcDetState);
+              showDetails(podcast);
+            }}
           />
         );
       });
@@ -124,7 +130,12 @@ const Podcasts = () => {
     paginatedPodcasts ? setCurrentPage(paginatedPodcasts[0]) : {};
   }, [paginatedPodcasts]);
 
+  useEffect(() => {
+    if (!searchRef.current) setSearchPCs(null);
+  }, [searchRef.current]);
+
   const showDetails = (podcast) => {
+    setHidden("");
     setPCDetailsPodcast(
       <PodcastDetails
         podcast={podcast}
@@ -133,146 +144,310 @@ const Podcasts = () => {
     );
   };
 
-  return (
-    <div className="bg-[#dee2fc]">
-      <div className="flex flex-col lg:grid lg:grid-cols-4">
-        {!pcDetailsPodcast && (
-          <>
-            <div className="flex flex-col items-center mt-8 px-4 lg:col-span-3">
-              <div className="flex-col w-full justify-center  mb-8">
-                {!paginatedPodcasts && (
-                  <>
-                    <div className="flex flex-wrap gap-8 justify-evenly mb-12">
-                      {...featuredPC}
-                    </div>
+  const handleSearchBarChange = (searchVal) => {
+    const filteredPCs = allPC
+      .filter((podcast) => {
+        return (
+          podcast.title.toLowerCase().includes(searchVal.toLowerCase()) ||
+          podcast.speaker.name
+            .toLowerCase()
+            .includes(searchVal.toLowerCase()) ||
+          podcast.description.toLowerCase().includes(searchVal.toLowerCase()) ||
+          podcast.date.toDate().toLocaleString().includes(searchVal) ||
+          podcast.tag.toLowerCase().includes(searchVal.toLowerCase())
+        );
+      })
+      .map((podcast, ind) => {
+        return (
+          <PodcastCard
+            key={ind}
+            shadowColor={"blue-600"}
+            podcast={podcast}
+            playAudio={playAudio}
+            showDetails={(podcast) => {
+              setTransState((transState) => !transState);
+              setPCDetState((pcDetState) => !pcDetState);
+              showDetails(podcast);
+            }}
+          />
+        );
+      });
+    searchVal === "" ? setSearchPCs(null) : setSearchPCs(filteredPCs);
+  };
 
-                    <Button
-                      className="w-full rounded-none mt-6"
-                      size="xs"
-                      color="blue"
-                      onClick={loadAllPodcasts}
-                    >
-                      <p>{loadingAllPCS ? <Spinner /> : "Load All Podcasts"}</p>
-                    </Button>
-                  </>
-                )}
-                {currentPage && (
-                  <div className="flex flex-wrap gap-8 justify-evenly mb-12">
-                    {currentPage.map((podcast) => {
-                      return (
-                        <PodcastCard
-                          shadowColor={"blue-600"}
-                          podcast={podcast.podcast}
-                          playAudio={playAudio}
-                          showDetails={(podcast) => showDetails(podcast)}
-                        />
-                      );
-                    })}
+  return (
+    <div className="bg-[#dee2fc] min-h-[100vh]">
+      <div className="flex flex-col lg:grid lg:grid-cols-4">
+        <SwitchTransition mode="out-in">
+          <CSSTransition
+            key={transState ? "entering" : "exiting"}
+            nodeRef={podcastsRef}
+            timeout={300}
+            addEndListener={(done) => {
+              podcastsRef.current.addEventListener(
+                "transitionend",
+                done,
+                false
+              );
+            }}
+            classNames="slide"
+          >
+            <div ref={podcastsRef} className="lg:col-span-3">
+              {!pcDetailsPodcast && (
+                <div className="flex flex-col items-center mt-4 px-4">
+                  <div className="flex-col w-full justify-center mb-8">
+                    {!paginatedPodcasts && (
+                      <>
+                        <div className="flex ml-2 w-full justify-between p-4 text-sky-900 text-xl font-dmserif">
+                          <div className="flex gap-1">
+                            {!searchPCs && <ArrowTrendingUp />}
+                            <p className="w-full">
+                              {searchPCs ? "Searching All" : "Featured"}
+                            </p>
+                          </div>
+
+                          <SearchBar
+                            ref={searchRef}
+                            value={searchRef.current?.value}
+                            onChange={() =>
+                              handleSearchBarChange(searchRef.current.value)
+                            }
+                          />
+                        </div>
+                        {!searchPCs && (
+                          <div className="featured-pc-container">
+                            <div className="featured-flex-container flex flex-wrap gap-8 justify-evenly mb-8">
+                              {...featuredPC}
+                            </div>
+                          </div>
+                        )}
+                        {searchPCs && (
+                          <div className="search-pc-container">
+                            <div className="search-flex-container flex flex-wrap gap-8 justify-evenly mb-8">
+                              {...searchPCs}
+                            </div>
+                          </div>
+                        )}
+
+                        <Button
+                          className="w-full rounded-none"
+                          size="xs"
+                          color="blue"
+                          onClick={() => {
+                            console.log("clicked");
+                            loadAllPodcasts();
+                          }}
+                        >
+                          <p>
+                            {loadingAllPCS ? <Spinner /> : "Load All Podcasts"}
+                          </p>
+                        </Button>
+                      </>
+                    )}
+                    {currentPage && (
+                      <>
+                        <div className="flex ml-2 w-full justify-between p-4 text-sky-900 text-xl font-dmserif">
+                          <div className="flex gap-1">
+                            <RectangleStack />
+                            <p className="w-full">All Podcasts</p>
+                          </div>
+                          <SearchBar
+                            ref={searchRef}
+                            value={searchRef.current?.value}
+                            onChange={() =>
+                              handleSearchBarChange(searchRef.current.value)
+                            }
+                          />
+                        </div>
+                        {searchPCs && (
+                          <div className="search-pc-container">
+                            <div className="search-flex-container flex flex-wrap gap-8 justify-evenly mb-8">
+                              {...searchPCs}
+                            </div>
+                          </div>
+                        )}
+                        {!searchPCs && (
+                          <PaginatedTransitions>
+                            <div className=" -mt-4 mb-4 mt-1 flex w-full justify-center">
+                              <Pagination
+                                currentPage={pageNumber}
+                                onPageChange={(page) => {
+                                  setCurrentPage(paginatedPodcasts[page - 1]);
+                                  setPageNumber(page);
+                                }}
+                                totalPages={paginatedPodcasts.length}
+                              />
+                            </div>
+                            <div className="paginated-pc-container">
+                              <div className="paginated-flex-container flex flex-wrap gap-8 justify-evenly mb-8">
+                                {currentPage.map((podcast, ind) => {
+                                  return (
+                                    <PodcastCard
+                                      key={ind}
+                                      onPageChange={() => {}}
+                                      shadowColor={"blue-600"}
+                                      podcast={podcast.podcast}
+                                      playAudio={playAudio}
+                                      showDetails={(podcast) => {
+                                        setTransState(
+                                          (transState) => !transState
+                                        );
+                                        setPCDetState(
+                                          (pcDetState) => !pcDetState
+                                        );
+                                        showDetails(podcast);
+                                      }}
+                                    />
+                                  );
+                                })}
+                              </div>
+                            </div>
+                            <div>
+                              <Pagination
+                                currentPage={pageNumber}
+                                onPageChange={(page) => {
+                                  setCurrentPage(paginatedPodcasts[page - 1]);
+                                  setPageNumber(page);
+                                }}
+                                totalPages={paginatedPodcasts.length}
+                              />
+                            </div>
+                          </PaginatedTransitions>
+                        )}
+                      </>
+                    )}
                   </div>
-                )}
-                {currentPage && (
-                  <div className="flex w-full justify-center">
-                    <Pagination
-                      currentPage={pageNumber}
-                      onPageChange={(page) => {
-                        setCurrentPage(paginatedPodcasts[page - 1]);
-                        setPageNumber(page);
-                      }}
-                      totalPages={paginatedPodcasts.length}
-                    />
+                  <div className="w-full bg-gray-300 rounded-md text-lg mb-6">
+                    <p className="text-black text-center text-2xl my-4 font-mono">
+                      Categories
+                    </p>
+                    <Accordion collapseAll>
+                      <Accordion.Panel>
+                        <Accordion.Title className="text-black">
+                          Thought Leaders
+                        </Accordion.Title>
+                        <Accordion.Content className="overflow-x-scroll">
+                          <div className="flex rounded-lg min-w-max w-full gap-6">
+                            {allPC
+                              .filter(
+                                (podcast) => podcast.tag === "thought_leaders"
+                              )
+                              .map((podcast, ind) => (
+                                <PodcastCard
+                                  key={ind}
+                                  shadowColor={"gray-800"}
+                                  podcast={podcast}
+                                  playAudio={playAudio}
+                                  showDetails={(podcast) => {
+                                    setTransState((transState) => !transState);
+                                    setPCDetState((pcDetState) => !pcDetState);
+                                    showDetails(podcast);
+                                  }}
+                                />
+                              ))}
+                          </div>
+                        </Accordion.Content>
+                      </Accordion.Panel>
+                      <Accordion.Panel>
+                        <Accordion.Title className="text-black">
+                          Business Leaders
+                        </Accordion.Title>
+                        <Accordion.Content className="overflow-x-scroll">
+                          <div className="flex rounded-lg min-w-max w-full gap-6">
+                            {allPC
+                              .filter(
+                                (podcast) => podcast.tag === "business_leaders"
+                              )
+                              .map((podcast, ind) => (
+                                <PodcastCard
+                                  key={ind}
+                                  shadowColor={"gray-800"}
+                                  podcast={podcast}
+                                  playAudio={playAudio}
+                                  showDetails={(podcast) => {
+                                    setTransState((transState) => !transState);
+                                    setPCDetState((pcDetState) => !pcDetState);
+                                    showDetails(podcast);
+                                  }}
+                                />
+                              ))}
+                          </div>
+                        </Accordion.Content>
+                      </Accordion.Panel>
+                      <Accordion.Panel>
+                        <Accordion.Title className="text-black">
+                          Government Leaders
+                        </Accordion.Title>
+                        <Accordion.Content className="overflow-x-scroll">
+                          <div className="flex rounded-lg min-w-max w-full gap-6">
+                            {allPC
+                              .filter(
+                                (podcast) =>
+                                  podcast.tag === "government_leaders"
+                              )
+                              .map((podcast, ind) => (
+                                <PodcastCard
+                                  key={ind}
+                                  shadowColor={"gray-800"}
+                                  podcast={podcast}
+                                  playAudio={playAudio}
+                                  showDetails={(podcast) => {
+                                    setTransState((transState) => !transState);
+                                    setPCDetState((pcDetState) => !pcDetState);
+                                    showDetails(podcast);
+                                  }}
+                                />
+                              ))}
+                          </div>
+                        </Accordion.Content>
+                      </Accordion.Panel>
+                    </Accordion>
                   </div>
-                )}
+                </div>
+              )}
+            </div>
+          </CSSTransition>
+        </SwitchTransition>
+
+        <SwitchTransition mode="out-in">
+          <CSSTransition
+            key={pcDetState ? "exiting" : "entering"}
+            nodeRef={pcDetailsRef}
+            timeout={300}
+            addEndListener={(done) => {
+              pcDetailsRef.current.addEventListener(
+                "transitionend",
+                done,
+                false
+              );
+            }}
+            classNames="fade"
+          >
+            <div
+              ref={pcDetailsRef}
+              className={`${hidden} relative flex mt-4 px-4 lg:col-span-3`}
+            >
+              <div className="sticky w-[9px] h-[9px] top-24 z-10">
+                <Button
+                  color="blue"
+                  className="shadow-md bg-opacity-80 z-10"
+                  size="sm"
+                  onClick={() => {
+                    setHidden("hidden");
+                    setPCDetState((pcDetState) => !pcDetState);
+                    setTransState((transState) => !transState);
+                    setPCDetailsPodcast(null);
+                  }}
+                >
+                  <BackIcon />
+                </Button>
               </div>
-              <div className="w-full bg-gray-300 rounded-md text-lg mb-6">
-                <p className="text-black text-center text-2xl my-4 font-mono">
-                  Categories
-                </p>
-                <Accordion collapseAll>
-                  <Accordion.Panel>
-                    <Accordion.Title className="text-black">
-                      Thought Leaders
-                    </Accordion.Title>
-                    <Accordion.Content className="overflow-x-scroll">
-                      <div className="flex rounded-lg min-w-max w-full gap-6">
-                        {allPC
-                          .filter(
-                            (podcast) => podcast.tag === "thought_leaders"
-                          )
-                          .map((podcast) => (
-                            <PodcastCard
-                              shadowColor={"gray-800"}
-                              podcast={podcast}
-                              playAudio={playAudio}
-                              showDetails={(podcast) => showDetails(podcast)}
-                            />
-                          ))}
-                      </div>
-                    </Accordion.Content>
-                  </Accordion.Panel>
-                  <Accordion.Panel>
-                    <Accordion.Title className="text-black">
-                      Business Leaders
-                    </Accordion.Title>
-                    <Accordion.Content className="overflow-x-scroll">
-                      <div className="flex rounded-lg min-w-max w-full gap-6">
-                        {allPC
-                          .filter(
-                            (podcast) => podcast.tag === "business_leaders"
-                          )
-                          .map((podcast) => (
-                            <PodcastCard
-                              shadowColor={"gray-800"}
-                              podcast={podcast}
-                              playAudio={playAudio}
-                              showDetails={(podcast) => showDetails(podcast)}
-                            />
-                          ))}
-                      </div>
-                    </Accordion.Content>
-                  </Accordion.Panel>
-                  <Accordion.Panel>
-                    <Accordion.Title className="text-black">
-                      Government Leaders
-                    </Accordion.Title>
-                    <Accordion.Content className="overflow-x-scroll">
-                      <div className="flex rounded-lg min-w-max w-full gap-6">
-                        {allPC
-                          .filter(
-                            (podcast) => podcast.tag === "government_leaders"
-                          )
-                          .map((podcast) => (
-                            <PodcastCard
-                              shadowColor={"gray-800"}
-                              podcast={podcast}
-                              playAudio={playAudio}
-                              showDetails={(podcast) => showDetails(podcast)}
-                            />
-                          ))}
-                      </div>
-                    </Accordion.Content>
-                  </Accordion.Panel>
-                </Accordion>
+              <div className="relative flex flex-col text-center w-full font-dmserif">
+                {pcDetailsPodcast}
               </div>
             </div>
-          </>
-        )}
-        {pcDetailsPodcast && (
-          <div className="relative flex mt-4 px-4 lg:col-span-3">
-            <div className="sticky w-[9px] h-[9px] top-24 z-10">
-              <Button
-                color="blue"
-                className="shadow-md bg-opacity-80 z-10"
-                size="sm"
-                onClick={() => setPCDetailsPodcast(null)}
-              >
-                <BackIcon />
-              </Button>
-            </div>
-            <div className="relative flex flex-col text-center w-full font-dmserif">
-              {pcDetailsPodcast}
-            </div>
-          </div>
-        )}
+          </CSSTransition>
+        </SwitchTransition>
         <div className="flex-col sticky top-24 h-fit mt-4 items-center">
           <div className="w-fit mx-auto">
             {!user && (
@@ -295,7 +470,7 @@ const Podcasts = () => {
             {haveAudio && (
               <div className="w-min">
                 <AudioPlayerII
-                  podcastList={podcastList}
+                  podcastList={podcastList ? podcastList : [emptyPodcastList]}
                   removePodcast={removePodcast}
                   showPodcastInfo={showPodcastInfo}
                 />

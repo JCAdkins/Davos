@@ -15,6 +15,7 @@ import ShoppingBagIcon from "../components/Icons/ShoppingBagIcon";
 import addEvent from "../services/addEvent";
 import getAllEvents from "../services/getAllEvents";
 import "../customcss/CustomCardCss.css";
+import DavosFooter from "../navigation/DavosFooter";
 
 const events = () => {};
 

@@ -17,6 +17,8 @@ import UserContext from "../contexts/UserContext";
 import EventsModal from "../components/Modals/EventsModal";
 import EventCard from "../components/EventCard";
 import paginatedCollection from "../services/paginatedCollection";
+import PaginatedTransitions from "../animations/PaginatedTransitions";
+import DavosFooter from "../navigation/DavosFooter";
 
 const Events = () => {
   const { user } = useContext(UserContext);
@@ -95,7 +97,6 @@ const Events = () => {
   const loadAllEvents = () => {
     setLoadingAllEvents(true);
     paginatedCollection("events", "date", 6).then((data) => {
-      console.log(data);
       setPaginatedEvents(data);
     });
   };
@@ -155,41 +156,40 @@ const Events = () => {
                       </>
                     )}
                     {currentPage && (
-                      <div className="flex w-full justify-center mb-4">
-                        <Pagination
-                          currentPage={pageNumber}
-                          onPageChange={(page) => {
-                            setCurrentPage(paginatedEvents[page - 1]);
-                            setPageNumber(page);
-                          }}
-                          totalPages={paginatedEvents.length}
-                        />
-                      </div>
-                    )}
-                    {currentPage && (
-                      <div className="-mx-4 flex flex-wrap justify-evenly mb-4">
-                        {currentPage.map((event) => {
-                          return (
-                            <EventCard
-                              event={event}
-                              setEvent={setEvent}
-                              setShowEvent={setShowEvent}
-                            />
-                          );
-                        })}
-                      </div>
-                    )}
-                    {currentPage && (
-                      <div className="flex w-full justify-center mb-4">
-                        <Pagination
-                          currentPage={pageNumber}
-                          onPageChange={(page) => {
-                            setCurrentPage(paginatedEvents[page - 1]);
-                            setPageNumber(page);
-                          }}
-                          totalPages={paginatedEvents.length}
-                        />
-                      </div>
+                      <PaginatedTransitions>
+                        <div className="flex w-full justify-center mb-4">
+                          <Pagination
+                            currentPage={pageNumber}
+                            onPageChange={(page) => {
+                              setCurrentPage(paginatedEvents[page - 1]);
+                              setPageNumber(page);
+                            }}
+                            totalPages={paginatedEvents.length}
+                          />
+                        </div>
+                        <div className="-mx-4 flex flex-wrap justify-evenly mb-4">
+                          {currentPage.map((event, ind) => {
+                            return (
+                              <EventCard
+                                key={ind}
+                                event={event}
+                                setEvent={setEvent}
+                                setShowEvent={setShowEvent}
+                              />
+                            );
+                          })}
+                        </div>
+                        <div className="flex w-full justify-center mb-4">
+                          <Pagination
+                            currentPage={pageNumber}
+                            onPageChange={(page) => {
+                              setCurrentPage(paginatedEvents[page - 1]);
+                              setPageNumber(page);
+                            }}
+                            totalPages={paginatedEvents.length}
+                          />
+                        </div>
+                      </PaginatedTransitions>
                     )}
                   </div>
                 </Accordion.Content>
@@ -277,29 +277,40 @@ const Events = () => {
                   </>
                 )}
                 {currentPage && (
-                  <div className="-mx-4 flex flex-wrap justify-evenly mb-12">
-                    {currentPage.map((event) => {
-                      return (
-                        <EventCard
-                          event={event}
-                          setEvent={setEvent}
-                          setShowEvent={setShowEvent}
-                        />
-                      );
-                    })}
-                  </div>
-                )}
-                {currentPage && (
-                  <div className="flex w-full justify-center">
-                    <Pagination
-                      currentPage={pageNumber}
-                      onPageChange={(page) => {
-                        setCurrentPage(paginatedEvents[page - 1]);
-                        setPageNumber(page);
-                      }}
-                      totalPages={paginatedEvents.length}
-                    />
-                  </div>
+                  <PaginatedTransitions>
+                    <div className="lg:hidden flex w-full justify-center">
+                      <Pagination
+                        currentPage={pageNumber}
+                        onPageChange={(page) => {
+                          setCurrentPage(paginatedEvents[page - 1]);
+                          setPageNumber(page);
+                        }}
+                        totalPages={paginatedEvents.length}
+                      />
+                    </div>
+                    <div className="-mx-4 flex flex-wrap justify-evenly mb-12">
+                      {currentPage.map((event, ind) => {
+                        return (
+                          <EventCard
+                            key={ind}
+                            event={event}
+                            setEvent={setEvent}
+                            setShowEvent={setShowEvent}
+                          />
+                        );
+                      })}
+                    </div>
+                    <div className="flex w-full justify-center">
+                      <Pagination
+                        currentPage={pageNumber}
+                        onPageChange={(page) => {
+                          setCurrentPage(paginatedEvents[page - 1]);
+                          setPageNumber(page);
+                        }}
+                        totalPages={paginatedEvents.length}
+                      />
+                    </div>
+                  </PaginatedTransitions>
                 )}
               </div>
             </div>
@@ -401,7 +412,7 @@ const Events = () => {
         </div>
       </div>
 
-      <div className="sticky h-[10%] hidden lg:block right-0 py-4 px-2 top-20 lg:items-center">
+      <div className="sticky h-[20%] hidden lg:block right-0 pt-6 px-2 top-20 lg:items-center">
         <div className="divide-y mb-4 divide-black">
           {!user && (
             <Card className="mt-4 text-black text-center justify-center">

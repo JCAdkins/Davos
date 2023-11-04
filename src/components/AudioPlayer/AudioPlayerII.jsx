@@ -212,7 +212,7 @@ const AudioPlayerII = (props) => {
   return (
     <div
       ref={containerRef}
-      className="flex flex-col items-center justify-center my-4 w-min rounded-2xl shadow-lg shadow-blue-700 bg-blue-900 text-white font-light"
+      className="flex flex-col md:flex-row lg:flex-col items-center justify-center my-4 w-min rounded-2xl shadow-lg shadow-blue-700 bg-blue-900 text-white font-light"
     >
       <div className="relative flex-col p-4 bg-white items-center justify-center text-center text-blue-900 rounded-2xl">
         <audio ref={playerRef}>
