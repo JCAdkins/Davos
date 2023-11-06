@@ -38,8 +38,7 @@ const CarouselCard = (props) => {
         </div>
         <div className="flex items-end justify-center h-full">
           <Button
-            className="w-full"
-            color="blue"
+            className="bg-sky-900 w-full"
             size="xs"
             onClick={() => props.setEvent(event)}
           >
@@ -51,7 +50,7 @@ const CarouselCard = (props) => {
   });
 
   return (
-    <div className="group -mt-72 rounded-lg min-w-full container bg-[#c98d26] px-4 pt-2 flex-grow w-full mx-auto">
+    <div className="group -mt-72 rounded-lg min-w-full container bg-gray-400 px-4 pt-2 flex-grow w-full mx-auto">
       <button
         className="absolute hidden group-hover:inline-block bg-white hover:bg-gray-400 top-1 right-0 border-solid border-2 rounded-md mr-1 z-10 border-black"
         type="button"

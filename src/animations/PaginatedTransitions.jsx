@@ -3,7 +3,7 @@ import React, { useState, useRef } from "react";
 import "./PaginatedTransitions.css";
 
 const PaginatedTransitions = ({ children }) => {
-  const [child1, child2, child3] = children;
+  const [child1, child2] = children;
   const [state, setState] = useState(false);
   const entRef = useRef(null);
   const exiRef = useRef(null);
@@ -21,17 +21,10 @@ const PaginatedTransitions = ({ children }) => {
         classNames="paginate-fade"
       >
         <>
-          <child1.type
-            {...child1.props}
-            onClick={() => {
-              setState((state) => !state);
-              child2.props.onClick;
-            }}
-          />
-          <child2.type {...child2.props} ref={nRef} />
+          <child1.type {...child1.props} ref={nRef} />
           <div className="flex w-full justify-center">
-            <child3.type
-              {...child3.props}
+            <child2.type
+              {...child2.props}
               onClick={() => {
                 setState((state) => !state);
                 child2.props.onClick;

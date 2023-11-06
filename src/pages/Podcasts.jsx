@@ -77,7 +77,7 @@ const Podcasts = () => {
         return (
           <PodcastCard
             key={ind}
-            shadowColor={"blue-600"}
+            shadowColor={"[#0c4a6e]"}
             podcast={podcast}
             playAudio={playAudio}
             showDetails={(podcast) => {
@@ -230,9 +230,8 @@ const Podcasts = () => {
                         )}
 
                         <Button
-                          className="w-full rounded-none"
+                          className="bg-sky-900 w-full rounded-none"
                           size="xs"
-                          color="blue"
                           onClick={() => {
                             console.log("clicked");
                             loadAllPodcasts();
@@ -268,16 +267,6 @@ const Podcasts = () => {
                         )}
                         {!searchPCs && (
                           <PaginatedTransitions>
-                            <div className=" -mt-4 mb-4 mt-1 flex w-full justify-center">
-                              <Pagination
-                                currentPage={pageNumber}
-                                onPageChange={(page) => {
-                                  setCurrentPage(paginatedPodcasts[page - 1]);
-                                  setPageNumber(page);
-                                }}
-                                totalPages={paginatedPodcasts.length}
-                              />
-                            </div>
                             <div className="paginated-pc-container">
                               <div className="paginated-flex-container flex flex-wrap gap-8 justify-evenly mb-8">
                                 {currentPage.map((podcast, ind) => {
@@ -323,10 +312,10 @@ const Podcasts = () => {
                     </p>
                     <Accordion collapseAll>
                       <Accordion.Panel>
-                        <Accordion.Title className="text-black">
+                        <Accordion.Title className="text-black bg-white">
                           Thought Leaders
                         </Accordion.Title>
-                        <Accordion.Content className="overflow-x-scroll">
+                        <Accordion.Content className="overflow-x-scroll bg-gray-400">
                           <div className="flex rounded-lg min-w-max w-full gap-6">
                             {allPC
                               .filter(
@@ -349,10 +338,13 @@ const Podcasts = () => {
                         </Accordion.Content>
                       </Accordion.Panel>
                       <Accordion.Panel>
-                        <Accordion.Title className="text-black">
+                        <Accordion.Title className="text-black bg-white">
                           Business Leaders
                         </Accordion.Title>
-                        <Accordion.Content className="overflow-x-scroll">
+                        <Accordion.Content
+                          className="overflow-x-scroll bg-gray-400"
+                          bg-gray-400
+                        >
                           <div className="flex rounded-lg min-w-max w-full gap-6">
                             {allPC
                               .filter(
@@ -375,10 +367,10 @@ const Podcasts = () => {
                         </Accordion.Content>
                       </Accordion.Panel>
                       <Accordion.Panel>
-                        <Accordion.Title className="text-black">
+                        <Accordion.Title className="text-black bg-white">
                           Government Leaders
                         </Accordion.Title>
-                        <Accordion.Content className="overflow-x-scroll">
+                        <Accordion.Content className="overflow-x-scroll bg-gray-400">
                           <div className="flex rounded-lg min-w-max w-full gap-6">
                             {allPC
                               .filter(
@@ -429,8 +421,7 @@ const Podcasts = () => {
             >
               <div className="sticky w-[9px] h-[9px] top-24 z-10">
                 <Button
-                  color="blue"
-                  className="shadow-md bg-opacity-80 z-10"
+                  className="shadow-md bg-sky-600 bg-opacity-80 z-10"
                   size="sm"
                   onClick={() => {
                     setHidden("hidden");
@@ -452,9 +443,8 @@ const Podcasts = () => {
           <div className="w-fit mx-auto">
             {!user && (
               <Button
-                color="blue"
                 size="sm"
-                className="w-full"
+                className="bg-sky-900 w-full"
                 onClick={() => setModal(true)}
               >
                 Subscribe

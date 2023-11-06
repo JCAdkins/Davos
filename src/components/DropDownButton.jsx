@@ -11,24 +11,35 @@ export default function DropDownButton(props) {
     <>
       <BaseAvatar image={user.profile.image} />
       <Dropdown
-        color="blue"
+        className="bg-sky-700"
         label={user.name.firstName + " " + user.name.lastName}
       >
         <Link to="/profile">
-          <DropdownItem>Profile</DropdownItem>
+          <DropdownItem className="text-white hover:text-black">
+            Profile
+          </DropdownItem>
         </Link>
         <Link to="/profile/settings">
-          <DropdownItem>Settings</DropdownItem>
+          <DropdownItem className="text-white hover:text-black">
+            Settings
+          </DropdownItem>
         </Link>
         {user.permissions.includes("admin") ? (
           <Link to="/admin">
-            <DropdownItem>Admin Panel</DropdownItem>
+            <DropdownItem className="text-white hover:text-black">
+              Admin Panel
+            </DropdownItem>
           </Link>
         ) : (
           <></>
         )}
 
-        <DropdownItem onClick={props.onClick}>Sign out</DropdownItem>
+        <DropdownItem
+          className="text-white hover:text-black"
+          onClick={props.onClick}
+        >
+          Sign out
+        </DropdownItem>
       </Dropdown>
     </>
   );

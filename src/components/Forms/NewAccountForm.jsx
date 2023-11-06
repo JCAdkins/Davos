@@ -152,6 +152,22 @@ const NewAccountForm = () => {
               </div>
               <div>
                 <div className="mb-2 block">
+                  <Label htmlFor="firstName" value="First Name" />
+                </div>
+                <TextInput
+                  id="firstName"
+                  shadow
+                  type="name"
+                  {...register("firstName", {
+                    required: "First name is required.",
+                  })}
+                />
+                <p className="text-red-600 text-sm">
+                  {errors.firstName?.message}
+                </p>
+              </div>
+              <div>
+                <div className="mb-2 block">
                   <Label htmlFor="password" value="Password" />
                 </div>
                 <TextInput
@@ -165,6 +181,56 @@ const NewAccountForm = () => {
                 />
                 <p className="text-red-600 text-sm">
                   {errors.password?.message}
+                </p>
+              </div>
+            </div>
+            <div>
+              <div>
+                <div>
+                  <div className="mb-2 block">
+                    <Label htmlFor="dob" value="Date of Birth" />
+                  </div>{" "}
+                  <Controller
+                    control={control}
+                    name="dob"
+                    render={({ field }) => (
+                      <Datepicker
+                        id="dob"
+                        shadow
+                        type="birthdate"
+                        onSelectedDateChanged={(dob) => field.onChange(dob)}
+                      />
+                    )}
+                    {...register("dob", {
+                      required: "Date of birth is required.",
+                      validate: {
+                        olderThan18: (date) => {
+                          const today = new Date();
+                          const eighteen = new Date(
+                            today.setFullYear(today.getFullYear() - 18)
+                          );
+                          return date > eighteen
+                            ? "Must be older than 18."
+                            : true;
+                        },
+                      },
+                    })}
+                  ></Controller>
+                  <p className="text-red-600 text-sm">{errors.dob?.message}</p>
+                </div>
+                <div className="mb-2 block">
+                  <Label htmlFor="lastName" value="Last Name" />
+                </div>
+                <TextInput
+                  id="lastName"
+                  shadow
+                  type="name"
+                  {...register("lastName", {
+                    required: "Last name is required.",
+                  })}
+                />
+                <p className="text-red-600 text-sm">
+                  {errors.lastName?.message}
                 </p>
               </div>
               <div>
@@ -191,74 +257,12 @@ const NewAccountForm = () => {
                 </p>
               </div>
             </div>
-            <div>
-              <div>
-                <div className="mb-2 block">
-                  <Label htmlFor="firstName" value="First Name" />
-                </div>
-                <TextInput
-                  id="firstName"
-                  shadow
-                  type="name"
-                  {...register("firstName", {
-                    required: "First name is required.",
-                  })}
-                />
-                <p className="text-red-600 text-sm">
-                  {errors.firstName?.message}
-                </p>
-              </div>
-              <div>
-                <div className="mb-2 block">
-                  <Label htmlFor="lastName" value="Last Name" />
-                </div>
-                <TextInput
-                  id="lastName"
-                  shadow
-                  type="name"
-                  {...register("lastName", {
-                    required: "Last name is required.",
-                  })}
-                />
-                <p className="text-red-600 text-sm">
-                  {errors.lastName?.message}
-                </p>
-              </div>
-              <div>
-                <div className="mb-2 block">
-                  <Label htmlFor="dob" value="Date of Birth" />
-                </div>{" "}
-                <Controller
-                  control={control}
-                  name="dob"
-                  render={({ field }) => (
-                    <Datepicker
-                      id="dob"
-                      shadow
-                      type="birthdate"
-                      onSelectedDateChanged={(dob) => field.onChange(dob)}
-                    />
-                  )}
-                  {...register("dob", {
-                    required: "Date of birth is required.",
-                    validate: {
-                      olderThan18: (date) => {
-                        const today = new Date();
-                        const eighteen = new Date(
-                          today.setFullYear(today.getFullYear() - 18)
-                        );
-                        return date > eighteen
-                          ? "Must be older than 18."
-                          : true;
-                      },
-                    },
-                  })}
-                ></Controller>
-                <p className="text-red-600 text-sm">{errors.dob?.message}</p>
-              </div>
-            </div>
           </div>
-          <Button type="submit" onClick={handleSubmit(checkPage)}>
+          <Button
+            className="bg-sky-900"
+            type="submit"
+            onClick={handleSubmit(checkPage)}
+          >
             Continue
           </Button>
         </>
@@ -383,7 +387,11 @@ const NewAccountForm = () => {
             </div>
             <p className="text-red-600 text-sm">{errors.agree?.message}</p>
           </div>
-          <Button type="submit" onClick={handleSubmit(submitForm)}>
+          <Button
+            className="bg-sky-900"
+            type="submit"
+            onClick={handleSubmit(submitForm)}
+          >
             Register new account
           </Button>
         </>
@@ -502,7 +510,11 @@ const NewAccountForm = () => {
               {...register("responsibilities")}
             />
           </div>
-          <Button type="submit" onClick={handleSubmit(checkPage)}>
+          <Button
+            className="bg-sky-900"
+            type="submit"
+            onClick={handleSubmit(checkPage)}
+          >
             Continue
           </Button>
         </>

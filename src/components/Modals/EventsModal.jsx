@@ -56,13 +56,6 @@ function EventsModal({ event, clearEventsModal }) {
     setInfoWindowData({ id, address });
     setIsOpen(true);
   };
-  const center = useMemo(
-    () => ({
-      lat: parseFloat(event.location.coordinates.lat),
-      lng: parseFloat(event.location.coordinates.long),
-    }),
-    []
-  );
 
   const clearModal = () => {
     clearEventsModal();
@@ -138,15 +131,15 @@ function EventsModal({ event, clearEventsModal }) {
           </div>
         </Modal.Body>
         <Modal.Footer className="flex w-full justify-evenly">
-          <Button color="blue" onClick={handleFullDetailsClick}>
+          <Button className="bg-sky-900" onClick={handleFullDetailsClick}>
             Full Details
           </Button>
           {event.date.toDate() < today ? (
-            <Button disabled color="blue">
+            <Button disabled className="bg-sky-900">
               Attend Event
             </Button>
           ) : (
-            <Button color="blue" onClick={handleAttendEventClick}>
+            <Button className="bg-sky-900" onClick={handleAttendEventClick}>
               Attend Event
             </Button>
           )}

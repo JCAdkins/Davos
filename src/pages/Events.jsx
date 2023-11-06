@@ -139,9 +139,8 @@ const Events = () => {
                         </div>
                         <div>
                           <Button
-                            className="w-full rounded-none"
+                            className="w-full bg-sky-900 rounded-none"
                             size="xs"
-                            color="blue"
                             onClick={loadAllEvents}
                           >
                             <p>
@@ -265,9 +264,8 @@ const Events = () => {
                     </div>
 
                     <Button
-                      className="w-full rounded-none mt-6"
+                      className="w-full bg-sky-900 rounded-none mt-6"
                       size="xs"
-                      color="blue"
                       onClick={loadAllEvents}
                     >
                       <p>
@@ -278,16 +276,6 @@ const Events = () => {
                 )}
                 {currentPage && (
                   <PaginatedTransitions>
-                    <div className="lg:hidden flex w-full justify-center">
-                      <Pagination
-                        currentPage={pageNumber}
-                        onPageChange={(page) => {
-                          setCurrentPage(paginatedEvents[page - 1]);
-                          setPageNumber(page);
-                        }}
-                        totalPages={paginatedEvents.length}
-                      />
-                    </div>
                     <div className="-mx-4 flex flex-wrap justify-evenly mb-12">
                       {currentPage.map((event, ind) => {
                         return (

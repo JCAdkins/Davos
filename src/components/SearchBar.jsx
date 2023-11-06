@@ -23,7 +23,7 @@ const SearchBar = forwardRef((props, ref) => {
           />
           <button
             onSubmit={(e) => e.preventDefault()}
-            class="absolute top-0 right-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-r-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            class="absolute top-0 right-0 p-2.5 text-sm font-medium h-full text-white bg-sky-900 rounded-r-lg border border-sky-800 hover:bg-cyan-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             <svg
               class="w-4 h-4"

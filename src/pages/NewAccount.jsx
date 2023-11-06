@@ -1,22 +1,31 @@
 import NewAccountForm from "../components/Forms/NewAccountForm";
-import CardDefault from "../components/CardDefault";
-import { Card } from "flowbite-react";
-import DavosFooter from "../navigation/DavosFooter";
+import { Alert } from "flowbite-react";
+import DefaultCarousel from "../components/DefaultCarousel";
+import { useState } from "react";
+import "../customcss/CustomCardCss.css";
 
 const NewAccount = () => {
+  const [hidden, setHidden] = useState();
   return (
-    <div className="flex flex-row justify-evenly">
-      <Card>
-        <div className="text-black text-xl max-w-[30ch]">
-          <p>
-            Congratulations! You have taken the first step toward becoming part
-            of a bold fellowship of new acquaintances and wonderful activities.
-          </p>
+    <div className="relative">
+      <div className="carousel-container absolute w-full h-full -z-10">
+        <DefaultCarousel className=" h-screen w-screen object-cover transition-opacity duration-300" />
+      </div>
+      <Alert
+        className={`fade-in-alert absolute left-0 p-2 top-10 right-0 ${hidden} -mb-2 text-sm`}
+        color="failure"
+        onDismiss={() => setHidden("hidden")}
+      >
+        <span className="font-medium">Hurry!</span> The $75 application fee is
+        waived for a limited time. The $19 a month membership dues will soon
+        rise to $29 a month. Become a member today and your $19 a month dues
+        will be grandfathered.
+      </Alert>
+      <div className="flex justify-center items-center bg-transparent w-screen h-screen">
+        <div className="bg-white p-6 -mt-32 rounded-lg w-fit bg-opacity-90">
+          <NewAccountForm />
         </div>
-      </Card>
-      <CardDefault display="flex justify-center">
-        <NewAccountForm />
-      </CardDefault>
+      </div>
     </div>
   );
 };

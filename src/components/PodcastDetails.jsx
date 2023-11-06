@@ -21,7 +21,7 @@ const PodcastDetails = ({ podcast, addToPlaylist }) => {
       <div className="pc-details flex flex-col sm:flex-row justify-center items-center gap-8 text-sky-900 my-4 font-dmserif">
         <div className="flex-col">
           <img
-            className="rounded-lg shadow-lg shadow-blue-600"
+            className="rounded-lg shadow-lg shadow-sky-900"
             src={podcast.speaker.img}
             alt="Speaker Image"
           />
@@ -33,7 +33,7 @@ const PodcastDetails = ({ podcast, addToPlaylist }) => {
           </div>
         </div>
         <div className="grid auto-rows-auto items-center">
-          <p className="text-3xl drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)] text-shadow shadow-blue-600">
+          <p className="text-3xl drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)] text-shadow shadow-sky-600">
             {podcast.title}
           </p>
           <div className="pc-details-icons-container flex w-full items-center justify-evenly my-3 text-xs text-sky-900 dark:text-gray-400">
@@ -55,8 +55,7 @@ const PodcastDetails = ({ podcast, addToPlaylist }) => {
           <p className="h-fit text-lg">{podcast.description}</p>
 
           <Button
-            className="mt-4"
-            color="blue"
+            className="mt-4 bg-sky-900"
             size="xs"
             onClick={() => {
               addToPlaylist(podcast);
