@@ -212,17 +212,17 @@ const AudioPlayerII = (props) => {
   return (
     <div
       ref={containerRef}
-      className="flex flex-col md:flex-row lg:flex-col items-center justify-center my-4 w-min rounded-2xl shadow-lg shadow-sky-700 bg-sky-900 text-white font-light"
+      className="flex flex-col md:flex-row lg:flex-col items-center justify-center my-4 w-min rounded-2xl shadow-lg shadow-app_accent-700 bg-app_accent-900 text-white font-light"
     >
-      <div className="relative flex-col p-4 bg-gray-200 items-center justify-center text-center text-sky-900 rounded-2xl">
+      <div className="relative flex-col p-4 bg-white items-center justify-center text-center text-app_accent-900 rounded-2xl">
         <audio ref={playerRef}>
           <source src={currentPodcast.embedded_src} type="audio/ogg" />
           Your browser does not support the audio element.
         </audio>
         <div>
-          <div className="img-wrap absolute blur  object-contain mx-auto w-48 h-48 overflow-hidden shadow-lg">
+          {/* <div className="img-wrap absolute blur  object-contain mx-auto w-48 h-48 overflow-hidden shadow-lg">
             <div className="absolute h-full w-full bg-yellow-500"></div>
-          </div>
+          </div> */}
           <div className="img-wrap relative shadow-md border-1 object-contain border-yellow-600 mx-auto w-48 h-48 overflow-hidden rounded-lg shadow-lg">
             <img
               src={currentPodcast.speaker.img}
@@ -231,12 +231,12 @@ const AudioPlayerII = (props) => {
             />
           </div>
         </div>
-        <div className="justify-center mt-4 max-w-[25ch] text-sky-900 prose m-auto">
+        <div className="justify-center mt-4 max-w-[25ch] text-app_accent-900 prose m-auto">
           <p className="text-center leading-none m-auto">
             {currentPodcast.title}
           </p>
         </div>
-        <div className="text-center song-author text-sky-400">
+        <div className="text-center song-author text-app_accent-400">
           {currentPodcast.speaker.name}
         </div>
 
@@ -247,28 +247,28 @@ const AudioPlayerII = (props) => {
 
         <div
           ref={timelineRef}
-          className="relative h-3 mt-2 bg-sky-400 rounded-full cursor-pointer"
+          className="relative h-3 mt-2 bg-app_accent-400 rounded-full cursor-pointer"
         >
           <div
             ref={hoverPlayheadRef}
-            className={`absolute h-3 bg-sky-700 rounded-full z-${zInd}`}
+            className={`absolute h-3 bg-app_accent-700 rounded-full z-${zInd}`}
           ></div>
           <div
             ref={playheadRef}
-            className="absolute h-3 bg-sky-900 rounded-full"
+            className="absolute h-3 bg-app_accent-900 rounded-full"
           ></div>
         </div>
 
         <div className="controls flex justify-center mt-4 space-x-4">
           <button
             onClick={prevPodcast}
-            className="text-sky-900 hover:scale-110"
+            className="text-app_accent-900 hover:scale-110"
           >
             <i className="fas fa-backward">{back}</i>
           </button>
           <button
             onClick={playOrPause}
-            className="border-2 border-gray-300 rounded-full w-12 h-12 flex items-center justify-center text-sky-900 hover:shadow-lg"
+            className="border-2 border-gray-300 rounded-full w-12 h-12 flex items-center justify-center text-app_accent-900 hover:shadow-lg"
           >
             {!pause ? (
               <i className="fas fa-play">{play}</i>
@@ -278,14 +278,14 @@ const AudioPlayerII = (props) => {
           </button>
           <button
             onClick={nextPodcast}
-            className="text-sky-900 hover:scale-110"
+            className="text-app_accent-900 hover:scale-110"
           >
             <i className="fas fa-forward">{forward}</i>
           </button>
         </div>
       </div>
 
-      <div className="play-list flex flex-col bg-sky-900 rounded-lg p-1 mt-2 space-y-1 h-56 overflow-y-scroll">
+      <div className="play-list flex flex-col bg-app_accent-900 rounded-lg p-1 mt-2 space-y-1 h-56 overflow-y-scroll">
         {podcastList.map((podcast, key) => {
           return podcast.disabled ? (
             <div></div>
@@ -293,8 +293,8 @@ const AudioPlayerII = (props) => {
             <div
               key={key}
               onClick={() => clickAudio(key)}
-              className={`track group relative w-full flex cursor-pointer items-center p-2 hover:bg-sky-600 rounded-lg transition ${
-                index === key ? "bg-sky-700" : ""
+              className={`track group relative w-full flex cursor-pointer items-center p-2 hover:bg-app_accent-600 rounded-lg transition ${
+                index === key ? "bg-app_accent-700" : ""
               }`}
             >
               <button
@@ -316,7 +316,7 @@ const AudioPlayerII = (props) => {
                   {podcast.title}
                 </span>
                 <div className="track-discr flex justify-evenly items-center">
-                  <span className="text-sky-300 text-sm">
+                  <span className="text-app_accent-300 text-sm">
                     {podcast.speaker.name}
                   </span>
 

@@ -46,7 +46,7 @@ const PodcastCard = ({ podcast, playAudio, shadowColor, showDetails }) => {
         <div className="flex-col justify-stretch">
           <div className="flex w-full gap-4">
             <Button
-              className="bg-sky-900 w-full"
+              className="bg-app_accent-900 w-full"
               size="xs"
               onClick={() => {
                 playAudio(podcast);
@@ -56,7 +56,7 @@ const PodcastCard = ({ podcast, playAudio, shadowColor, showDetails }) => {
             </Button>
 
             <Button
-              className="bg-sky-900 w-full"
+              className="bg-app_accent-900 w-full"
               size="xs"
               onClick={() => showDetails(podcast)}
             >

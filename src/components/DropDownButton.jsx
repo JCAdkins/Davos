@@ -11,7 +11,7 @@ export default function DropDownButton(props) {
     <>
       <BaseAvatar image={user.profile.image} />
       <Dropdown
-        className="bg-sky-700"
+        className="bg-app_accent-900"
         label={user.name.firstName + " " + user.name.lastName}
       >
         <Link to="/profile">

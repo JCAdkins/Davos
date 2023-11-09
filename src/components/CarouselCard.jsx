@@ -38,7 +38,7 @@ const CarouselCard = (props) => {
         </div>
         <div className="flex items-end justify-center h-full">
           <Button
-            className="bg-sky-900 w-full"
+            className="bg-app_accent-900 w-full"
             size="xs"
             onClick={() => props.setEvent(event)}
           >

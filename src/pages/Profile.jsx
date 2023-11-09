@@ -1,10 +1,9 @@
 import { Card } from "flowbite-react";
 import ProfileDisplay from "../components/ProfileDisplay";
-import DavosFooter from "../navigation/DavosFooter";
 
 const Profile = () => {
   return (
-    <div className="flex-col">
+    <div className="bg-app_bg flex-col">
       <Card className="-m-6">
         <ProfileDisplay />
       </Card>

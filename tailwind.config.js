@@ -19,10 +19,10 @@ export default withMT({
       },
       fontFamily: { dmserif: ["DM Serif Display", "serif"] },
       colors: {
-        sb_blue: "#000080",
-        bg_orange: "#fd9e02",
-        accent: "#fb8500",
-        sky: {
+        app_bg: "#dee2fc", // Lavenderish color
+        app_main: "#c98d26", // Desertish Color
+        // a bluish-greenish color; if change make sure to include all shades as they're used throughout app
+        app_accent: {
           50: "#f0f9ff",
           100: "#e0f2fe",
           200: "#bae6fd",

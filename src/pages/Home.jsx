@@ -63,7 +63,7 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className="flex-col bg-[#dee2fc]">
+    <div className="flex-col bg-app_bg">
       <div className="flex-col h-screen w-screen">
         <div className="absolute top-0 left-0">
           <Suspense
@@ -138,12 +138,12 @@ const HomePage = () => {
         </div>
         <div className="empty-container w-screen h-1/2"></div>
       </div>
-      <div className="lg:hidden bg-sky-900 flex flex-col text-xl">
-        <div className="flex flex-col justify-center items-center w-full">
+      <div className="lg:hidden bg-app_accent-900 flex flex-col text-xl">
+        <div className="flex flex-col justify-center items-center w-full border-double border-x-8 border-t-8 sm:border-none border-white">
           <div className="w-full">
-            <div className="sm:hidden w-screen border-double border-x-8 border-t-8 border-white">
+            <div className="sm:hidden w-screen">
               <div className="flex flex-wrap max-w-[38ch] items-center justify-center text-center text-2xl whitespace-pre py-4 px-8">
-                <em className="text-sky-400 font-bold text-shadow shadow-sky-600">
+                <em className="text-app_accent-400 font-bold text-shadow shadow-app_accent-600">
                   Davos On Air:
                 </em>{" "}
                 The best{" "}
@@ -154,16 +154,16 @@ const HomePage = () => {
               </div>
             </div>
             <img
-              className="w-full h-auto border-double border-x-8 border-white sm:border-none"
+              className="w-full h-auto"
               src={IMAGES.podcast_home_2}
               alt="podcast picture"
             ></img>
           </div>
           <div className="flex w-full items-center justify-center text-center">
-            <div className="flex-col border-double border-x-8 border-white items-center justify-center text-center">
+            <div className="flex-col items-center justify-center sm:border-double sm:border-x-8 sm:border-white text-center">
               <div className="hidden sm:block">
                 <div className="flex flex-wrap max-w-[38ch] items-center justify-center text-center text-2xl whitespace-pre p-8">
-                  <em className="text-sky-400 font-bold text-shadow shadow-sky-600">
+                  <em className="text-app_accent-400 font-bold text-shadow shadow-app_accent-600">
                     Davos On Air:
                   </em>{" "}
                   The best{" "}
@@ -185,7 +185,7 @@ const HomePage = () => {
                   </p>
                 </div>
               </div>
-              <div className="mt-4 pb-8 flex w-full sm:border-none border-b-2 border-white justify-center">
+              <div className="mt-4 pb-8 flex w-full justify-center">
                 <Link to="/podcasts">
                   <Button color="dark" size="md" pill>
                     Listen Now
@@ -195,58 +195,62 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col justify-center items-center w-full">
-          <div className="sm:hidden flex flex-wrap items-center border-double border-x-8 border-white justify-center text-center text-2xl whitespace-pre p-4">
-            <p>Become a </p>
-            <em className="text-sky-400 font-bold text-shadow shadow-sky-600">
-              Davos In The Desert{" "}
-            </em>
-            member now
-          </div>
-          <img
-            className="w-full h-auto border-double border-x-8 border-white sm:border-none"
-            src={IMAGES.member_home_1}
-            alt="podcast picture"
-          ></img>
-          <div className="flex w-full items-center justify-center text-center">
-            <div className="flex-col border-double border-x-8 border-white items-center justify-center text-center">
-              <div className="hidden sm:block">
-                <div className="flex flex-wrap items-center justify-center text-center text-2xl whitespace-pre p-8">
-                  <p>Become a </p>
-                  <em className="text-sky-400 font-bold text-shadow shadow-sky-600">
-                    Davos In The Desert{" "}
-                  </em>
-                  member now
-                </div>
-              </div>
-              <div className="flex w-full items-center justify-center text-center">
-                <div>
-                  <p className="text-center max-w-[30ch]">
-                    ...and join thousands of people just like you! Have your
-                    voice heard by those that want to <span>DO</span> something
-                    about it. Now is the time to take actions.
-                  </p>
-                </div>
-              </div>
-              <div className="mt-4 mb-2 text-red-500 text-center">
-                <p className="">*Special offers available</p>
-              </div>
-              <div className="flex w-full justify-center sm:border-none border-b-2 border-white">
-                <div className="mb-8 flex w-2/3 justify-center">
-                  <Link to="/new_account">
-                    <Button className="w-full" color="dark" size="md" pill>
-                      Sign Up
-                    </Button>
-                  </Link>
+        <div className="flex flex-col justify-center items-center w-full border-double border-white border-x-8 sm:border-none">
+          <div className="flex flex-col justify-center items-center w-full border-y-2 border-white sm:border-none">
+            <div className="sm:hidden flex flex-wrap items-center justify-center text-center text-2xl whitespace-pre p-4">
+              <p>Become a </p>
+              <em className="text-app_accent-400 font-bold text-shadow shadow-app_accent-600">
+                Davos In The Desert{" "}
+              </em>
+              member now
+            </div>
+            <img
+              className="w-full h-auto"
+              src={IMAGES.member_home_1}
+              alt="podcast picture"
+            ></img>
+            <div className="flex w-full items-center justify-center text-center">
+              <div className="flex w-full items center justify-center">
+                <div className="flex-col items-center justify-center text-center sm:border-double sm:border-x-8 sm:border-white">
+                  <div className="hidden sm:block">
+                    <div className="flex flex-wrap items-center justify-center text-center text-2xl whitespace-pre p-8">
+                      <p>Become a </p>
+                      <em className="text-app_accent-400 font-bold text-shadow shadow-app_accent-600">
+                        Davos In The Desert{" "}
+                      </em>
+                      member now
+                    </div>
+                  </div>
+                  <div className="flex w-full items-center justify-center text-center">
+                    <div>
+                      <p className="text-center max-w-[30ch]">
+                        ...and join thousands of people just like you! Have your
+                        voice heard by those that want to <span>DO</span>{" "}
+                        something about it. Now is the time to take actions.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="mt-4 mb-2 text-red-500 text-center">
+                    <p className="">*Special offers available</p>
+                  </div>
+                  <div className="flex w-full justify-center">
+                    <div className="mb-8 flex w-2/3 justify-center">
+                      <Link to="/new_account">
+                        <Button className="w-full" color="dark" size="md" pill>
+                          Sign Up
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="flex flex-col justify-center items-center w-full sm:border-none border-b-8 border-x-8 border-double border-white">
+        <div className="flex flex-col justify-center items-center w-full border-double border-white border-x-8 border-b-8 sm:border-none">
           <div className="sm:hidden flex flex-wrap items-center justify-center text-center text-2xl whitespace-pre my-8 sm:px-14">
             Party & mingle with all of your{" "}
-            <em className="text-sky-400 font-bold text-shadow shadow-sky-600">
+            <em className="text-app_accent-400 font-bold text-shadow shadow-app_accent-600">
               Davos{" "}
             </em>
             pals
@@ -257,11 +261,11 @@ const HomePage = () => {
             alt="podcast picture"
           ></img>
           <div className="flex w-full items-center justify-center text-center">
-            <div className="flex-col sm:border-b-0 sm:border-double sm:border-x-8  border-white items-center justify-center text-center">
+            <div className="flex-col sm:border-b-0 items-center justify-center text-center sm:border-double sm:border-x-8 sm:border-white">
               <div className="hidden sm:block">
                 <div className="flex flex-wrap items-center justify-center text-center text-2xl whitespace-pre my-8 sm:px-14">
                   Party & mingle with all of your{" "}
-                  <em className="text-sky-400 font-bold text-shadow shadow-sky-600">
+                  <em className="text-app_accent-400 font-bold text-shadow shadow-app_accent-600">
                     Davos{" "}
                   </em>
                   pals
@@ -290,15 +294,15 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-      <div className="hidden lg:block bg-sky-900 lg:grid lg:grid-cols-12 lg:grid-rows-3">
-        <div className="flex lg:col-span-7  bg-sky-900 w-full h-full">
+      <div className="hidden lg:block bg-app_accent-900 lg:grid lg:grid-cols-12 lg:grid-rows-3">
+        <div className="flex lg:col-span-7  bg-app_accent-900 w-full h-full">
           <img
             className="home-images lg:w-full lg:h-auto lg:max-h-1/3"
             src={IMAGES.podcast_home_1}
             alt="podcast picture"
           ></img>
         </div>
-        <div className="bg-sky-900 lg:grid lg:grid-rows-2 flex-col lg:col-span-5 text-xl lg:text-2xl">
+        <div className="bg-app_accent-900 lg:grid lg:grid-rows-2 flex-col lg:col-span-5 text-xl lg:text-2xl">
           <div className="lg:row-span-1">
             <div className="lg:flex-col h-full p-4 w-full text-2xl lg:text-4xl">
               <div className="flex lg:h-1/5 w-full  lg:justify-start items-center justify-center">
@@ -349,7 +353,7 @@ const HomePage = () => {
           </div>
         </div>
 
-        <div className="lg:col-span-5 bg-sky-900">
+        <div className="lg:col-span-5 bg-app_accent-900">
           <div className="flex-col h-full text-xl lg:text-2xl lg:grid lg:grid-rows-3">
             <div className="davos-member-container flex-col w-full h-full text-2xl lg:text-4xl">
               <div className="flex w-full h-1/3 justify-start">

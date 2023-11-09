@@ -13,6 +13,7 @@ import MemberSignInModal from "../components/Modals/MemberSignInModal";
 import UserContext from "../contexts/UserContext";
 import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
+import "../customcss/CustomCardCss.css";
 
 const StickyNavbar = () => {
   const [openNav, setOpenNav] = useState(false);
@@ -91,7 +92,7 @@ const StickyNavbar = () => {
   );
 
   return (
-    <Navbar className="sticky bg-[#c98d26] top-0 z-10 h-max border-none max-w-full rounded-none py-1 px-4 lg:px-8 lg:py-1">
+    <Navbar className="sticky bg-app_main top-0 z-10 h-max border-none max-w-full rounded-none py-1 px-4 lg:px-8 lg:py-1">
       <div className="flex items-center justify-between text-blue-gray-900">
         <Link className="cursor-pointer py-1.5 font-medium" to="/">
           <div className="invert relative rounded-md w-full overflow-hidden bg-cover bg-[50%] bg-no-repeat">
@@ -107,7 +108,9 @@ const StickyNavbar = () => {
         <div className="flex items-center gap-4">
           <div className="mr-4 hidden lg:block">{navList}</div>
           {user ? (
-            <DropDownButton onClick={logOut} />
+            <div className="flex justify-evenly gap-4 drop-down">
+              <DropDownButton onClick={logOut} />
+            </div>
           ) : (
             <Button
               variant="gradient"

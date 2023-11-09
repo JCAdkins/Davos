@@ -10,7 +10,7 @@ const EventCard = ({ event, setEvent, setShowEvent }) => {
   return (
     <div className="w-full flex lg:flex-col p-4 sm:w-1/2 lg:w-1/3">
       <Card
-        className="event-card flex-1 h-full border-none hover:shadow-sky-900 hover:scale-105 shadow-lg shadow-sky-900"
+        className="event-card flex-1 h-full border-none hover:shadow-app_accent-900 hover:scale-105 shadow-lg shadow-app_accent-900"
         imgAlt="Guest Speaker"
         imgSrc={event.img}
       >
@@ -41,7 +41,7 @@ const EventCard = ({ event, setEvent, setShowEvent }) => {
               setEvent(event);
               setShowEvent(true);
             }}
-            className="bg-sky-900 w-full"
+            className="bg-app_accent-900 w-full"
             size="xs"
           >
             Details

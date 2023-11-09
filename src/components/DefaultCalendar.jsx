@@ -8,6 +8,7 @@ export default function DefaultCalendar(props) {
   const [showOverlay, setShowOverlay] = useState(false);
 
   const handleDateChange = (value) => {
+    console.log(value);
     onChange(value);
     setShowOverlay(!showOverlay);
     props.setTileContent(value);
@@ -39,39 +40,26 @@ export default function DefaultCalendar(props) {
                     return (
                       <span
                         key={ind}
-                        className={`flex mt-0.5 w-full h-1 bg-yellow-200 rounded-full m-${margin}`}
+                        className={`flex mt-0.5 w-full h-1 bg-yellow-200 dark:bg-yellow-200 rounded-full m-${margin}`}
                       ></span>
                     );
                   else if (event.type === "cocktail_party")
                     return (
                       <span
                         key={ind}
-                        className={`flex w-full h-1 mt-0.5  bg-red-400 rounded-full dark:bg-gray-700 m-${margin}`}
+                        className={`flex w-full h-1 mt-0.5  bg-red-400 rounded-full dark:bg-red-700 m-${margin}`}
                       ></span>
                     );
                   else if (event.type === "course")
                     return (
                       <span
                         key={ind}
-                        className={`flex w-full h-1 mt-0.5 bg-blue-400 rounded-full m-${margin}`}
+                        className={`flex w-full h-1 mt-0.5 bg-blue-400 dark:bg-blue-400 rounded-full m-${margin}`}
                       ></span>
                     );
                 });
-                const currentDate = new Date();
-                const isCurrentDate =
-                  date.getDate() === currentDate.getDate() &&
-                  date.getMonth() === currentDate.getMonth() &&
-                  date.getFullYear() === currentDate.getFullYear();
 
-                return (
-                  <div
-                    className={`calendar-tile-${
-                      isCurrentDate ? "current-day" : ""
-                    }`}
-                  >
-                    {[retArray]}
-                  </div>
-                );
+                return <div>{retArray}</div>;
               }}
               calendarType="gregory"
               onChange={handleDateChange}

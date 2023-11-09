@@ -1,4 +1,3 @@
-import "./App.css";
 import StickyNavbar from "./navigation/StickyNavbar";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -20,6 +19,7 @@ import getUser from "./services/getUser";
 import MemberSignInModal from "./components/Modals/MemberSignInModal";
 import EventInfo from "./pages/EventInfo";
 import DavosFooter from "./navigation/DavosFooter";
+import "react-tooltip/dist/react-tooltip.css";
 
 function App() {
   const [user, setUser] = useState();
@@ -104,7 +104,7 @@ function App() {
                 path="/profile/settings"
                 element={
                   <ProtectedRoute isAllowed={!!user}>
-                    <UserSettings />
+                    <UserSettings user={user} />
                   </ProtectedRoute>
                 }
               />

@@ -90,7 +90,7 @@ const MemberSignInModal = (props) => {
               </div>
               <TextInput
                 id="current-password"
-                type="current-password"
+                type="password"
                 onChange={clearErrorMessage}
                 {...register("current-password", {
                   required: "Password is required.",
@@ -114,14 +114,14 @@ const MemberSignInModal = (props) => {
               </div>
               <a
                 href="/modal"
-                className="text-sm text-sky-700 hover:underline dark:text-sky-500"
+                className="text-sm text-app_accent-700 hover:underline dark:text-app_accent-500"
               >
                 Lost Password?
               </a>
             </div>
             <div className="w-full">
               <Button
-                className="bg-sky-900"
+                className="bg-app_accent-900"
                 type="submit"
                 onClick={handleSubmit(logInClick)}
               >
@@ -132,7 +132,7 @@ const MemberSignInModal = (props) => {
               Not registered?&nbsp;
               <Link
                 to="/new_account"
-                className="text-sky-700 hover:underline dark:text-sky-500"
+                className="text-app_accent-700 hover:underline dark:text-app_accent-500"
                 onClick={() => props.resetModal()}
               >
                 Create account

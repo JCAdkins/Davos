@@ -131,15 +131,21 @@ function EventsModal({ event, clearEventsModal }) {
           </div>
         </Modal.Body>
         <Modal.Footer className="flex w-full justify-evenly">
-          <Button className="bg-sky-900" onClick={handleFullDetailsClick}>
+          <Button
+            className="bg-app_accent-900"
+            onClick={handleFullDetailsClick}
+          >
             Full Details
           </Button>
           {event.date.toDate() < today ? (
-            <Button disabled className="bg-sky-900">
+            <Button disabled className="bg-app_accent-900">
               Attend Event
             </Button>
           ) : (
-            <Button className="bg-sky-900" onClick={handleAttendEventClick}>
+            <Button
+              className="bg-app_accent-900"
+              onClick={handleAttendEventClick}
+            >
               Attend Event
             </Button>
           )}

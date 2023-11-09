@@ -1,7 +1,6 @@
 import { useEffect, useState, useContext, useRef } from "react";
 import { Timestamp } from "firebase/firestore";
 import { Tooltip } from "react-tooltip";
-import "react-tooltip/dist/react-tooltip.css";
 import { auth } from "../utils/firebase";
 import updateUser from "../services/updateUser";
 import UserContext from "../contexts/UserContext";
@@ -207,34 +206,20 @@ const ProfileDisplay = () => {
   }, []);
 
   return (
-    <div className="p-16 bg-sky-900">
+    <div className="p-16 bg-app_accent-900">
       <div className="p-8 bg-white shadow mt-24">
-        {/* <div className="flex items-center justify-center w-full -mb-40">
-          <div className="flex flex-col items-center justify-center pt-5 pb-6">
-            <img
-              className=""
-              src="https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg"
-              alt="Background Image"
-            />
-          </div>
-        </div> */}
         <div className="grid grid-cols-1 md:grid-cols-3">
-          {" "}
           <div className="grid grid-cols-2 text-center order-last md:order-first mt-20 md:mt-0">
-            {" "}
             <div>
-              {" "}
-              <p className="font-bold text-gray-700 text-xl">22</p>{" "}
-              <p className="text-gray-400">Friends</p>{" "}
-            </div>{" "}
+              <p className="font-bold text-gray-700 text-xl">22</p>
+              <p className="text-gray-400">Friends</p>
+            </div>
             <div>
-              {" "}
-              <p className="font-bold text-gray-700 text-xl">89</p>{" "}
-              <p className="text-gray-400">Comments</p>{" "}
-            </div>{" "}
-          </div>{" "}
+              <p className="font-bold text-gray-700 text-xl">89</p>
+              <p className="text-gray-400">Comments</p>
+            </div>
+          </div>
           <div className="relative">
-            {" "}
             <div className="w-48 h-48 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center">
               {addProfilePic && (
                 <>
@@ -260,27 +245,24 @@ const ProfileDisplay = () => {
               {editingProfilePic && (
                 <ProfilePicModal setUser={setUserProfPic} />
               )}
-            </div>{" "}
-          </div>{" "}
+            </div>
+          </div>
           <div className="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center">
-            <button className="text-white py-2 px-4 uppercase rounded bg-sky-400 hover:bg-sky-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
-              {" "}
+            <button className="text-white py-2 px-4 uppercase rounded bg-app_accent-400 hover:bg-app_accent-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
               Connect
-            </button>{" "}
+            </button>
             <button className="text-white py-2 px-4 uppercase rounded bg-gray-700 hover:bg-gray-800 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
-              {" "}
               Message
-            </button>{" "}
-          </div>{" "}
-        </div>{" "}
+            </button>
+          </div>
+        </div>
         <div className="mt-20 text-center border-b pb-12">
-          {" "}
           <h1 className="text-4xl font-medium mb-4 text-gray-700">
-            {user.name.firstName + " " + user.name.lastName},{" "}
+            {user.name.firstName + " " + user.name.lastName},
             <span className="font-light text-gray-500">
               {getAge(user.profile.dob)}
             </span>
-          </h1>{" "}
+          </h1>
           <div className="group justify-center">
             <button
               class="hidden -mt-3 group-hover:inline-block text-black"
@@ -300,7 +282,6 @@ const ProfileDisplay = () => {
                 }}
                 onSubmit={submitLocation}
               >
-                {" "}
                 <div className="flex flex-row w-full items-center gap-2 scale-75 justify-center">
                   <TextInput
                     ref={cityRef}
@@ -316,7 +297,7 @@ const ProfileDisplay = () => {
                         : {};
                     }}
                     shadow
-                  ></TextInput>
+                  />
                   <SelectInput
                     type="input"
                     id="state"
@@ -331,10 +312,9 @@ const ProfileDisplay = () => {
                     }}
                     options={STATES_LIST}
                   />
-                </div>{" "}
+                </div>
               </form>
             )}
-
             {!editingLocation && (
               <p className="font-light text-gray-600 -mt-2 mb-10">
                 {user.profile.location.city +
@@ -435,7 +415,6 @@ const ProfileDisplay = () => {
                 }}
                 onSubmit={submitEducation}
               >
-                {" "}
                 <div className="flex flex-row w-full items-center gap-2 scale-75 justify-center">
                   <TextInput
                     ref={schoolRef}
@@ -457,7 +436,7 @@ const ProfileDisplay = () => {
                     }}
                     options={EDUCATION}
                   />
-                </div>{" "}
+                </div>
               </form>
             )}
             {!editingEducation && (
@@ -472,9 +451,8 @@ const ProfileDisplay = () => {
               </div>
             )}
           </div>
-        </div>{" "}
+        </div>
         <div className="group mt-12 flex justify-center">
-          {" "}
           <div className="flex items-center flex-col basis-3/4">
             <button
               className="hidden group-hover:inline-block text-center text-black"
@@ -513,7 +491,7 @@ const ProfileDisplay = () => {
                   {user.profile.about ? user.profile.about : <p>[About ME]</p>}
                 </div>
               )}
-            </div>{" "}
+            </div>
           </div>
         </div>
       </div>

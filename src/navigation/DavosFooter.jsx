@@ -11,7 +11,7 @@ import {
 
 const DavosFooter = () => {
   return (
-    <Footer container className="bottom-0 bg-[#c98d26] opacity-90 rounded-none">
+    <Footer container className="bottom-0 bg-app_main opacity-90 rounded-none">
       <div className="w-full">
         <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
           <div>

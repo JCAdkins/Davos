@@ -9,16 +9,26 @@ import {
   Pagination,
   Spinner,
 } from "flowbite-react";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import getAllEvents from "../services/getAllEvents";
 import getAllUserEvents from "../services/getAllUserEvents";
-import "../customcss/CustomCardCss.css";
 import UserContext from "../contexts/UserContext";
 import EventsModal from "../components/Modals/EventsModal";
 import EventCard from "../components/EventCard";
+import SearchBar from "../components/SearchBar";
 import paginatedCollection from "../services/paginatedCollection";
 import PaginatedTransitions from "../animations/PaginatedTransitions";
-import DavosFooter from "../navigation/DavosFooter";
+import CardSkeleton from "../components/Skeletons/CardSkeleton";
+import UpcomingEvents from "../components/Icons/UpcomingEvents";
+
+const skeletonList = [
+  <CardSkeleton />,
+  <CardSkeleton />,
+  <CardSkeleton />,
+  <CardSkeleton />,
+  <CardSkeleton />,
+  <CardSkeleton />,
+];
 
 const Events = () => {
   const { user } = useContext(UserContext);
@@ -31,6 +41,9 @@ const Events = () => {
   const [currentPage, setCurrentPage] = useState();
   const [loadingAllEvents, setLoadingAllEvents] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
+  const [loadingInit, setLoadingInit] = useState(true);
+  const [searchEvents, setSearchEvents] = useState();
+  const searchRef = useRef(null);
 
   useEffect(() => {
     let temp = [];
@@ -44,7 +57,7 @@ const Events = () => {
                   setEvent(data);
                   setShowEvent(true);
                 }}
-                className="flex-col text-black whitespace-pre overflow-hidden focus:text-sky-900 hover:text-sky-900"
+                className="flex-col text-black whitespace-pre overflow-hidden focus:text-app_accent-900 hover:text-app_accent-900"
               >
                 <p>
                   {data.title}
@@ -56,6 +69,7 @@ const Events = () => {
               </ListGroup.Item>,
             ];
             setUserEvents(temp);
+            setLoadingInit(false);
           });
         })
       : {};
@@ -86,8 +100,9 @@ const Events = () => {
       return event.date.toDate() >= todaysDate;
     })
     .slice(0, 6)
-    .map((event) => (
+    .map((event, ind) => (
       <EventCard
+        key={ind}
         event={event}
         setEvent={setEvent}
         setShowEvent={setShowEvent}
@@ -118,19 +133,67 @@ const Events = () => {
     paginatedEvents ? setCurrentPage(paginatedEvents[0]) : {};
   }, [paginatedEvents]);
 
+  const handleSearchBarChange = (searchVal) => {
+    const filteredEvents = eventList
+      .filter((event) => {
+        return (
+          event.title.toLowerCase().includes(searchVal.toLowerCase()) ||
+          event.description.toLowerCase().includes(searchVal.toLowerCase()) ||
+          event.full_description
+            .toLowerCase()
+            .includes(searchVal.toLowerCase()) ||
+          event.date.toDate().toLocaleString().includes(searchVal) ||
+          event.location.address
+            .toLowerCase()
+            .includes(searchVal.toLowerCase()) ||
+          event.location.city.toLowerCase().includes(searchVal.toLowerCase()) ||
+          event.location.state
+            .toLowerCase()
+            .includes(searchVal.toLowerCase()) ||
+          event.location.state
+            .toLowerCase()
+            .includes(searchVal.toLowerCase()) ||
+          event.location.zip.toLowerCase().includes(searchVal.toLowerCase()) ||
+          event.type.toLowerCase().includes(searchVal.toLowerCase())
+        );
+      })
+      .map((event, ind) => {
+        return (
+          <EventCard
+            key={ind}
+            event={event}
+            setEvent={setEvent}
+            setShowEvent={setShowEvent}
+          />
+        );
+      });
+    console.log("filteredEvents", filteredEvents);
+    searchVal === "" ? setSearchEvents(null) : setSearchEvents(filteredEvents);
+  };
+
   return (
-    <div className="bg-[#dee2fc] lg:grid lg:auto-cols-max lg:grid-cols-4">
+    <div className="bg-app_bg lg:grid lg:auto-cols-max lg:grid-cols-4">
       <div className="flex flex-col lg:col-span-3">
         <div className="lg:flex-1 lg:w-full">
-          <div className="lg:hidden p-4 bg-sky-900">
+          <div className="lg:hidden p-4 bg-app_accent-900">
             <Accordion collapseAll className="">
               <Accordion.Panel>
                 <Accordion.Title className="text-gray-900 bg-white">
-                  Upcoming Events
+                  <div className="flex w-full gap-1">
+                    <UpcomingEvents />
+                    <p>Upcoming Events</p>
+                  </div>
                 </Accordion.Title>
                 <Accordion.Content className="bg-gray-400">
                   <div className="flex-col">
-                    {!currentPage && (
+                    {searchEvents && (
+                      <div className="flex overflow-x-scroll justify-content text-center mb-6">
+                        <div className="flex-1 min-w-[25ch] h-full">
+                          {...searchEvents}
+                        </div>
+                      </div>
+                    )}
+                    {!currentPage && !searchEvents && (
                       <>
                         <div className="flex overflow-x-scroll justify-content text-center mb-6">
                           <div className="flex-1 min-w-[25ch] h-full">
@@ -139,7 +202,7 @@ const Events = () => {
                         </div>
                         <div>
                           <Button
-                            className="w-full bg-sky-900 rounded-none"
+                            className="w-full bg-app_accent-900 rounded-none"
                             size="xs"
                             onClick={loadAllEvents}
                           >
@@ -154,7 +217,7 @@ const Events = () => {
                         </div>
                       </>
                     )}
-                    {currentPage && (
+                    {currentPage && !searchEvents && (
                       <PaginatedTransitions>
                         <div className="flex w-full justify-center mb-4">
                           <Pagination
@@ -199,7 +262,7 @@ const Events = () => {
                 </Accordion.Title>
                 <Accordion.Content className="bg-gray-400">
                   <div className="lg:items-center lg:flex-1">
-                    <div className="bg-[#c98d26] border border-gray-200 shadow-lg dark:border-gray-700 dark:bg-gray-800 rounded-none h-full justify-start">
+                    <div className="bg-app_main border border-gray-200 shadow-lg dark:border-gray-700 dark:bg-gray-800 rounded-none h-full justify-start">
                       <div className="flex flex-row gap-4 p-6 justify-evenly">
                         <div className="flex flex-row gap-4 w-fit">
                           <span className="flex-none w-3 h-3 bg-yellow-200 rounded-full mr-1 my-2"></span>
@@ -255,50 +318,91 @@ const Events = () => {
             </Accordion>
           </div>
           <div className="hidden lg:block">
-            <div className="h-full lg:rounded-none lg:justify-start lg:items-center lg:h-full lg:w-fill">
+            <div className="h-full lg:rounded-none lg:justify-start lg:items-center lg:h-full lg:w-fill text-xl font-dmserif">
               <div className="max-w-screen-xl mx-4 my-4">
+                <div className="flex justify-between">
+                  <div className="flex gap-1">
+                    <UpcomingEvents />
+                    <p className="w-full text-app_accent-900">
+                      {searchEvents ? "Searching Events" : "Upcoming Events"}
+                    </p>
+                  </div>
+                  <SearchBar
+                    ref={searchRef}
+                    value={searchRef.current?.value}
+                    onChange={() =>
+                      handleSearchBarChange(searchRef.current.value)
+                    }
+                  />
+                </div>
+
                 {!currentPage && (
                   <>
-                    <div className="-mx-4 flex flex-wrap">
-                      {...upcomingEvents}
-                    </div>
+                    {loadingInit && (
+                      <div className="-mx-4 gap-4 flex flex-wrap">
+                        {...skeletonList}
+                      </div>
+                    )}
+                    {!loadingInit && (
+                      <>
+                        {searchEvents && (
+                          <div className="-mx-4 flex flex-wrap">
+                            {...searchEvents}
+                          </div>
+                        )}
+                        {!searchEvents && (
+                          <div className="-mx-4 flex flex-wrap">
+                            {...upcomingEvents}
+                          </div>
+                        )}
 
-                    <Button
-                      className="w-full bg-sky-900 rounded-none mt-6"
-                      size="xs"
-                      onClick={loadAllEvents}
-                    >
-                      <p>
-                        {loadingAllEvents ? <Spinner /> : "Load All Events"}
-                      </p>
-                    </Button>
+                        <Button
+                          className="w-full bg-app_accent-900 rounded-none mt-6"
+                          size="xs"
+                          onClick={loadAllEvents}
+                        >
+                          <p>
+                            {loadingAllEvents ? <Spinner /> : "Load All Events"}
+                          </p>
+                        </Button>
+                      </>
+                    )}
                   </>
                 )}
                 {currentPage && (
-                  <PaginatedTransitions>
-                    <div className="-mx-4 flex flex-wrap justify-evenly mb-12">
-                      {currentPage.map((event, ind) => {
-                        return (
-                          <EventCard
-                            key={ind}
-                            event={event}
-                            setEvent={setEvent}
-                            setShowEvent={setShowEvent}
+                  <>
+                    {searchEvents && (
+                      <div className="-mx-4 flex flex-wrap">
+                        {...searchEvents}
+                      </div>
+                    )}
+                    {!searchEvents && (
+                      <PaginatedTransitions>
+                        <div className="-mx-4 flex flex-wrap justify-evenly mb-12">
+                          {currentPage.map((event, ind) => {
+                            return (
+                              <EventCard
+                                key={ind}
+                                event={event}
+                                setEvent={setEvent}
+                                setShowEvent={setShowEvent}
+                              />
+                            );
+                          })}
+                        </div>
+                        <div className="flex w-full justify-center">
+                          <Pagination
+                            currentPage={pageNumber}
+                            onPageChange={(page) => {
+                              setCurrentPage(paginatedEvents[page - 1]);
+                              setPageNumber(page);
+                            }}
+                            totalPages={paginatedEvents.length}
                           />
-                        );
-                      })}
-                    </div>
-                    <div className="flex w-full justify-center">
-                      <Pagination
-                        currentPage={pageNumber}
-                        onPageChange={(page) => {
-                          setCurrentPage(paginatedEvents[page - 1]);
-                          setPageNumber(page);
-                        }}
-                        totalPages={paginatedEvents.length}
-                      />
-                    </div>
-                  </PaginatedTransitions>
+                        </div>
+                      </PaginatedTransitions>
+                    )}
+                  </>
                 )}
               </div>
             </div>
@@ -329,7 +433,7 @@ const Events = () => {
                 <span className="mt-6 font-bold">What to Expect: </span>
                 <ol
                   role="list"
-                  className="items-center marker:text-white bg-orange-300 rounded bg-sky-900 text-white list-disc mb-6 pl-5 space-y-3"
+                  className="items-center marker:text-white rounded bg-app_accent-900 text-white px-4 list-disc list-inside mb-6 space-y-3"
                 >
                   <li className="mt-2">
                     <strong>Engaging Workshops: </strong>Dive deep into the
@@ -372,7 +476,7 @@ const Events = () => {
               <div className="flex flex-col mx-6 lg:max-w-[65ch]">
                 <ol
                   role="list"
-                  className="marker:text-white bg-sky-900 text-white rounded list-disc pl-5 space-y-3"
+                  className="marker:text-white bg-app_accent-900 text-white rounded list-disc list-inside px-4 space-y-3"
                 >
                   <li className="mt-2">Expand your knowledge</li>
                   <li> Build meaningful connections </li>
@@ -415,7 +519,7 @@ const Events = () => {
           )}
         </div>
         <div className="">
-          <div className="rounded-t-md bg-[#c98d26] bg-opacity-90">
+          <div className="rounded-t-md bg-app_main bg-opacity-90">
             <div className="flex">
               <div className="flex items-center justify-center gap-1 text-black text-center text-sm w-full h-full">
                 <p className="flex-none w-3 h-3 bg-yellow-200 rounded-full dark:bg-gray-700 "></p>

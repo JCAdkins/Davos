@@ -115,7 +115,7 @@ const EventInfo = () => {
     <div className="flex flex-col w-full h-full bg-black text-black">
       <div className="sticky h-[25px] absolute top-24 ml-4 z-10">
         <Button
-          className="shadow-md bg-sky-600 bg-opacity-80 z-10"
+          className="shadow-md bg-app_accent-600 bg-opacity-80 z-10"
           size="sm"
           onClick={() => navigate("/events")}
         >
@@ -126,7 +126,7 @@ const EventInfo = () => {
       <div className="flex-col m-6 font-dmserif text-5xl items-center text-center">
         <div className="flex w-full h-full justify-center p-6">
           <div className="relative w-fit">
-            <h1 className="bg-gradient-to-r from-red-700 to-blue-700 absolute p-2 rounded-lg  text-sky-900 blur -inset-2">
+            <h1 className="bg-gradient-to-r from-red-700 to-blue-700 absolute p-2 rounded-lg  text-app_accent-900 blur -inset-2">
               {event.title}
             </h1>
             <h1 className="relative p-2 bg-black drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)] text-shadow shadow-orange-500 text-red-200 rounded-lg w-fit">
@@ -135,7 +135,7 @@ const EventInfo = () => {
           </div>
         </div>
         <div className="flex bg-gray-300 justify-center -m-6 w-screen my-4 text-2xl">
-          <div className="event-info-description  text-shadow shadow-sky-500/50 w-full leading-10 text-center max-w-[65ch]">
+          <div className="event-info-description  text-shadow shadow-app_accent-500/50 w-full leading-10 text-center max-w-[65ch]">
             {event.description}
           </div>
         </div>
@@ -144,7 +144,7 @@ const EventInfo = () => {
             <div className="flex flex-col divide-y-8 divide-gray-900">
               <div className="flex bg-black gap-2 justify-evenly">
                 <Button
-                  className="text-black bg-sky-900 w-full h-full rounded-none"
+                  className="text-black bg-app_accent-900 w-full h-full rounded-none"
                   onClick={() => setShowModal(true)}
                 >
                   {user ? (

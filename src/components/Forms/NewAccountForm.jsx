@@ -259,7 +259,7 @@ const NewAccountForm = () => {
             </div>
           </div>
           <Button
-            className="bg-sky-900"
+            className="bg-app_accent-900"
             type="submit"
             onClick={handleSubmit(checkPage)}
           >
@@ -388,7 +388,7 @@ const NewAccountForm = () => {
             <p className="text-red-600 text-sm">{errors.agree?.message}</p>
           </div>
           <Button
-            className="bg-sky-900"
+            className="bg-app_accent-900"
             type="submit"
             onClick={handleSubmit(submitForm)}
           >
@@ -511,7 +511,7 @@ const NewAccountForm = () => {
             />
           </div>
           <Button
-            className="bg-sky-900"
+            className="bg-app_accent-900"
             type="submit"
             onClick={handleSubmit(checkPage)}
           >

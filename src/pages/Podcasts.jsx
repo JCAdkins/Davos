@@ -77,7 +77,7 @@ const Podcasts = () => {
         return (
           <PodcastCard
             key={ind}
-            shadowColor={"[#0c4a6e]"}
+            shadowColor={"app_accent-900"}
             podcast={podcast}
             playAudio={playAudio}
             showDetails={(podcast) => {
@@ -161,7 +161,7 @@ const Podcasts = () => {
         return (
           <PodcastCard
             key={ind}
-            shadowColor={"blue-600"}
+            shadowColor={"app_accent-900"}
             podcast={podcast}
             playAudio={playAudio}
             showDetails={(podcast) => {
@@ -176,7 +176,7 @@ const Podcasts = () => {
   };
 
   return (
-    <div className="bg-[#dee2fc] min-h-[100vh]">
+    <div className="bg-app_bg min-h-[100vh]">
       <div className="flex flex-col lg:grid lg:grid-cols-4">
         <SwitchTransition mode="out-in">
           <CSSTransition
@@ -198,7 +198,7 @@ const Podcasts = () => {
                   <div className="flex-col w-full justify-center mb-8">
                     {!paginatedPodcasts && (
                       <>
-                        <div className="flex ml-2 w-full justify-between p-4 text-sky-900 text-xl font-dmserif">
+                        <div className="flex ml-2 w-full justify-between p-4 text-app_accent-900 text-xl font-dmserif">
                           <div className="flex gap-1">
                             {!searchPCs && <ArrowTrendingUp />}
                             <p className="w-full">
@@ -230,7 +230,7 @@ const Podcasts = () => {
                         )}
 
                         <Button
-                          className="bg-sky-900 w-full rounded-none"
+                          className="bg-app_accent-900 w-full rounded-none"
                           size="xs"
                           onClick={() => {
                             console.log("clicked");
@@ -245,7 +245,7 @@ const Podcasts = () => {
                     )}
                     {currentPage && (
                       <>
-                        <div className="flex ml-2 w-full justify-between p-4 text-sky-900 text-xl font-dmserif">
+                        <div className="flex ml-2 w-full justify-between p-4 text-app_accent-900 text-xl font-dmserif">
                           <div className="flex gap-1">
                             <RectangleStack />
                             <p className="w-full">All Podcasts</p>
@@ -274,7 +274,7 @@ const Podcasts = () => {
                                     <PodcastCard
                                       key={ind}
                                       onPageChange={() => {}}
-                                      shadowColor={"blue-600"}
+                                      shadowColor={"app_accent-900"}
                                       podcast={podcast.podcast}
                                       playAudio={playAudio}
                                       showDetails={(podcast) => {
@@ -421,7 +421,7 @@ const Podcasts = () => {
             >
               <div className="sticky w-[9px] h-[9px] top-24 z-10">
                 <Button
-                  className="shadow-md bg-sky-600 bg-opacity-80 z-10"
+                  className="shadow-md bg-app_accent-600 bg-opacity-80 z-10"
                   size="sm"
                   onClick={() => {
                     setHidden("hidden");
@@ -444,7 +444,7 @@ const Podcasts = () => {
             {!user && (
               <Button
                 size="sm"
-                className="bg-sky-900 w-full"
+                className="bg-app_accent-900 w-full"
                 onClick={() => setModal(true)}
               >
                 Subscribe

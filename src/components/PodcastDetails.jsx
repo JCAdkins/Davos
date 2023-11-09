@@ -18,10 +18,10 @@ const padTo2Digits = (num) => {
 const PodcastDetails = ({ podcast, addToPlaylist }) => {
   return (
     <div className="flex-col">
-      <div className="pc-details flex flex-col sm:flex-row justify-center items-center gap-8 text-sky-900 my-4 font-dmserif">
+      <div className="pc-details flex flex-col sm:flex-row justify-center items-center gap-8 text-app_accent-900 my-4 font-dmserif">
         <div className="flex-col">
           <img
-            className="rounded-lg shadow-lg shadow-sky-900"
+            className="rounded-lg shadow-lg shadow-app_accent-900"
             src={podcast.speaker.img}
             alt="Speaker Image"
           />
@@ -33,29 +33,29 @@ const PodcastDetails = ({ podcast, addToPlaylist }) => {
           </div>
         </div>
         <div className="grid auto-rows-auto items-center">
-          <p className="text-3xl drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)] text-shadow shadow-sky-600">
+          <p className="text-3xl drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)] text-shadow shadow-app_accent-600">
             {podcast.title}
           </p>
-          <div className="pc-details-icons-container flex w-full items-center justify-evenly my-3 text-xs text-sky-900 dark:text-gray-400">
+          <div className="pc-details-icons-container flex w-full items-center justify-evenly my-3 text-xs text-app_accent-900 dark:text-gray-400">
             <div className="flex w-fit gap-2 items-center">
-              <ClockIcon text={"sky-900"} />
-              <p className="text-sky-900">{podcast.duration}</p>
+              <ClockIcon text={"app_accent-900"} />
+              <p className="text-app_accent-900">{podcast.duration}</p>
             </div>
             <div className="flex w-fit gap-2 items-center text-black">
-              <PodcastCalendar text={"sky-900"} />
-              <p className="text-sky-900">
+              <PodcastCalendar text={"app_accent-900"} />
+              <p className="text-app_accent-900">
                 {formatDate(podcast.date.toDate())}
               </p>
             </div>
             <div className="flex w-fit items-center">
-              <HashtagIcon text={"sky-900"} />
-              <p className="text-sky-900">{podcast.tag}</p>
+              <HashtagIcon text={"app_accent-900"} />
+              <p className="text-app_accent-900">{podcast.tag}</p>
             </div>
           </div>
           <p className="h-fit text-lg">{podcast.description}</p>
 
           <Button
-            className="mt-4 bg-sky-900"
+            className="mt-4 bg-app_accent-900"
             size="xs"
             onClick={() => {
               addToPlaylist(podcast);
@@ -72,8 +72,8 @@ const PodcastDetails = ({ podcast, addToPlaylist }) => {
           style="underline"
         >
           <Tabs.Item className="" active title="Topics">
-            <div className="flex w-full justify-center bg-sky-900">
-              <ul className="bg-sky-900 border-x-8 border-white border-double list-disc list-inside p-4 max-w-[70ch] text-lg text-left">
+            <div className="flex w-full justify-center bg-app_accent-900">
+              <ul className="bg-app_accent-900 border-x-8 border-white border-double list-disc list-inside p-4 max-w-[70ch] text-lg text-left">
                 <p className="text-center">
                   The issues that are discussed during this podcast:
                 </p>
@@ -88,8 +88,8 @@ const PodcastDetails = ({ podcast, addToPlaylist }) => {
             </div>
           </Tabs.Item>
           <Tabs.Item title="Biography">
-            <div className="flex w-full justify-center bg-sky-900">
-              <div className="flex-col border-x-8 border-white border-double bg-sky-900 p-4 max-w-[70ch] text-lg text-left">
+            <div className="flex w-full justify-center bg-app_accent-900">
+              <div className="flex-col border-x-8 border-white border-double bg-app_accent-900 p-4 max-w-[70ch] text-lg text-left">
                 <p className="m-6">{podcast.speaker.about}</p>
               </div>
             </div>

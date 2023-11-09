@@ -101,8 +101,8 @@ const Admin = () => {
   const editEvents = () => {};
 
   return (
-    <div className="bg-sky-900 lg:grid lg:grid-cols-5">
-      <div className="sticky h-[30%] shrink-0 top-20 lg:items-center lg:flex-1 bg-sky-900">
+    <div className="bg-app_bg lg:grid lg:grid-cols-5">
+      <div className="sticky h-[30%] shrink-0 top-20 lg:items-center lg:flex-1 bg-app_accent-900">
         <div className="flex h-fill justify-center mx-auto mt-4">
           <Sidebar
             className="flex justify-center"
@@ -111,7 +111,7 @@ const Admin = () => {
             <Sidebar.Items className="flex bg-orange-300">
               <Sidebar.ItemGroup>
                 <Sidebar.Item
-                  className="hover:bg-sky-600"
+                  className="hover:bg-app_accent-600"
                   onClick={() => {
                     closeDisplays();
                     setShowDashboard(true);
@@ -121,7 +121,7 @@ const Admin = () => {
                   <p>Dashboard</p>
                 </Sidebar.Item>
                 <Sidebar.Item
-                  className="hover:bg-sky-600"
+                  className="hover:bg-app_accent-600"
                   onClick={() => {
                     closeDisplays();
                     setShowUsers(true);
@@ -131,12 +131,12 @@ const Admin = () => {
                   <p>Users</p>
                 </Sidebar.Item>
                 <Sidebar.Collapse
-                  className="hover:bg-sky-600"
+                  className="hover:bg-app_accent-600"
                   icon={ShoppingBagIcon}
                   label="E-commerce"
                 >
                   <Sidebar.Item
-                    className="hover:bg-sky-600"
+                    className="hover:bg-app_accent-600"
                     onClick={() => {
                       closeDisplays();
                       setShowProducts(true);
@@ -145,7 +145,7 @@ const Admin = () => {
                     Products
                   </Sidebar.Item>
                   <Sidebar.Item
-                    className="hover:bg-sky-600"
+                    className="hover:bg-app_accent-600"
                     onClick={() => {
                       closeDisplays();
                       setShowSales(true);
@@ -154,7 +154,7 @@ const Admin = () => {
                     Sales
                   </Sidebar.Item>
                   <Sidebar.Item
-                    className="hover:bg-sky-600"
+                    className="hover:bg-app_accent-600"
                     onClick={() => {
                       closeDisplays();
                       setShowShipping(true);
@@ -163,7 +163,7 @@ const Admin = () => {
                     Shipping
                   </Sidebar.Item>
                   <Sidebar.Item
-                    className="hover:bg-sky-600"
+                    className="hover:bg-app_accent-600"
                     onClick={() => {
                       closeDisplays();
                       setShowSalesData(true);
@@ -173,7 +173,7 @@ const Admin = () => {
                   </Sidebar.Item>
                 </Sidebar.Collapse>
                 <Sidebar.Item
-                  className="hover:bg-sky-600"
+                  className="hover:bg-app_accent-600"
                   onClick={() => {
                     closeDisplays();
                     loadEvents();
@@ -184,7 +184,7 @@ const Admin = () => {
                   <p>Events</p>
                 </Sidebar.Item>
                 <Sidebar.Item
-                  className="hover:bg-sky-600"
+                  className="hover:bg-app_accent-600"
                   onClick={() => {
                     closeDisplays();
                     loadPodcasts();
@@ -206,7 +206,7 @@ const Admin = () => {
               <div className="flex text-xs gap-2">
                 <Button
                   size="xs"
-                  className="bg-sky-900"
+                  className="bg-app_accent-900"
                   onClick={addNewPodcast}
                   data-tooltip-content="Add a new podcast"
                   data-tooltip-place="top"
@@ -217,7 +217,7 @@ const Admin = () => {
                 <Tooltip className="z-10" id="add-tooltip" delayShow={1300} />
                 <Button
                   size="xs"
-                  className="bg-sky-900"
+                  className="bg-app_accent-900"
                   onClick={editPodcast}
                   data-tooltip-content="Edit a podcast"
                   data-tooltip-place="top"
@@ -228,7 +228,7 @@ const Admin = () => {
                 <Tooltip className="z-10" id="edit-tooltip" delayShow={1300} />
                 <Button
                   size="xs"
-                  className="bg-sky-900"
+                  className="bg-app_accent-900"
                   onClick={deletePodcast}
                   data-tooltip-content="Delete a podcast"
                   data-tooltip-place="top"
@@ -248,7 +248,7 @@ const Admin = () => {
               <div className="text-xs">
                 <Button
                   size="xs"
-                  className="bg-sky-900"
+                  className="bg-app_accent-900"
                   data-tooltip-content="Close"
                   data-tooltip-place="top"
                   data-tooltip-id="close-tooltip"
@@ -272,7 +272,7 @@ const Admin = () => {
               <div className="flex text-xs gap-2">
                 <Button
                   size="xs"
-                  className="bg-sky-900"
+                  className="bg-app_accent-900"
                   onClick={addNewEvent}
                   data-tooltip-content="Add a new event"
                   data-tooltip-place="top"
@@ -283,7 +283,7 @@ const Admin = () => {
                 <Tooltip className="z-10" id="add-tooltip" delayShow={1300} />
                 <Button
                   size="xs"
-                  className="bg-sky-900"
+                  className="bg-app_accent-900"
                   onClick={editEvents}
                   data-tooltip-content="Edit an event"
                   data-tooltip-place="top"
@@ -294,7 +294,7 @@ const Admin = () => {
                 <Tooltip className="z-10" id="edit-tooltip" delayShow={1300} />
                 <Button
                   size="xs"
-                  className="bg-sky-900"
+                  className="bg-app_accent-900"
                   onClick={deleteEvent}
                   data-tooltip-content="Delete an event"
                   data-tooltip-place="top"
@@ -314,7 +314,7 @@ const Admin = () => {
               <div className="text-xs">
                 <Button
                   size="xs"
-                  className="bg-sky-900"
+                  className="bg-app_accent-900"
                   data-tooltip-content="Close"
                   data-tooltip-place="top"
                   data-tooltip-id="close-tooltip"
@@ -333,7 +333,7 @@ const Admin = () => {
           </div>
         )}
       </div>
-      <div className="col-span-1 sticky h-[43%] top-20 lg:items-center lg:flex-1 bg-sky-900">
+      <div className="col-span-1 sticky h-[43%] top-20 lg:items-center lg:flex-1 bg-app_accent-900">
         Other Content
       </div>
     </div>

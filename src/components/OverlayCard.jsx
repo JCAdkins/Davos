@@ -9,7 +9,7 @@ const OverlayCard = (props) => {
   const date = new Date(props.date);
   const name =
     props.className +
-    " max-w-sm text-sm p-6 bg-sky-900 mb-2.5 mt-2 divide-y text-center border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700";
+    " max-w-sm text-sm p-6 bg-app_accent-900 mb-2.5 mt-2 divide-y text-center border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700";
   return (
     <div className={name}>
       <a href="#">

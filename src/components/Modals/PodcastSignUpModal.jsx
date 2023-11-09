@@ -98,7 +98,7 @@ const PodcastSignInModal = ({ clearPodcastSignUpModal }) => {
             <div className="flex flex-row justify-between">
               <div className="w-fit">
                 <Button
-                  className="bg-sky-900"
+                  className="bg-app_accent-900"
                   type="submit"
                   onClick={handleSubmit(onSubmit)}
                 >
@@ -107,14 +107,14 @@ const PodcastSignInModal = ({ clearPodcastSignUpModal }) => {
               </div>
               <p className="text-black">OR</p>
               <div className="w-fit">
-                <Button className="bg-sky-900">Log In</Button>
+                <Button className="bg-app_accent-900">Log In</Button>
               </div>
             </div>
             <div className="flex justify-between text-sm font-medium text-gray-500 dark:text-gray-300">
               Not registered?&nbsp;
               <Link
                 to="/new_account"
-                className="text-sky-700 hover:underline dark:text-sky-500"
+                className="text-app_accent-700 hover:underline dark:text-app_accent-500"
               >
                 Create account
               </Link>
