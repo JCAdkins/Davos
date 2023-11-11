@@ -199,7 +199,7 @@ const Podcasts = () => {
                     {!paginatedPodcasts && (
                       <>
                         <div className="flex ml-2 w-full justify-between p-4 text-app_accent-900 text-xl font-dmserif">
-                          <div className="flex gap-1">
+                          <div className="flex gap-1 drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]">
                             {!searchPCs && <ArrowTrendingUp />}
                             <p className="w-full">
                               {searchPCs ? "Searching All" : "Featured"}
@@ -230,7 +230,7 @@ const Podcasts = () => {
                         )}
 
                         <Button
-                          className="bg-app_accent-900 w-full rounded-none"
+                          className="bg-app_accent-900 w-full rounded-none drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]"
                           size="xs"
                           onClick={() => {
                             console.log("clicked");
@@ -306,7 +306,7 @@ const Podcasts = () => {
                       </>
                     )}
                   </div>
-                  <div className="w-full bg-gray-300 rounded-md text-lg mb-6">
+                  <div className="w-full bg-gray-300 rounded-md text-lg mb-6 drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]">
                     <p className="text-black text-center text-2xl my-4 font-mono">
                       Categories
                     </p>

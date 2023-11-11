@@ -167,7 +167,6 @@ const Events = () => {
           />
         );
       });
-    console.log("filteredEvents", filteredEvents);
     searchVal === "" ? setSearchEvents(null) : setSearchEvents(filteredEvents);
   };
 
@@ -179,7 +178,7 @@ const Events = () => {
             <Accordion collapseAll className="">
               <Accordion.Panel>
                 <Accordion.Title className="text-gray-900 bg-white">
-                  <div className="flex w-full gap-1">
+                  <div className="flex w-full gap-1 drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]">
                     <UpcomingEvents />
                     <p>Upcoming Events</p>
                   </div>
@@ -202,7 +201,7 @@ const Events = () => {
                         </div>
                         <div>
                           <Button
-                            className="w-full bg-app_accent-900 rounded-none"
+                            className="w-full bg-app_accent-900  rounded-none"
                             size="xs"
                             onClick={loadAllEvents}
                           >
@@ -321,7 +320,7 @@ const Events = () => {
             <div className="h-full lg:rounded-none lg:justify-start lg:items-center lg:h-full lg:w-fill text-xl font-dmserif">
               <div className="max-w-screen-xl mx-4 my-4">
                 <div className="flex justify-between">
-                  <div className="flex gap-1">
+                  <div className="flex gap-1 drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]">
                     <UpcomingEvents />
                     <p className="w-full text-app_accent-900">
                       {searchEvents ? "Searching Events" : "Upcoming Events"}
@@ -357,7 +356,7 @@ const Events = () => {
                         )}
 
                         <Button
-                          className="w-full bg-app_accent-900 rounded-none mt-6"
+                          className="w-full bg-app_accent-900 rounded-none mt-6 drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]"
                           size="xs"
                           onClick={loadAllEvents}
                         >
@@ -409,10 +408,10 @@ const Events = () => {
           </div>
         </div>
         <div className="w-full font-serif items-center lg:leading-snug text-gray-900 lg:text-2xl">
-          <div className="flex-col items-center justify-center">
+          <div className="flex-col items-center justify-center drop-shadow-[0_1.2px_1.2px_rgba(70,70,70)]">
             <div className="w-full mt-6 justify-center items-center">
               <img
-                className="w-full mr-4"
+                className="w-full mr-4 drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]"
                 src={IMAGES.social_event_page}
                 alt="Social Event Picture"
               ></img>
@@ -433,30 +432,30 @@ const Events = () => {
                 <span className="mt-6 font-bold">What to Expect: </span>
                 <ol
                   role="list"
-                  className="items-center marker:text-white rounded bg-app_accent-900 text-white px-4 list-disc list-inside mb-6 space-y-3"
+                  className="items-center marker:text-white rounded bg-app_accent-900 drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)] text-white px-4 list-disc list-inside mb-6 space-y-3"
                 >
-                  <li className="mt-2">
+                  <li className="mt-2 drop-shadow-[0_1.2px_1.2px_rgba(200,200,200)]">
                     <strong>Engaging Workshops: </strong>Dive deep into the
                     latest industry trends and gain hands-on experience with our
                     expert-led workshops.
                   </li>{" "}
-                  <li>
+                  <li className="drop-shadow-[0_1.2px_1.2px_rgba(200,200,200)]">
                     <strong> Informative Webinars:</strong> Stay updated with
                     the ever-evolving landscape through our informative webinars
                     and panel discussions.
                   </li>
-                  <li>
+                  <li className="drop-shadow-[0_1.2px_1.2px_rgba(200,200,200)]">
                     {" "}
                     <strong> Networking Opportunities:</strong> Connect with
                     like-minded professionals, potential partners, and industry
                     leaders.
                   </li>
-                  <li>
+                  <li className="drop-shadow-[0_1.2px_1.2px_rgba(200,200,200)]">
                     {" "}
                     <strong>Product Launches:</strong> Be the first to witness
                     groundbreaking product launches and innovations.
                   </li>
-                  <li className="mb-2">
+                  <li className="mb-2 drop-shadow-[0_1.2px_1.2px_rgba(200,200,200)]">
                     {" "}
                     <strong>Community Building:</strong> Share your insights,
                     ask questions, and participate in discussions that matter to
@@ -476,13 +475,25 @@ const Events = () => {
               <div className="flex flex-col mx-6 lg:max-w-[65ch]">
                 <ol
                   role="list"
-                  className="marker:text-white bg-app_accent-900 text-white rounded list-disc list-inside px-4 space-y-3"
+                  className="marker:text-white bg-app_accent-900 drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)] text-white rounded list-disc list-inside px-4 space-y-3"
                 >
-                  <li className="mt-2">Expand your knowledge</li>
-                  <li> Build meaningful connections </li>
-                  <li>Explore new opportunities</li>{" "}
-                  <li>Stay ahead in your field</li>
-                  <li className="mb-2"> Enjoy the experience</li>
+                  <li className="mt-2 drop-shadow-[0_1.2px_1.2px_rgba(200,200,200)]">
+                    Expand your knowledge
+                  </li>
+                  <li className="drop-shadow-[0_1.2px_1.2px_rgba(200,200,200)]">
+                    {" "}
+                    Build meaningful connections{" "}
+                  </li>
+                  <li className="drop-shadow-[0_1.2px_1.2px_rgba(200,200,200)]">
+                    Explore new opportunities
+                  </li>{" "}
+                  <li className="drop-shadow-[0_1.2px_1.2px_rgba(200,200,200)]">
+                    Stay ahead in your field
+                  </li>
+                  <li className="mb-2 drop-shadow-[0_1.2px_1.2px_rgba(200,200,200)]">
+                    {" "}
+                    Enjoy the experience
+                  </li>
                 </ol>
                 <div className="flex flex-col items-center mt-6 lg:max-w-[65ch]">
                   <span className="mt-6 w-[100%] font-bold">Stay Updated:</span>{" "}
@@ -513,8 +524,12 @@ const Events = () => {
           )}
           {user && (
             <div className="text-center text-black text-xl font-bold">
-              <h1 className="mb-2">My Events</h1>
-              <ListGroup>{...userEvents}</ListGroup>
+              <h1 className="mb-2 drop-shadow-[0_1.2px_1.2px_rgba(70,70,70)]">
+                My Events
+              </h1>
+              <div className="drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]">
+                <ListGroup>{...userEvents}</ListGroup>
+              </div>
             </div>
           )}
         </div>
@@ -537,7 +552,7 @@ const Events = () => {
             </div>
           </div>
           <div className="shrink-0 justify-center">
-            <div className="text-black w-full rounded-lg">
+            <div className="text-black w-full rounded-lg drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]">
               <DefaultCalendar
                 setEvent={(event) => {
                   setEvent(event);

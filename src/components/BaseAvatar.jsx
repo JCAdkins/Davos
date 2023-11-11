@@ -3,7 +3,7 @@ import { Avatar } from "flowbite-react";
 const BaseAvatar = ({ image }) => {
   return (
     <div className="flex flex-wrap gap-2">
-      <Avatar bordered img={image} rounded />
+      <Avatar color={"app_accent-900"} bordered img={image} rounded />
     </div>
   );
 };

@@ -144,3 +144,11 @@
 .toggle-red span {
   color: red;
 }
+
+.new-password div {
+  width: fit-content;
+}
+
+.new-password input {
+  padding: 0.25rem;
+}

@@ -63,7 +63,7 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className="flex-col bg-app_bg">
+    <div className="flex-col bg-app_bg font-dmserif">
       <div className="flex-col h-screen w-screen">
         <div className="absolute top-0 left-0">
           <Suspense
@@ -73,7 +73,7 @@ const HomePage = () => {
                 class="flex items-center justify-center h-56 max-w-sm bg-gray-300 rounded-lg animate-pulse dark:bg-gray-700"
               >
                 <svg
-                  class="w-10 h-10 text-gray-400 dark:text-gray-600"
+                  className="w-10 h-10 text-gray-400 dark:text-gray-600"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
@@ -82,7 +82,7 @@ const HomePage = () => {
                   <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z" />
                   <path d="M14.066 0H7v5a2 2 0 0 1-2 2H0v11a1.97 1.97 0 0 0 1.934 2h12.132A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.934-2ZM9 13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2Zm4 .382a1 1 0 0 1-1.447.894L10 13v-2l1.553-1.276a1 1 0 0 1 1.447.894v2.764Z" />
                 </svg>
-                <span class="sr-only">Loading...</span>
+                <span className="sr-only">Loading...</span>
               </div>
             }
           >
@@ -126,7 +126,7 @@ const HomePage = () => {
         </div>
         <div className="flex relative w-2/3 h-1/2 m-12">
           <div className="flex text-xl md:text-3xl lg:text-5xl w-full text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
-            <p>
+            <p className="drop-shadow-[0_1.2px_1.2px_rgba(0,0,0)]">
               The{" "}
               <span className="h-fit italic text-black drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)] text-3xl md:text-4xl lg:text-7xl">
                 premier
@@ -143,7 +143,7 @@ const HomePage = () => {
           <div className="w-full">
             <div className="sm:hidden w-screen">
               <div className="flex flex-wrap max-w-[38ch] items-center justify-center text-center text-2xl whitespace-pre py-4 px-8">
-                <em className="text-app_accent-400 font-bold text-shadow shadow-app_accent-600">
+                <em className="text-black font-bold text-shadow shadow-app_accent-300 drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
                   Davos On Air:
                 </em>{" "}
                 The best{" "}
@@ -163,7 +163,7 @@ const HomePage = () => {
             <div className="flex-col items-center justify-center sm:border-double sm:border-x-8 sm:border-white text-center">
               <div className="hidden sm:block">
                 <div className="flex flex-wrap max-w-[38ch] items-center justify-center text-center text-2xl whitespace-pre p-8">
-                  <em className="text-app_accent-400 font-bold text-shadow shadow-app_accent-600">
+                  <em className="text-black font-bold text-shadow shadow-app_accent-300 drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
                     Davos On Air:
                   </em>{" "}
                   The best{" "}
@@ -199,7 +199,7 @@ const HomePage = () => {
           <div className="flex flex-col justify-center items-center w-full border-y-2 border-white sm:border-none">
             <div className="sm:hidden flex flex-wrap items-center justify-center text-center text-2xl whitespace-pre p-4">
               <p>Become a </p>
-              <em className="text-app_accent-400 font-bold text-shadow shadow-app_accent-600">
+              <em className="text-black font-bold text-shadow shadow-app_accent-300 drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
                 Davos In The Desert{" "}
               </em>
               member now
@@ -215,7 +215,7 @@ const HomePage = () => {
                   <div className="hidden sm:block">
                     <div className="flex flex-wrap items-center justify-center text-center text-2xl whitespace-pre p-8">
                       <p>Become a </p>
-                      <em className="text-app_accent-400 font-bold text-shadow shadow-app_accent-600">
+                      <em className="text-black font-bold text-shadow shadow-app_accent-300 drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
                         Davos In The Desert{" "}
                       </em>
                       member now
@@ -250,7 +250,7 @@ const HomePage = () => {
         <div className="flex flex-col justify-center items-center w-full border-double border-white border-x-8 border-b-8 sm:border-none">
           <div className="sm:hidden flex flex-wrap items-center justify-center text-center text-2xl whitespace-pre my-8 sm:px-14">
             Party & mingle with all of your{" "}
-            <em className="text-app_accent-400 font-bold text-shadow shadow-app_accent-600">
+            <em className="text-black font-bold text-shadow shadow-app_accent-300 drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
               Davos{" "}
             </em>
             pals
@@ -265,7 +265,7 @@ const HomePage = () => {
               <div className="hidden sm:block">
                 <div className="flex flex-wrap items-center justify-center text-center text-2xl whitespace-pre my-8 sm:px-14">
                   Party & mingle with all of your{" "}
-                  <em className="text-app_accent-400 font-bold text-shadow shadow-app_accent-600">
+                  <em className="text-black font-bold text-shadow shadow-app_accent-300 drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
                     Davos{" "}
                   </em>
                   pals
@@ -306,7 +306,7 @@ const HomePage = () => {
           <div className="lg:row-span-1">
             <div className="lg:flex-col h-full p-4 w-full text-2xl lg:text-4xl">
               <div className="flex lg:h-1/5 w-full  lg:justify-start items-center justify-center">
-                <em className="text-black font-bold drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
+                <em className="text-black font-bold text-shadow shadow-app_accent-300 drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
                   Davos On Air:
                 </em>
               </div>
@@ -362,7 +362,7 @@ const HomePage = () => {
 
               <div className="flex w-full h-1/3 justify-center">
                 <p>
-                  <em className="text-black font-bold drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
+                  <em className="text-black font-bold text-shadow shadow-app_accent-300 drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
                     Davos In The Desert
                   </em>
                 </p>
@@ -418,7 +418,7 @@ const HomePage = () => {
             </div>
             <div className="flex row-start-2 col-start-2 row-span-1 col-span-2 justify-center text-center mt-1">
               with
-              <strong className="text-black font-bold drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)] whitespace-pre">
+              <strong className="text-black font-bold text-shadow shadow-app_accent-300 drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)] whitespace-pre">
                 {" "}
                 Davos{" "}
               </strong>

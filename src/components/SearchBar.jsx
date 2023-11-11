@@ -9,12 +9,12 @@ const SearchBar = forwardRef((props, ref) => {
       }}
     >
       <div class="flex">
-        <div class="relative w-full">
+        <div class="relative w-full ">
           <input
             ref={ref}
             type="search"
             id="search-dropdown"
-            class="block p-1.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+            class="block rounded-l-lg p-1.5 w-full drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)] z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
             placeholder="Search"
             onChange={props.onChange}
             value={props.value}
@@ -23,7 +23,7 @@ const SearchBar = forwardRef((props, ref) => {
           />
           <button
             onSubmit={(e) => e.preventDefault()}
-            class="absolute top-0 right-0 p-2.5 text-sm font-medium h-full text-white bg-app_accent-900 rounded-r-lg border border-app_accent-800 hover:bg-cyan-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            class="absolute top-0 right-0 drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)] p-2.5 text-sm font-medium h-full text-white bg-app_accent-900 rounded-r-lg border border-app_accent-800 hover:bg-cyan-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             <svg
               class="w-4 h-4"
