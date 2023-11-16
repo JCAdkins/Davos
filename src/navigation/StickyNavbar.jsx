@@ -55,7 +55,7 @@ const StickyNavbar = () => {
         className="p-1 font-normal"
       >
         <Link
-          className="flex items-center hover:drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]"
+          className="flex items-center hover:scale-110 hover:drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]"
           to="/members"
         >
           Members
@@ -68,7 +68,7 @@ const StickyNavbar = () => {
         className="p-1 font-normal"
       >
         <Link
-          className="flex items-center hover:drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]"
+          className="flex items-center hover:scale-110 hover:drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]"
           to="/events"
         >
           Events
@@ -81,7 +81,7 @@ const StickyNavbar = () => {
         className="p-1 font-normal"
       >
         <Link
-          className="flex items-center hover:drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]"
+          className="flex items-center hover:scale-110 hover:drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]"
           to="/podcasts"
         >
           Podcasts
@@ -94,7 +94,7 @@ const StickyNavbar = () => {
         className="p-1 font-normal"
       >
         <Link
-          className="flex items-center hover:drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]"
+          className="flex items-center hover:scale-110 hover:drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]"
           to="/about"
         >
           About
@@ -107,9 +107,9 @@ const StickyNavbar = () => {
     <Navbar className="sticky bg-app_main top-0 z-10 h-max border-none max-w-full rounded-none py-1 px-4 lg:px-8 lg:py-1">
       <div className="flex items-center justify-between text-blue-gray-900">
         <Link className="cursor-pointer py-1.5 font-medium" to="/">
-          <div className="invert relative rounded-md w-full overflow-hidden hover:drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)] bg-cover bg-[50%] bg-no-repeat">
+          <div className="invert relative rounded-md w-full overflow-hidden hover:scale-105 hover:drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)] bg-cover bg-[50%] bg-no-repeat">
             <DefaultImage
-              className="hover:drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]"
+              className="hover:scale-110 hover:drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]"
               src="https://davosinthedesert.us/wp-content/uploads/2023/02/davos-logo-v3.png"
               alt="Davos In The Desert"
             ></DefaultImage>
@@ -136,7 +136,7 @@ const StickyNavbar = () => {
           <IconButton
             variant="text"
             className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
-            ripple={false}
+            ripple={true}
             onClick={() => setOpenNav(!openNav)}
           >
             {openNav ? (

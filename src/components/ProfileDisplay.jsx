@@ -382,20 +382,26 @@ const ProfileDisplay = () => {
             )}
             {!editingCareer && (
               <div className="flex justify-center -mt-2 gap-2">
-                {user.profile.occupation != "" && (
+                {user.profile.occupational.occupation != "" && (
                   <>
-                    <p className="text-gray-500">{user.profile.occupation}</p>
+                    <p className="text-gray-500">
+                      {user.profile.occupational.occupation}
+                    </p>
                     <p className="text-gray-500"> - </p>
                   </>
                 )}
 
-                {user.profile.experience > 0 && (
+                {user.profile.occupational.experience > 0 && (
                   <>
-                    <p className="text-gray-500">{user.profile.experience}</p>
+                    <p className="text-gray-500">
+                      {user.profile.occupational.experience}
+                    </p>
                     <p className="text-gray-500"> Years - </p>
                   </>
                 )}
-                <p className="text-gray-500">{user.profile.organization}</p>
+                <p className="text-gray-500">
+                  {user.profile.occupational.organization}
+                </p>
               </div>
             )}
           </div>

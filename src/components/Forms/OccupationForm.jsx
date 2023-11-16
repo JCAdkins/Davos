@@ -6,7 +6,7 @@ const OccupationForm = ({ onSubmit }) => {
     const data = {
       occupation: event.target.occupation.value,
       industry: event.target.industry.value,
-      company: event.target.company.value,
+      organization: event.target.company.value,
       company_url: event.target.company_url.value,
       number_employees: event.target.number_employees.value,
       experience: event.target.experience.value,

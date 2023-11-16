@@ -1,4 +1,4 @@
-import { Modal } from "flowbite-react";
+import Xicon from "../Xicon";
 import { useState, useEffect, useRef } from "react";
 import AddressForm from "../Forms/AddressForm";
 import EducationForm from "../Forms/EducationForm";
@@ -6,10 +6,10 @@ import OccupationForm from "../Forms/OccupationForm";
 import "../../customcss/CustomCardCss.css";
 import Draggable from "react-draggable";
 
-function SettingsProfileModal({ clearSettingsModal, data, submitData }) {
+function EditSettingsInput({ clearSettingsModal, data, submitData }) {
   const [openModal, setOpenModal] = useState("dismissible");
   const [form, setForm] = useState(<></>);
-  const modalRef = useRef(null);
+  const modalRef = useState(null);
 
   const clearModal = () => {
     clearSettingsModal();
@@ -48,21 +48,22 @@ function SettingsProfileModal({ clearSettingsModal, data, submitData }) {
   }, []);
 
   return (
-    <Draggable handle=".form-handle" nodeRef={modalRef}>
-      <Modal
-        ref={modalRef}
-        dismissible
-        className="event-modal"
-        show={openModal}
-        onClose={() => clearModal()}
-      >
-        <Modal.Header className="form-handle hover:cursor-pointer bg-gray-200 text-center w-full">
-          <strong className="text-center">Edit {data.type}</strong>{" "}
-        </Modal.Header>
-        <Modal.Body className="">{form}</Modal.Body>
-      </Modal>
+    <Draggable
+      handle=".form-handle"
+      onDrag={(e) => console.log(e)}
+      nodeRef={modalRef}
+    >
+      <div ref={modalRef}>
+        <div className="form-handle hover:cursor-pointer bg-gray-200 text-center w-full">
+          <p>
+            <strong className="text-center">Edit {data.type}</strong>
+          </p>
+          <Xicon />
+        </div>
+        <div className="">{form}</div>
+      </div>
     </Draggable>
   );
 }
 
-export default SettingsProfileModal;
+export default EditSettingsInput;

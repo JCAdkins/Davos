@@ -10,19 +10,19 @@ function ErrorModal({ error, clearErrorModal }) {
   };
 
   return (
-    <>
-      <Modal
-        dismissible
-        className="event-modal"
-        show={openModal}
-        onClose={() => clearModal()}
-      >
-        <Modal.Header className="">Error</Modal.Header>
-        <Modal.Body className="text-black">
-          <div>{error.message}</div>
-        </Modal.Body>
-      </Modal>
-    </>
+    <Modal
+      dismissible
+      className="event-modal scale-110"
+      show={openModal}
+      onClose={() => clearModal()}
+    >
+      <Modal.Header className="error-modal-header bg-gray-300 text-black">
+        Error
+      </Modal.Header>
+      <Modal.Body className="bg-white text-red-400">
+        <div>{error.message}</div>
+      </Modal.Body>
+    </Modal>
   );
 }
 

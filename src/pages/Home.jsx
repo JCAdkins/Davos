@@ -118,9 +118,9 @@ const HomePage = () => {
               <a className="bg-black" href="http://videezy.com">
                 Free B-Roll provided by Videezy
               </a>
-              <p className="bg-black text-white">
+              {/* <p className="bg-black text-white">
                 *Proper 4k video will look much more crisp.
-              </p>
+              </p> */}
             </div>
           </Suspense>
         </div>

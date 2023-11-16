@@ -40,8 +40,8 @@ const SettingsProfile = ({ user, setSaveData }) => {
 
   return (
     <div className="flex justify-center w-full h-full p-4 text-xl">
-      <div className="inner-settings-profile flex grid grid-cols-2 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0)] auto-rows-auto w-full  gap-4">
-        <div className="flex flex-col bg-white bg-opacity-70 border-b-2 rounded-lg w-full h-full text-lg p-4 whitespace-pre divide-y divide-gray-200">
+      <div className="inner-settings-profile grid grid-cols-2 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0)] w-full gap-4">
+        <div className="flex flex-col bg-white bg-opacity-70 border-b-2 overflow-y-auto rounded-lg w-full h-full text-lg p-4 whitespace-pre divide-y divide-gray-200">
           <div className="flex drop-shadow-[0_1.2px_1.2px_rgba(135,135,135)] grid-cols-6 justify-center mb-3">
             <div className="flex flex-col pr-1 text-right">
               <p>Name:</p>
@@ -71,7 +71,7 @@ const SettingsProfile = ({ user, setSaveData }) => {
                           className="new-password"
                           placeholder="New Password"
                           id="new-password"
-                          type="text"
+                          type="password"
                           sizing="sm"
                           required
                         />
@@ -92,7 +92,7 @@ const SettingsProfile = ({ user, setSaveData }) => {
                           className="new-password"
                           id="re-type-password"
                           placeholder="Re-type Password"
-                          type="text"
+                          type="password"
                           sizing="sm"
                           required
                         />
@@ -201,7 +201,7 @@ const SettingsProfile = ({ user, setSaveData }) => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col bg-white bg-opacity-70 border-b-2 rounded-lg w-full h-full text-lg p-4">
+        <div className="flex flex-col bg-white bg-opacity-70 border-b-2 rounded-lg w-full h-full overflow-y-auto text-lg p-4">
           <div className="flex flex-col w-full divide-y divide-gray-200">
             <div className="flex w-full text-center justify-between drop-shadow-[0_1.2px_1.2px_rgba(135,135,135)] mb-2">
               <div className="invisible">j</div>
@@ -311,9 +311,9 @@ const SettingsProfile = ({ user, setSaveData }) => {
             </div>
             <div className="flex grid-cols-6 justify-center pt-2">
               <div className="flex flex-col text-right pr-1 drop-shadow-[0_1.2px_1.2px_rgba(135,135,135)] ">
-                <p>Occupation:</p>
                 {!work && (
                   <>
+                    <p>Occupation:</p>
                     {user.profile.occupational.occupation.length > 22 ? (
                       <p className="invisible">j</p>
                     ) : (
@@ -359,43 +359,44 @@ const SettingsProfile = ({ user, setSaveData }) => {
                 )}
                 {work && (
                   <>
-                    {work.occupation.length > 22 ? (
+                    <p>Occupation:</p>
+                    {work?.occupation.length > 22 ? (
                       <p className="invisible">j</p>
                     ) : (
                       ""
                     )}
                     <p>Industry:</p>
-                    {work.industry.length > 22 ? (
+                    {work?.industry.length > 22 ? (
                       <p className="invisible">j</p>
                     ) : (
                       ""
                     )}
                     <p>Company:</p>
-                    {work.organization.length > 22 ? (
+                    {work?.organization.length > 22 ? (
                       <p className="invisible">j</p>
                     ) : (
                       ""
                     )}
                     <p>Experience:</p>
-                    {work.experience.length > 22 ? (
+                    {work?.experience.length > 22 ? (
                       <p className="invisible">j</p>
                     ) : (
                       ""
                     )}
                     <p>Employees:</p>
-                    {work.number_employees.length > 22 ? (
+                    {work?.number_employees.length > 22 ? (
                       <p className="invisible">j</p>
                     ) : (
                       ""
                     )}
                     <p>URL:</p>
-                    {work.company_url.length > 22 ? (
+                    {work?.company_url.length > 22 ? (
                       <p className="invisible">j</p>
                     ) : (
                       ""
                     )}
                     <p>Email:</p>
-                    {work.email.length > 22 ? (
+                    {work?.email.length > 22 ? (
                       <p className="invisible">j</p>
                     ) : (
                       ""
@@ -404,30 +405,42 @@ const SettingsProfile = ({ user, setSaveData }) => {
                 )}
                 <p>Duties:</p>
               </div>
-              <div className="flex flex-col text-app_accent-700 text-left pl-1 drop-shadow-[0_1.2px_1.2px_rgba(135,135,135)] ">
-                <p className="w-fit break-all">
-                  {user.profile.occupational.occupation}
+              <div className="flex-col text-app_accent-700 text-left pl-1 h-full overflow-y-auto drop-shadow-[0_1.2px_1.2px_rgba(135,135,135)] ">
+                <p className="w-fit">
+                  {work
+                    ? work.occupation
+                    : user.profile.occupational.occupation}
+                </p>
+                <p className="w-fit">
+                  {work ? work.industry : user.profile.occupational.industry}
+                </p>
+                <p className="w-fit">
+                  {work
+                    ? work.organization
+                    : user.profile.occupational.organization}
+                </p>
+                <p className="w-fit">
+                  {work
+                    ? work.experience
+                    : user.profile.occupational.experience}
+                </p>
+                <p className="w-fit">
+                  {work
+                    ? work.number_employees
+                    : user.profile.occupational.number_employees}
                 </p>
                 <p className="w-fit break-all">
-                  {user.profile.occupational.industry}
+                  {work
+                    ? work.company_url
+                    : user.profile.occupational.company_url}
                 </p>
                 <p className="w-fit break-all">
-                  {user.profile.occupational.organization}
+                  {work ? work.email : user.profile.occupational.email}
                 </p>
-                <p className="w-fit break-all">
-                  {user.profile.occupational.experience}
-                </p>
-                <p className="w-fit break-all">
-                  {user.profile.occupational.number_employees}
-                </p>
-                <p className="w-fit break-all">
-                  {user.profile.occupational.company_url}
-                </p>
-                <p className="w-fit break-all">
-                  {user.profile.occupational.email}
-                </p>
-                <p className="w-fit break-all overflow-scroll">
-                  {user.profile.occupational.responsibilities}
+                <p className="w-fit overflow-scroll">
+                  {work
+                    ? work.responsibilities
+                    : user.profile.occupational.responsibilities}
                 </p>
               </div>
             </div>

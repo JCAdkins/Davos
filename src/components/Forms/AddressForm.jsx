@@ -6,7 +6,7 @@ import {
 import { useState, useRef, useEffect } from "react";
 import "@geoapify/geocoder-autocomplete/styles/round-borders.css";
 
-const AddressForm = ({ onSubmit }) => {
+const AddressForm = ({ houseRequired, onSubmit }) => {
   const myAPIkey = import.meta.env.VITE_GEOAPIFY_KEY;
   const [place, setPlace] = useState();
   const streetRef = useRef(null);
@@ -44,6 +44,8 @@ const AddressForm = ({ onSubmit }) => {
       stateRef.current.children[1].children[0].style.borderColor = "red";
       countryRef.current.children[1].children[0].style.borderColor = "red";
       zipRef.current.children[1].children[0].style.borderColor = "red";
+      if (houseRequired)
+        houseRef.current.children[1].children[0].style.borderColor = "red";
       return;
     }
     if (!place.properties.street) {
@@ -64,6 +66,11 @@ const AddressForm = ({ onSubmit }) => {
     }
     if (!place.properties.postcode) {
       zipRef.current.children[1].children[0].style.borderColor = "red";
+      return;
+    }
+    if (houseRequired && !place.properties.housenumber) {
+      houseRef.current.children[1].children[0].style.borderColor = "red";
+
       return;
     }
     const data = {

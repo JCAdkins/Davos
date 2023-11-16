@@ -7,6 +7,7 @@ import PaginatedTransitions from "../animations/PaginatedTransitions";
 import getAllPodcasts from "../services/getAllPodcasts";
 import PodcastCard from "../components/PodcastCard";
 import paginatedCollection from "../services/paginatedCollection";
+import HorizonatalCardSkeleton from "../components/Skeletons/HorizonatalCardSkeleton";
 import BackIcon from "../components/Icons/BackIcon";
 import PodcastDetails from "../components/PodcastDetails";
 import ArrowTrendingUp from "../components/Icons/ArrowTrendingUp";
@@ -34,6 +35,15 @@ const emptyPodcastList = {
   disabled: true,
 };
 
+const skeletonCards = [
+  <HorizonatalCardSkeleton />,
+  <HorizonatalCardSkeleton />,
+  <HorizonatalCardSkeleton />,
+  <HorizonatalCardSkeleton />,
+  <HorizonatalCardSkeleton />,
+  <HorizonatalCardSkeleton />,
+];
+
 const Podcasts = () => {
   const { user } = useContext(UserContext);
   const [_, setCurrentPodcast] = useState(emptyPodcastList);
@@ -58,6 +68,7 @@ const Podcasts = () => {
   const pcDetailsRef = pcDetState ? exitingDetsRef : enteringDetsRef;
   const searchRef = useRef(null);
   const [searchPCs, setSearchPCs] = useState(null);
+  const [loadingInit, setLoadingInit] = useState(true);
 
   useEffect(() => {
     var pcList = [];
@@ -65,6 +76,7 @@ const Podcasts = () => {
       snapshot.docs.forEach((doc) => {
         pcList = [...pcList, doc.data().podcast];
         setAllPC(pcList);
+        setLoadingInit(false);
       });
     });
   }, []);
@@ -217,7 +229,11 @@ const Podcasts = () => {
                         {!searchPCs && (
                           <div className="featured-pc-container">
                             <div className="featured-flex-container flex flex-wrap gap-8 justify-evenly mb-8">
-                              {...featuredPC}
+                              {loadingInit ? (
+                                <>{...skeletonCards}</>
+                              ) : (
+                                <>{...featuredPC}</>
+                              )}
                             </div>
                           </div>
                         )}

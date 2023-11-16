@@ -1,5 +1,5 @@
 import { Modal } from "flowbite-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function SuccessModal({ message, clearSuccessModal }) {
   const [openModal, setOpenModal] = useState("dismissible");
@@ -8,6 +8,12 @@ function SuccessModal({ message, clearSuccessModal }) {
     clearSuccessModal();
     setOpenModal(undefined);
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      clearModal();
+    }, 2000);
+  }, []);
 
   return (
     <>
