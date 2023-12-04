@@ -192,10 +192,9 @@ div[data-testid="modal-overlay"]:has(.form-handle) {
     display: flex;
     flex-direction: column;
   }
-}
-
-.settings-profile-main {
-  overflow-y: auto;
+  /* .settings-profile-main {
+    overflow-y: auto;
+  } */
 }
 
 .about-sidebar-container button:focus {

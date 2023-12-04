@@ -10,7 +10,7 @@ import getUser from "../../services/getUser";
 const MemberSignInModal = (props) => {
   const [openModal, _] = useState("form-elements");
   const [errorMessage, setErrorMessage] = useState();
-  const { __, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
   const emailRegex = new RegExp(
     /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,})$/
   );

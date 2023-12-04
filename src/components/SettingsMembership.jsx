@@ -1,6 +1,6 @@
 import PlusIcon from "./Icons/PlusIcon";
 import SettingsRemoveModal from "./Modals/SettingsRemoveModal";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useMemo } from "react";
 import { auth } from "../utils/firebase";
 import updateUser from "../services/updateUser";
 import UserContext from "../contexts/UserContext";
@@ -23,9 +23,6 @@ const formatDate = (date) => {
   );
 };
 
-const tierBenefit =
-  "As a Davos Gold Member you pay reduced price per month, you can attend events at no cost, and you get a 10% discount on Davos merchandise. You can also listen to podcasts commercial free.";
-
 const SettingsMembership = () => {
   const [itemToRemove, setItemToRemove] = useState();
   const [paymentMethods, setPaymentMethods] = useState();
@@ -33,6 +30,16 @@ const SettingsMembership = () => {
   const [successModal, setSuccessModal] = useState();
   const { user, setUser } = useContext(UserContext);
   const [addData, setAddData] = useState();
+
+  const tierBenefit = useMemo(
+    () =>
+      user.membership.tier === "monthly"
+        ? "Some kinda silver benefits."
+        : user.membership.tier === "yearly"
+        ? "As a Davos Gold Member you pay reduced price per month, you can attend events at no cost, and you get a 10% discount on Davos merchandise. You can also listen to podcasts commercial free."
+        : "Some kinda lifetime benefits.",
+    []
+  );
 
   useEffect(() => {
     setPaymentMethods(mapPaymentMethods(user.membership.cards));
@@ -320,13 +327,13 @@ const SettingsMembership = () => {
 
   return (
     <div className="flex justify-center w-full h-full p-4 text-xl">
-      <div className="inner-settings-profile drop-shadow-[0_1.2px_1.2px_rgba(0,0,0)] w-full gap-4 overflow-y-auto">
-        <div className="flex-col bg-white bg-opacity-70 border-b-2 rounded-lg w-full text-lg p-4 whitespace-pre divide-y divide-gray-200">
+      <div className="inner-settings-profile drop-shadow-[0_1.2px_1.2px_rgba(0,0,0)] w-full gap-4">
+        <div className="flex-col bg-white bg-opacity-70 border-b-2 rounded-lg w-full text-lg p-4 overflow-y-auto whitespace-pre divide-y divide-gray-200">
           <div className="flex drop-shadow-[0_1.2px_1.2px_rgba(135,135,135)] grid-cols-6  mb-3">
             <div className="flex flex-col pr-1 text-right">
               <p>Name:</p>
               <p>Since:</p>
-              <p>Davos Tier: </p>
+              <p>Tier: </p>
               <p>Current: </p>
             </div>
             <div className="flex flex-col col-span-5 text-app_accent-700 pl-1">
@@ -335,14 +342,13 @@ const SettingsMembership = () => {
               </p>
               <p>{formatDate(user.created)}</p>
               <p>
-                Gold
-                {() =>
-                  user.membership.tier === "monthly"
-                    ? "Silver"
-                    : user.membershipt.tier === "yearly"
-                    ? "Gold"
-                    : "Lifetime"
-                }
+                {user.membership.tier === "monthly" ? (
+                  <>Silver</>
+                ) : user.membershipt.tier === "yearly" ? (
+                  <>Gold</>
+                ) : (
+                  <>Lifetime</>
+                )}
               </p>{" "}
               <p className="whitespace-pre-wrap">
                 {formatDate(user.membership.pay_period.begin) +
@@ -384,7 +390,7 @@ const SettingsMembership = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col bg-white bg-opacity-70 border-b-2 divide-y rounded-lg w-full h-full text-lg p-4">
+        <div className="flex flex-col bg-white bg-opacity-70 border-b-2 divide-y rounded-lg w-full h-full text-lg p-4 overflow-y-auto">
           <div className="flex flex-col w-full divide-y divide-gray-200">
             <div className="mb-4">
               <div className="flex justify-evenly w-full  drop-shadow-[0_1.2px_1.2px_rgba(135,135,135)] mb-2">
