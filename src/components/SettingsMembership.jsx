@@ -325,6 +325,8 @@ const SettingsMembership = () => {
     });
   };
 
+  console.log(user);
+
   return (
     <div className="flex justify-center w-full h-full p-4 text-xl">
       <div className="inner-settings-profile drop-shadow-[0_1.2px_1.2px_rgba(0,0,0)] w-full gap-4">
@@ -344,7 +346,7 @@ const SettingsMembership = () => {
               <p>
                 {user.membership.tier === "monthly" ? (
                   <>Silver</>
-                ) : user.membershipt.tier === "yearly" ? (
+                ) : user.membership.tier === "yearly" ? (
                   <>Gold</>
                 ) : (
                   <>Lifetime</>
