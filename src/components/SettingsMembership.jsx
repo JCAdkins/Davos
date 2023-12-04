@@ -40,39 +40,42 @@ const SettingsMembership = () => {
   }, []);
 
   const mapShipAddresses = (list) => {
-    return list.map((address, ind) => (
-      <div
-        key={ind}
-        className="bg-white border-b border-black drop-shadow-[0_1.2px_1.2px_rgba(135,135,135)] text-sm rounded-lg p-2 leading-none"
-      >
-        <p>
-          Street: <span className="text-app_accent-700">{address.address}</span>
-        </p>
-        <div className="flex gap-2">
+    return list.map((address, ind) => {
+      return (
+        <div
+          key={ind}
+          className="bg-white border-b border-black drop-shadow-[0_1.2px_1.2px_rgba(135,135,135)] text-sm rounded-lg p-2 leading-none"
+        >
           <p>
-            State:{" "}
-            <span className="text-app_accent-700">{address.state_code}</span>
+            Street:{" "}
+            <span className="text-app_accent-700">{address.address}</span>
           </p>
+          <div className="flex gap-2">
+            <p>
+              State:{" "}
+              <span className="text-app_accent-700">{address.state_code}</span>
+            </p>
 
-          <p>
-            Country:{" "}
-            <span className="text-app_accent-700">
-              {address.country_code.toUpperCase()}
-            </span>
-          </p>
-          <p>
-            Zip: <span className="text-app_accent-700">{address.zip}</span>
-          </p>
+            <p>
+              Country:{" "}
+              <span className="text-app_accent-700">
+                {address.country_code.toUpperCase()}
+              </span>
+            </p>
+            <p>
+              Zip: <span className="text-app_accent-700">{address.zip}</span>
+            </p>
 
-          <button
-            className="bg-app_accent-900 ml-auto hover:bg-cyan-700 h-18 w-auto rounded-full px-2 text-sm text-white"
-            onClick={() => removeShipping(address)}
-          >
-            Remove
-          </button>
+            <button
+              className="bg-app_accent-900 ml-auto hover:bg-cyan-700 h-18 w-auto rounded-full px-2 text-sm text-white"
+              onClick={() => removeShipping(address)}
+            >
+              Remove
+            </button>
+          </div>
         </div>
-      </div>
-    ));
+      );
+    });
   };
 
   const mapPaymentMethods = (list) => {
@@ -127,61 +130,142 @@ const SettingsMembership = () => {
     ));
   };
 
-  const addPayment = (saveData) => {
-    console.log(saveData);
+  const addItem = (saveData) => {
     updateUser(auth.currentUser.uid, {
       membership: {
         ...user.membership,
-        cards: [...user.membership.cards, saveData.data],
+        cards:
+          saveData.type == "payment method"
+            ? [...user.membership.cards, saveData.data.payment]
+            : [...user.membership.cards],
+        shipping:
+          saveData.type == "shipping address"
+            ? [saveData.data, ...user.membership.shipping]
+            : [...saveData.data.addresses],
       },
     });
     setUser({
       ...user,
       membership: {
         ...user.membership,
-        cards: [...user.membership.cards, saveData.data],
+        cards:
+          saveData.type == "payment method"
+            ? [...user.membership.cards, saveData.data.payment]
+            : [...user.membership.cards],
+        shipping:
+          saveData.type == "shipping address"
+            ? [saveData.data, ...user.membership.shipping]
+            : [...saveData.data.addresses],
       },
     });
-    setPaymentMethods(
-      mapPaymentMethods([...user.membership.cards, saveData.data])
-    );
-  };
 
-  const addShipping = ({ data }) => {
-    updateUser(auth.currentUser.uid, {
-      membership: {
-        ...user.membership,
-        shipping: [data, ...user.membership.shipping],
-      },
-    });
-    setUser({
-      ...user,
-      membership: {
-        ...user.membership,
-        shipping: [data, ...user.membership.shipping],
-      },
-    });
-    setShippingAddresses(mapShipAddresses([data, ...user.membership.shipping]));
+    if (saveData.type == "shipping address")
+      setShippingAddresses((prevState) => [
+        <div className="bg-white border-b border-black drop-shadow-[0_1.2px_1.2px_rgba(135,135,135)] text-sm rounded-lg p-2 leading-none">
+          <p>
+            Street:{" "}
+            <span className="text-app_accent-700">{saveData.data.address}</span>
+          </p>
+          <div className="flex gap-2">
+            <p>
+              State:{" "}
+              <span className="text-app_accent-700">
+                {saveData.data.state_code}
+              </span>
+            </p>
+
+            <p>
+              Country:{" "}
+              <span className="text-app_accent-700">
+                {saveData.data.country_code.toUpperCase()}
+              </span>
+            </p>
+            <p>
+              Zip:{" "}
+              <span className="text-app_accent-700">{saveData.data.zip}</span>
+            </p>
+
+            <button
+              className="bg-app_accent-900 ml-auto hover:bg-cyan-700 h-18 w-auto rounded-full px-2 text-sm text-white"
+              onClick={() => removeShipping(saveData.data)}
+            >
+              Remove
+            </button>
+          </div>
+        </div>,
+        ...prevState,
+      ]);
+
+    if (saveData.type == "payment method") {
+      setShippingAddresses(mapShipAddresses(saveData.data.addresses));
+      setPaymentMethods((prevState) => [
+        ...prevState,
+        <div className="bg-white border-b border-black drop-shadow-[0_1.2px_1.2px_rgba(135,135,135)] text-sm rounded-lg p-2 leading-none">
+          <div>
+            <p>
+              Name:{" "}
+              <span className="text-app_accent-700">
+                {saveData.data.payment.name}
+              </span>
+            </p>
+            <p>
+              Type:{" "}
+              <span className="text-app_accent-700">
+                {saveData.data.payment.company}
+              </span>
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <p>
+              Number:{" "}
+              <span className="text-app_accent-700">
+                ****{saveData.data.payment.number.slice(-4)}
+              </span>
+            </p>
+            <p>
+              Exp:{" "}
+              <span className="text-app_accent-700">
+                {saveData.data.payment.expiration instanceof Timestamp ? (
+                  <>
+                    {saveData.data.payment.expiration.toDate().getMonth() +
+                      1 +
+                      "/" +
+                      saveData.data.payment.expiration
+                        .toDate()
+                        .getUTCFullYear()}
+                  </>
+                ) : (
+                  <>
+                    {saveData.data.payment.expiration.getMonth() +
+                      1 +
+                      "/" +
+                      saveData.data.payment.expiration.getUTCFullYear()}
+                  </>
+                )}
+              </span>
+            </p>
+            <button
+              className="bg-app_accent-900 ml-auto hover:bg-cyan-700 h-18 w-auto rounded-full px-2 text-sm text-white"
+              onClick={() => removePayment(saveData.data.payment)}
+            >
+              Remove
+            </button>
+          </div>
+        </div>,
+      ]);
+    }
   };
 
   const removeItem = (item) => {
     if (item.type === "shipping address") {
-      const filteredAddresses = user.membership.shipping.filter((address) => {
-        console.log(
-          item.data.city != address.city ||
-            item.data.country != address.country ||
-            item.data.state != address.state ||
-            item.data.address != address.address ||
-            item.data.zip != address.zip
-        );
-        return (
+      const filteredAddresses = user.membership.shipping.filter(
+        (address) =>
           item.data.city != address.city ||
           item.data.country != address.country ||
           item.data.state != address.state ||
           item.data.address != address.address ||
           item.data.zip != address.zip
-        );
-      });
+      );
       updateUser(auth.currentUser.uid, {
         membership: { ...user.membership, shipping: filteredAddresses },
       });
@@ -193,27 +277,15 @@ const SettingsMembership = () => {
       setShippingAddresses(newShip);
     }
     if (item.type === "payment method") {
-      const filteredPayments = user.membership.cards.filter((card) => {
-        console.log(card);
-        console.log(item.data);
-        console.log(
-          card.company != item.data.company ||
-            card.cvc != item.data.cvc ||
-            card.expiration != item.data.expiration ||
-            card.name != item.data.name ||
-            card.number != item.data.number ||
-            card.type != item.data.type
-        );
-        return (
+      const filteredPayments = user.membership.cards.filter(
+        (card) =>
           card.company != item.data.company ||
           card.cvc != item.data.cvc ||
           card.expiration != item.data.expiration ||
           card.name != item.data.name ||
           card.number != item.data.number ||
           card.type != item.data.type
-        );
-      });
-      console.log("filterPayments: ", filteredPayments);
+      );
       updateUser(auth.currentUser.uid, {
         membership: { ...user.membership, cards: filteredPayments },
       });
@@ -248,13 +320,14 @@ const SettingsMembership = () => {
 
   return (
     <div className="flex justify-center w-full h-full p-4 text-xl">
-      <div className="inner-settings-profile grid grid-cols-2 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0)] w-full gap-4">
-        <div className="flex-col bg-white bg-opacity-70 border-b-2 overflow-y-auto rounded-lg w-full h-full text-lg p-4 whitespace-pre divide-y divide-gray-200">
+      <div className="inner-settings-profile drop-shadow-[0_1.2px_1.2px_rgba(0,0,0)] w-full gap-4 overflow-y-auto">
+        <div className="flex-col bg-white bg-opacity-70 border-b-2 rounded-lg w-full text-lg p-4 whitespace-pre divide-y divide-gray-200">
           <div className="flex drop-shadow-[0_1.2px_1.2px_rgba(135,135,135)] grid-cols-6  mb-3">
             <div className="flex flex-col pr-1 text-right">
               <p>Name:</p>
               <p>Since:</p>
-              <p>Davos Tier: </p> <p>Current: </p>
+              <p>Davos Tier: </p>
+              <p>Current: </p>
             </div>
             <div className="flex flex-col col-span-5 text-app_accent-700 pl-1">
               <p>
@@ -271,7 +344,7 @@ const SettingsMembership = () => {
                     : "Lifetime"
                 }
               </p>{" "}
-              <p>
+              <p className="whitespace-pre-wrap">
                 {formatDate(user.membership.pay_period.begin) +
                   " - " +
                   formatDate(user.membership.pay_period.end)}
@@ -311,7 +384,7 @@ const SettingsMembership = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col bg-white bg-opacity-70 border-b-2 divide-y rounded-lg w-full h-full overflow-y-auto text-lg p-4">
+        <div className="flex flex-col bg-white bg-opacity-70 border-b-2 divide-y rounded-lg w-full h-full text-lg p-4">
           <div className="flex flex-col w-full divide-y divide-gray-200">
             <div className="mb-4">
               <div className="flex justify-evenly w-full  drop-shadow-[0_1.2px_1.2px_rgba(135,135,135)] mb-2">
@@ -385,9 +458,10 @@ const SettingsMembership = () => {
           clearAddModal={() => setAddData()}
           data={addData}
           submitData={(data) =>
-            data.type === "shipping address"
-              ? addShipping(data)
-              : addPayment(data)
+            // data.type === "shipping address"
+            //   ? addShipping(data)
+            //   : addPayment(data)
+            addItem(data)
           }
         />
       )}

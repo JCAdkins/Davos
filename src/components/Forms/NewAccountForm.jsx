@@ -23,11 +23,10 @@ const emailRegex = new RegExp(
 const phoneRegex = new RegExp(
   /^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/
 );
-const URL = "http://127.0.0.1:3000/users";
 
 const NewAccountForm = () => {
   const navigate = useNavigate();
-  const { _, setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [page, setPage] = useState(0);
   const uidRef = useRef();
   const [userTaken, setUserTaken] = useState();
@@ -42,12 +41,8 @@ const NewAccountForm = () => {
   } = useForm();
 
   const submitForm = async (event) => {
-    console.log(event);
     const userData = {
-      credentials: {
-        userName: event.email,
-        password: event.password,
-      },
+      username: event.email,
       name: {
         firstName: event.firstName,
         lastName: event.lastName,
@@ -57,14 +52,16 @@ const NewAccountForm = () => {
         image:
           "https://firebasestorage.googleapis.com/v0/b/davos-57f96.appspot.com/o/tester_mctestington.png?alt=media&token=0c4ad935-6a4a-4424-b064-b47bebf25871&_gl=1*80ywfm*_ga*MTUzMzk2MTg0MC4xNjk3NTM3Mzk3*_ga_CW55HF8NVT*MTY5Nzc3MzE2OS4xNS4xLjE2OTc3NzMyOTQuNDMuMC4w",
         background_image: "",
-        organization: event.organization,
-        occupation: event.occupation,
-        experience: event.experience,
-        responsibilities: event.responsibilities,
-        company_url: event.company_url,
-        number_employees: event.number_employees,
-        industry: event.industry,
-        email: event.company_email,
+        occupational: {
+          organization: event.organization,
+          occupation: event.occupation,
+          experience: event.experience,
+          responsibilities: event.responsibilities,
+          company_url: event.company_url,
+          number_employees: event.number_employees,
+          industry: event.industry,
+          email: event.company_email,
+        },
         education: { school: event.school, degree: degree },
         location: { city: event.city, state: state },
         phone: event.phone,
@@ -75,7 +72,7 @@ const NewAccountForm = () => {
       subscribed: true,
       events: [],
       created: new Date(),
-      new: true,
+      newUser: true,
       playlists: [
         {
           name: "current",
@@ -84,9 +81,9 @@ const NewAccountForm = () => {
       ],
     };
 
-    const docRef = addUser(userData, uidRef.current);
-    console.log(docRef);
+    addUser(userData, uidRef.current);
     setUser(userData);
+    console.log("user: ", user);
     navigate("/profile");
 
     // Implement logic to check for a successful post code here
@@ -115,8 +112,8 @@ const NewAccountForm = () => {
         return user.uid;
       })
       .catch((error) => {
+        console.log("Error: ", error);
         setUserTaken("Username is taken.");
-        console.log(error);
       });
     return uid;
   };
@@ -305,7 +302,7 @@ const NewAccountForm = () => {
                   <Label htmlFor="experience" value="Years Experience" />
                 </div>
                 <input
-                  className="rounded-lg"
+                  className="rounded-lg text-black"
                   id="experience"
                   type="number"
                   min="0"
@@ -354,7 +351,7 @@ const NewAccountForm = () => {
                   />
                 </div>{" "}
                 <input
-                  className="rounded-lg"
+                  className="rounded-lg text-black"
                   id="number_employees"
                   type="number"
                   min="0"

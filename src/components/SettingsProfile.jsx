@@ -21,7 +21,10 @@ const SettingsProfile = ({ user, setSaveData }) => {
   const [education, setEducation] = useState();
   const [work, setWork] = useState();
   const newPasswordRef = useRef(null);
+  const verifyPasswordRef = useRef(null);
   const retypePasswordRef = useRef(null);
+  const [verifyPassword, setVerifyPassword] = useState();
+  const [verifyError, setVerifyError] = useState();
 
   useEffect(() => {
     setSaveData({
@@ -38,6 +41,14 @@ const SettingsProfile = ({ user, setSaveData }) => {
     if (data.type === "work") setWork(data.data);
   };
 
+  const handleBlur = (event) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+      setVerifyError();
+      setVerifyPassword();
+      setChangingPassword();
+    }
+  };
+
   return (
     <div className="flex justify-center w-full h-full p-4 text-xl">
       <div className="inner-settings-profile grid grid-cols-2 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0)] w-full gap-4">
@@ -47,7 +58,11 @@ const SettingsProfile = ({ user, setSaveData }) => {
               <p>Name:</p>
               <p>User:</p>
               <p>Password:</p>
-              {changingPassword ? <p>Re-Type:</p> : ""}
+              {changingPassword ? (
+                <>{verifyPassword === "verify" ? "" : <p>Re-Type:</p>}</>
+              ) : (
+                ""
+              )}
               <p>Created:</p>
             </div>
             <div className="flex flex-col col-span-5 text-app_accent-700 pl-1">
@@ -57,58 +72,96 @@ const SettingsProfile = ({ user, setSaveData }) => {
               <p>{user.credentials.userName}</p>
               <div>
                 {changingPassword ? (
-                  <form
-                    onSubmit={(event) => {
-                      event.preventDefault();
-                      setNewPassword(newPasswordRef.current?.value);
-                      setChangingPassword(false);
-                    }}
-                  >
-                    <div className="flex flex-col gap-1">
-                      <div className="flex gap-1">
+                  <>
+                    {verifyPassword === "verify" ? (
+                      <form
+                        onBlur={(event) => handleBlur(event)}
+                        className="flex gap-1"
+                      >
                         <TextInput
-                          ref={newPasswordRef}
-                          className="new-password"
-                          placeholder="New Password"
-                          id="new-password"
+                          ref={verifyPasswordRef}
+                          className={`verify-password ${verifyError}`}
+                          placeholder="Enter Current Password"
+                          id="verify-password"
                           type="password"
                           sizing="sm"
+                          onChange={() => (verifyError ? setVerifyError() : {})}
+                          autoFocus
                           required
                         />
                         <button
                           className="bg-app_accent-900 hover:bg-cyan-700 h-18 w-auto rounded-full px-2 text-sm text-white"
-                          onSubmit={(event) => {
+                          onClick={(event) => {
                             event.preventDefault();
-                            setNewPassword(newPasswordRef.current?.value);
-                            setChangingPassword(false);
+                            if (
+                              verifyPasswordRef.current?.value ===
+                              user.credentials.password
+                            )
+                              setVerifyPassword("verified");
+                            else setVerifyError("verify-password-error");
                           }}
                         >
-                          Submit
+                          {" "}
+                          Enter{" "}
                         </button>
-                      </div>
-                      <div className="flex gap-1">
-                        <TextInput
-                          ref={retypePasswordRef}
-                          className="new-password"
-                          id="re-type-password"
-                          placeholder="Re-type Password"
-                          type="password"
-                          sizing="sm"
-                          required
-                        />
-                        <button
-                          className="bg-app_accent-900 hover:bg-cyan-700 h-18 w-auto rounded-full px-2 text-sm text-white"
-                          onClick={() => setChangingPassword(false)}
-                        >
-                          Cancel{" "}
-                        </button>
-                      </div>
-                    </div>
-                  </form>
+                      </form>
+                    ) : (
+                      <form
+                        onSubmit={(event) => {
+                          event.preventDefault();
+                          setNewPassword(newPasswordRef.current?.value);
+                          setChangingPassword(false);
+                        }}
+                      >
+                        <div className="flex flex-col gap-1">
+                          <div className="flex gap-1">
+                            <TextInput
+                              ref={newPasswordRef}
+                              className="new-password"
+                              placeholder="New Password"
+                              id="new-password"
+                              type="password"
+                              sizing="sm"
+                              required
+                            />
+                            <button
+                              className="bg-app_accent-900 hover:bg-cyan-700 h-18 w-auto rounded-full px-2 text-sm text-white"
+                              onSubmit={(event) => {
+                                event.preventDefault();
+                                setNewPassword(newPasswordRef.current?.value);
+                                setChangingPassword(false);
+                              }}
+                            >
+                              Submit
+                            </button>
+                          </div>
+                          <div className="flex gap-1">
+                            <TextInput
+                              ref={retypePasswordRef}
+                              className="new-password"
+                              id="re-type-password"
+                              placeholder="Re-type Password"
+                              type="password"
+                              sizing="sm"
+                              required
+                            />
+                            <button
+                              className="bg-app_accent-900 hover:bg-cyan-700 h-18 w-auto rounded-full px-2 text-sm text-white"
+                              onClick={() => setChangingPassword(false)}
+                            >
+                              Cancel{" "}
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                    )}
+                  </>
                 ) : (
                   <button
                     className="bg-app_accent-900 hover:bg-cyan-700 h-[26px] px-2 w-auto rounded-full text-sm text-white "
                     onClick={() => {
+                      setVerifyPassword("verify");
+                      console.log(verifyPasswordRef.current);
                       setChangingPassword((prevState) => !prevState);
                     }}
                   >

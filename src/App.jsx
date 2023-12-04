@@ -31,21 +31,24 @@ function App() {
   };
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
+    onAuthStateChanged(auth, (tUser) => {
+      if (tUser) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
-        const uid = user.uid;
-        getUser(uid).then((data) => {
-          data ? setUser(data) : {};
+        const username = tUser.email;
+        getUser(username).then((data) => {
+          data.forEach((signedInUser) => {
+            setUser({ ...signedInUser.data() });
+          });
         });
       } else {
         // User is signed out
-        // ...
-        setTimeout(setModal(true), 2000);
+        setTimeout(() => setModal(true), 2000);
       }
     });
   }, []);
+
+  useEffect(() => {}, [user]);
 
   return (
     <div className="bg-cover bg-fixed w-screen">
@@ -73,7 +76,7 @@ function App() {
                 element={
                   <ProtectedRoute
                     isAllowed={
-                      user ? user.permissions.includes("admin") : false
+                      user ? user.permissions?.includes("admin") : false
                     }
                   >
                     <Admin />

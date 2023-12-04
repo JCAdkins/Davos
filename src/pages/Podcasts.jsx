@@ -104,7 +104,7 @@ const Podcasts = () => {
   }, [allPC]);
 
   useEffect(() => {
-    setTimeout(setModal(!user), 3000);
+    setTimeout(() => setModal(!user), 2000);
   }, []);
 
   const addPodcast = (podcast) => {
@@ -323,7 +323,7 @@ const Podcasts = () => {
                     )}
                   </div>
                   <div className="w-full bg-gray-300 rounded-md text-lg mb-6 drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]">
-                    <p className="text-black text-center text-2xl my-4 font-mono">
+                    <p className="text-black text-center text-2xl my-4 font-dmserif">
                       Categories
                     </p>
                     <Accordion collapseAll>
@@ -357,10 +357,7 @@ const Podcasts = () => {
                         <Accordion.Title className="text-black bg-white">
                           Business Leaders
                         </Accordion.Title>
-                        <Accordion.Content
-                          className="overflow-x-scroll bg-gray-400"
-                          bg-gray-400
-                        >
+                        <Accordion.Content className="overflow-x-scroll bg-gray-400">
                           <div className="flex rounded-lg min-w-max w-full gap-6">
                             {allPC
                               .filter(

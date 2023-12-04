@@ -69,7 +69,6 @@ const Events = () => {
               </ListGroup.Item>,
             ];
             setUserEvents(temp);
-            setLoadingInit(false);
           });
         })
       : {};
@@ -82,6 +81,7 @@ const Events = () => {
         evList = [...evList, doc.data()];
         setEventList(evList);
       });
+      setLoadingInit(false);
     });
   }, []);
 
@@ -432,7 +432,7 @@ const Events = () => {
                 <span className="mt-6 font-bold">What to Expect: </span>
                 <ol
                   role="list"
-                  className="items-center marker:text-white rounded bg-app_accent-900 drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)] text-white px-4 list-disc list-inside mb-6 space-y-3"
+                  className="items-center marker:text-white rounded bg-app_accent-900 drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)] text-white px-4 pb-2 list-disc list-inside mb-6 space-y-3"
                 >
                   <li className="mt-2 drop-shadow-[0_1.2px_1.2px_rgba(200,200,200)]">
                     <strong>Engaging Workshops: </strong>Dive deep into the
@@ -475,7 +475,7 @@ const Events = () => {
               <div className="flex flex-col mx-6 lg:max-w-[65ch]">
                 <ol
                   role="list"
-                  className="marker:text-white bg-app_accent-900 drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)] text-white rounded list-disc list-inside px-4 space-y-3"
+                  className="marker:text-white bg-app_accent-900 drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)] text-white rounded list-disc list-inside px-4 pb-2 space-y-3"
                 >
                   <li className="mt-2 drop-shadow-[0_1.2px_1.2px_rgba(200,200,200)]">
                     Expand your knowledge

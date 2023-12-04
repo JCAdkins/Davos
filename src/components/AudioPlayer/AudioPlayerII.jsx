@@ -288,7 +288,7 @@ const AudioPlayerII = (props) => {
       <div className="play-list flex flex-col bg-app_accent-900 rounded-lg p-1 mt-2 space-y-1 h-56 overflow-y-scroll">
         {podcastList.map((podcast, key) => {
           return podcast.disabled ? (
-            <div></div>
+            <div key={key}></div>
           ) : (
             <div
               key={key}

@@ -24,7 +24,6 @@ function AddModal({ clearAddModal, data, submitData }) {
   };
 
   useEffect(() => {
-    console.log(modalRef.current);
     if (data.type === "payment method")
       setForm(
         <PaymentMethodForm

@@ -78,10 +78,10 @@ const UserSettings = () => {
   return (
     <div className="settings-body bg-app_bg font-dmserif text-black">
       <div className="settings-container flex flex-col w-screen h-full">
-        <div className="settings-grid-container flex grid grid-cols-4">
-          <div className="settings-sidebar flex flex-col bg-app_accent-900 items-center gap-4 p-4">
+        <div className="settings-grid-container flex flex-col sm:grid sm:grid-cols-4">
+          <div className="settings-sidebar flex flex-col bg-app_accent-900 items-center gap-4 p-4 break-all">
             <img
-              className="rounded-full w-48 h-48 border-2 border-app_main p-2"
+              className="rounded-none w-auto h-auto border-1 sm:border-2 sm:border-app_main p-0 sm:p-1 md:p-2"
               src={user.profile.image}
               alt={user.name}
             />

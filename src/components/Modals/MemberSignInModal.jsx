@@ -28,13 +28,16 @@ const MemberSignInModal = (props) => {
       })
       .catch((error) => {
         logInDenied();
-        console.log(error.errorCode, error.errorMessage);
+        console.log(error);
       });
   };
 
   const logInAuthorized = (u) => {
-    const tmpUser = getUser(u.uid);
-    tmpUser.then((data) => setUser(data));
+    getUser(u.email).then((data) => {
+      data.forEach((signInUser) => {
+        setUser({ ...signInUser.data() });
+      });
+    });
     props.resetModal();
   };
 

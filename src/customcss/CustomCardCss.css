@@ -125,17 +125,6 @@
   background-color: lightgray;
 }
 
-.settings-body,
-.settings-sidebar {
-  height: calc(100vh - 76px);
-}
-
-.inner-settings-profile {
-  height: 100%;
-  max-height: 667px;
-  overflow-y: scroll;
-}
-
 .settings-toggle div {
   background-color: #0369a1;
 }
@@ -179,3 +168,68 @@ div[data-testid="modal-overlay"]:has(.form-handle) {
 /* div:has(.form-handle) {
   position: fixed;
 } */
+
+@media screen and (min-width: 750px) {
+  .settings-body,
+  .settings-sidebar {
+    height: calc(100vh - 76px);
+  }
+  .inner-settings-profile {
+    height: 100%;
+    max-height: 750px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .settings-body,
+  .settings-sidebar {
+    height: calc(100%);
+  }
+  .inner-settings-profile {
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.settings-profile-main {
+  overflow-y: auto;
+}
+
+.about-sidebar-container button:focus {
+  box-shadow: var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width))
+    var(--tw-ring-color);
+  background-color: lightgray;
+}
+
+.verify-password input {
+  padding: 0.31rem;
+}
+
+.verify-password-error input {
+  color: red;
+  animation: shake 0.5s linear;
+}
+
+@keyframes shake {
+  8%,
+  41% {
+    -webkit-transform: translateX(-10px);
+  }
+  25%,
+  58% {
+    -webkit-transform: translateX(10px);
+  }
+  75% {
+    -webkit-transform: translateX(-5px);
+  }
+  92% {
+    -webkit-transform: translateX(5px);
+  }
+  0%,
+  100% {
+    -webkit-transform: translateX(0);
+  }
+}

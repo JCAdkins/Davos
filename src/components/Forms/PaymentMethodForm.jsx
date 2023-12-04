@@ -15,7 +15,7 @@ const PaymentMethodForm = ({
   payments,
   addresses,
   submitData,
-  submitNewBilling,
+  //submitNewBilling,
 }) => {
   const [date, setDate] = useState();
   const [cardType, setCardType] = useState("Credit");
@@ -41,16 +41,18 @@ const PaymentMethodForm = ({
 
   const submitForm = (data) => {
     const addy = billingAddress.props
-      ? addresses.filter(
-          (address) =>
+      ? pAddresses.filter((address) => {
+          return (
             billingAddress.props.children[0] == address.address &&
             billingAddress.props.children[2] == address.city &&
-            billingAddress.props.children[4] == address.state_code &&
+            (billingAddress.props.children[4] == address.state_code ||
+              billingAddress.props.children[5] == address.state_code) &&
             billingAddress.props.children[7] ==
               address.country_code.toUpperCase() &&
             billingAddress.props.children[9] == address.zip
-        )
-      : addresses.filter((address) => {
+          );
+        })
+      : pAddresses.filter((address) => {
           const addr = billingAddress.split(", ");
           return (
             addr[0] == address.address &&
@@ -118,7 +120,14 @@ const PaymentMethodForm = ({
       }, 1000);
       return;
     }
-    submitNewBilling({ type: "shipping address", data: newAddressData });
+    // ********************************************************************************
+    // DO NOT DO THIS WAY: submitNewBilling({ type: "shipping address", data: newAddressData });
+    //
+    // **** If we submitted a new billing address this way, then the Users db will be updated to reflect the address
+    // **** addition, however, the data inside the AddModal <PaymentMethodForm> closure formed when function is mounted
+    // **** will not have that data included. So, when form submission with new payment method is done, the user addresses
+    // **** will be updated to what's inside the closure and the newly added address will be effectively be removed.
+    // ********************************************************************************
     if (billingOptions)
       setBillingOpptions([
         <option>
@@ -151,15 +160,28 @@ const PaymentMethodForm = ({
   useEffect(() => {
     if (validate) {
       console.log(validate);
-      if (!validate.validation.data.isValid) {
+      if (validate.validation.error || !validate.validation.data.isValid) {
+        console.log("Data not valid.");
+        if (validate.validation.error) {
+          validate.validation.error === "429"
+            ? setErrorMod(
+                "An error occurred on our end. Please contact FAKEEMAIL@fake.com and tell them you received error code: 429."
+              )
+            : setErrorMod(
+                "An error occurred on our end. Please give us a little time to correct the issue then try again."
+              );
+          return;
+        }
         setErrorMod(
           "An error occurred while adding payment method. Re-check that all fields are entered correctly then re-submit."
         );
+        return;
       }
       if (
         validate.payment.company.toLowerCase() !=
         validate.validation.data.card.type
       ) {
+        console.log("companies don't match.");
         setErrorMod(
           <div className="flex gap-2">
             <div className="underline whitespace-nowrap">Company mismatch:</div>
@@ -176,7 +198,9 @@ const PaymentMethodForm = ({
             </div>
           </div>
         );
+        return;
       }
+      submitData({ payment: validate.payment, addresses: pAddresses });
     }
   }, [validate]);
 
@@ -229,7 +253,7 @@ const PaymentMethodForm = ({
 
   useEffect(() => {
     setValue("company", "Visa");
-    const tempAddr = addresses.map((address, ind) => (
+    const tempAddr = pAddresses.map((address, ind) => (
       <option key={ind} id={ind}>
         {address.address}, {address.city}, {address.state_code},{" "}
         {address.country_code.toUpperCase()}, {address.zip}

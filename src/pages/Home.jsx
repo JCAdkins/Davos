@@ -34,24 +34,28 @@ const HomePage = () => {
       if (vid1Ref.current) vid1Ref.current.playbackRate = 2.0;
 
       vid1Ref.current?.play();
+      vid4Ref.current ? (vid4Ref.current.currentTime = 0) : {};
       Video2.preload();
       setVideo4Disp("hidden");
       setVideo1Disp("block");
     }
     if (videoIndex === 1) {
       vid2Ref.current?.play();
+      vid1Ref.current ? (vid1Ref.current.currentTime = 0) : {};
       Video3.preload();
       setVideo1Disp("hidden");
       setVideo2Disp("block");
     }
     if (videoIndex === 2) {
       vid3Ref.current?.play();
+      vid2Ref.current ? (vid2Ref.current.currentTime = 0) : {};
       Video4.preload();
       setVideo2Disp("hidden");
       setVideo3Disp("block");
     }
     if (videoIndex === 3) {
       vid4Ref.current?.play();
+      vid3Ref.current ? (vid3Ref.current.currentTime = 0) : {};
       Video1.preload();
       setVideo3Disp("hidden");
       setVideo4Disp("block");

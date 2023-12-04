@@ -1,4 +1,4 @@
-import { Label, Button } from "flowbite-react";
+import { Label, Button, TextInput } from "flowbite-react";
 import {
   GeoapifyGeocoderAutocomplete,
   GeoapifyContext,
@@ -107,7 +107,7 @@ const AddressForm = ({ houseRequired, onSubmit }) => {
               placeholder="1234"
               filterByCountryCode={["us"]}
               placeSelect={placeSelect}
-              limit={4}
+              limit={0}
               debounceDelay={50}
             />
           </div>
@@ -118,7 +118,7 @@ const AddressForm = ({ houseRequired, onSubmit }) => {
             placeholder="Apt/Suite"
             filterByCountryCode={["us"]}
             placeSelect={placeSelect}
-            limit={4}
+            limit={0}
             debounceDelay={50}
           />
         </div>
@@ -130,7 +130,7 @@ const AddressForm = ({ houseRequired, onSubmit }) => {
               placeholder="City"
               filterByCountryCode={["us"]}
               placeSelect={placeSelect}
-              limit={4}
+              limit={0}
               debounceDelay={50}
             />
           </div>
@@ -141,7 +141,7 @@ const AddressForm = ({ houseRequired, onSubmit }) => {
               placeholder="54321"
               filterByCountryCode={["us"]}
               placeSelect={placeSelect}
-              limit={4}
+              limit={0}
               debounceDelay={50}
             />
           </div>
@@ -154,7 +154,7 @@ const AddressForm = ({ houseRequired, onSubmit }) => {
               placeholder="State"
               filterByCountryCode={["us"]}
               placeSelect={placeSelect}
-              limit={4}
+              limit={0}
               debounceDelay={50}
             />
           </div>
@@ -164,7 +164,7 @@ const AddressForm = ({ houseRequired, onSubmit }) => {
               placeholder="Country"
               filterByCountryCode={["us"]}
               placeSelect={placeSelect}
-              limit={4}
+              limit={0}
               debounceDelay={50}
             />
           </div>
