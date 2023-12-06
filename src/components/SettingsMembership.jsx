@@ -325,8 +325,6 @@ const SettingsMembership = () => {
     });
   };
 
-  console.log(user);
-
   return (
     <div className="flex justify-center w-full h-full p-4 text-xl">
       <div className="inner-settings-profile drop-shadow-[0_1.2px_1.2px_rgba(0,0,0)] w-full gap-4">
@@ -361,7 +359,7 @@ const SettingsMembership = () => {
           </div>
           <div className="flex mb-2">
             <div className="flex w-full pt-2 drop-shadow-[0_1.2px_1.2px_rgba(135,135,135)]">
-              Tier Benefits:{" "}
+              Benefits:{" "}
               <span className="text-app_accent-700 whitespace-normal break-normal">
                 {tierBenefit}
               </span>

@@ -88,6 +88,8 @@
 
 .fade-in-alert {
   animation: fadeIn 400ms;
+  -moz-animation: fadeIn 400ms;
+  -webkit-animation: fadeIn 400ms;
 }
 
 @keyframes fadeIn {
@@ -165,10 +167,6 @@ div[data-testid="modal-overlay"]:has(.form-handle) {
   --tw-bg-opacity: 0;
 }
 
-/* div:has(.form-handle) {
-  position: fixed;
-} */
-
 @media screen and (min-width: 750px) {
   .settings-body,
   .settings-sidebar {
@@ -192,9 +190,6 @@ div[data-testid="modal-overlay"]:has(.form-handle) {
     display: flex;
     flex-direction: column;
   }
-  /* .settings-profile-main {
-    overflow-y: auto;
-  } */
 }
 
 .about-sidebar-container button:focus {
