@@ -3,9 +3,9 @@ import "../customcss/CustomCardCss.css";
 
 const DefaultCarousel = () => {
   return (
-    <div className="carousel-container h-screen w-screen">
+    <div className="carousel-container h-screen w-screen rounded-none">
       <Carousel
-        className="carousel"
+        className="carousel rounded-none"
         indicators={false}
         leftControl=" "
         rightControl=" "
@@ -16,7 +16,7 @@ const DefaultCarousel = () => {
           src="https://dsk4t6ov5vq8n.cloudfront.net/uploads/PBS-Articles/2022/The-Green-Planet/Episode-4-photos/Sized-photos/The_Green_Planet_04_010.jpg"
         />
         <img
-          className="carousel-image"
+          className="carousel-image rounded-none"
           alt="..."
           src="https://images.squarespace-cdn.com/content/v1/5e9f634cf9f8c97306173ee3/1655751101586-IDSZYILJ5S7EM07V97B0/desert-sunrays-2000-wm-IMG_4502.jpg?format=2500w"
         />

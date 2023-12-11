@@ -70,18 +70,24 @@ const ProfileDisplay = () => {
     updateUser(auth.currentUser.uid, {
       profile: {
         ...user.profile,
-        experience: yearsExp,
-        occupation: occupationRef.current.value,
-        organization: organizationRef.current.value,
+        occupational: {
+          ...user.profile.occupational,
+          experience: yearsExp,
+          occupation: occupationRef.current.value,
+          organization: organizationRef.current.value,
+        },
       },
     });
     setUser({
       ...user,
       profile: {
         ...user.profile,
-        experience: yearsExp,
-        occupation: occupationRef.current.value,
-        organization: organizationRef.current.value,
+        occupational: {
+          ...user.profile.occupational,
+          experience: yearsExp,
+          occupation: occupationRef.current.value,
+          organization: organizationRef.current.value,
+        },
       },
     });
     setEditingCareer(false);
@@ -114,7 +120,7 @@ const ProfileDisplay = () => {
   };
 
   const submitLocation = (event) => {
-    // There are two ways to submit the data one with onSubmit which provides an event and another which doesn't
+    // There are two ways to submit the data, one with onSubmit which provides an event and another which doesn't
     // provide an event in which case we have to check for an event here before preventing the window refresh
     event ? event.preventDefault() : {};
 
@@ -206,21 +212,25 @@ const ProfileDisplay = () => {
   }, []);
 
   return (
-    <div className="p-16 bg-app_accent-900">
-      <div className="p-8 bg-white shadow mt-24">
+    <div className="p-16 bg-app_accent-900 font-dmserif">
+      <div className="p-8 bg-gray-300 rounded-md shadow mt-24">
         <div className="grid grid-cols-1 md:grid-cols-3">
-          <div className="grid grid-cols-2 text-center order-last md:order-first mt-20 md:mt-0">
+          <div className="grid grid-cols-2 text-center order-last md:order-first mt-20 md:mt-0 drop-shadow-[0_1.2px_1.2px_rgba(95,95,95)]">
             <div>
-              <p className="font-bold text-gray-700 text-xl">22</p>
-              <p className="text-gray-400">Friends</p>
+              <p className="font-bold text-black text-xl">
+                {user.social.friends.length}
+              </p>
+              <p className="text-gray-800">Friends</p>
             </div>
             <div>
-              <p className="font-bold text-gray-700 text-xl">89</p>
-              <p className="text-gray-400">Comments</p>
+              <p className="font-bold text-black text-xl">
+                {user.social.comments.length}
+              </p>
+              <p className="text-gray-800">Comments</p>
             </div>
           </div>
           <div className="relative">
-            <div className="w-48 h-48 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center">
+            <div className="w-48 h-48 mx-auto z-10 rounded-full shadow-2xl drop-shadow-[0_6px_6px_rgba(95,95,95)] absolute inset-x-0 top-0 -mt-24 flex items-center justify-center">
               {addProfilePic && (
                 <>
                   <img
@@ -247,226 +257,236 @@ const ProfileDisplay = () => {
               )}
             </div>
           </div>
-          <div className="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center">
-            <button className="text-white py-2 px-4 uppercase rounded bg-app_accent-400 hover:bg-app_accent-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
+          <div className="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center drop-shadow-[0_2px_2px_rgba(95,95,95)]">
+            <button className="text-white py-2 px-4 uppercase rounded bg-app_accent-600 active:drop-shadow-[0_2px_2px_rgba(95,95,95)] shadow hover:drop-shadow-[0_3px_3px_rgba(95,95,95)] hover:shadow-lg font-medium transition transform active:bg-app_accent-700 hover:scale-105 hover:-translate-y-0.5">
               Connect
             </button>
-            <button className="text-white py-2 px-4 uppercase rounded bg-gray-700 hover:bg-gray-800 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
+            <button className="text-white py-2 px-4 uppercase rounded bg-app_accent-600 active:drop-shadow-[0_2px_2px_rgba(95,95,95)] hover:drop-shadow-[0_3px_3px_rgba(95,95,95)] hover:scale-105 active:bg-app_accent-700 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
               Message
             </button>
           </div>
         </div>
-        <div className="mt-20 text-center border-b pb-12">
-          <h1 className="text-4xl font-medium mb-4 text-gray-700">
-            {user.name.firstName + " " + user.name.lastName},
-            <span className="font-light text-gray-500">
-              {getAge(user.profile.dob)}
-            </span>
-          </h1>
-          <div className="group justify-center">
-            <button
-              class="hidden -mt-3 group-hover:inline-block text-black"
-              onClick={() => {
-                editLocation();
-              }}
-            >
-              <EditIcon />
-            </button>
+        <div className="flex justify-center w-full mt-4 drop-shadow-[0_3px_3px_rgba(95,95,95)]">
+          <div className="flex items-center bg-app_main w-fit h-full px-4 rounded-md ">
+            <div className="w-fit mt-10 text-center pb-12">
+              <h1 className="text-4xl font-medium mb-4 text-black drop-shadow-[0_1.2px_1.2px_rgba(95,95,95)] ">
+                {user.name.firstName + " " + user.name.lastName},{" "}
+                <span className="font-light text-black">
+                  {getAge(user.profile.dob)}
+                </span>
+              </h1>
+              <div className="group justify-center">
+                <button
+                  class="hidden -mt-3 group-hover:inline-block text-black"
+                  onClick={() => {
+                    editLocation();
+                  }}
+                >
+                  <EditIcon />
+                </button>
 
-            {editingLocation && (
-              <form
-                type="submit"
-                className="flex-row justify center mb-4 -mt-2"
-                onBlur={(e) => {
-                  e.currentTarget.contains(e.relatedTarget) ? {} : cancelEdit();
-                }}
-                onSubmit={submitLocation}
-              >
-                <div className="flex flex-row w-full items-center gap-2 scale-75 justify-center">
-                  <TextInput
-                    ref={cityRef}
-                    type="input"
-                    autoFocus
-                    className="w-fit"
-                    id="city"
-                    defaultValue={user.profile.location.city}
-                    placeholder="City"
-                    onChange={() => {
-                      cityRef.current
-                        ? (cityRef.current.style.background = "white")
-                        : {};
+                {editingLocation && (
+                  <form
+                    type="submit"
+                    className="flex-row justify center mb-4 -mt-2"
+                    onBlur={(e) => {
+                      e.currentTarget.contains(e.relatedTarget)
+                        ? {}
+                        : cancelEdit();
                     }}
-                    shadow
-                  />
-                  <SelectInput
-                    type="input"
-                    id="state"
-                    value={state}
-                    onKeyDown={(e) => {
-                      cityRef.current.value
-                        ? onKeyUpEnter(e)
-                        : (cityRef.current.style.background = "red");
-                    }}
-                    onChange={(e) => {
-                      setState(e.target.value);
-                    }}
-                    options={STATES_LIST}
-                  />
-                </div>
-              </form>
-            )}
-            {!editingLocation && (
-              <p className="font-light text-gray-600 -mt-2 mb-10">
-                {user.profile.location.city +
-                  ", " +
-                  user.profile.location.state}
-              </p>
-            )}
-          </div>
-          <div className="group justify-center mb-4">
-            <button
-              class="hidden -mt-3 group-hover:inline-block text-black"
-              onClick={editCareer}
-            >
-              <EditIcon />
-            </button>
-            {editingCareer && (
-              <form
-                type="submit"
-                className="flex-row justify center mb-4 -mt-2"
-                onBlur={(e) => {
-                  e.currentTarget.contains(e.relatedTarget) ? {} : cancelEdit();
-                }}
-                onSubmit={submitCareer}
-              >
-                <div className="flex flex-row w-full items-center gap-2 scale-75 justify-center">
-                  <TextInput
-                    autoFocus
-                    ref={occupationRef}
-                    type="input"
-                    defaultValue={user.profile.occupation}
-                    placeholder="Occupation"
-                    shadow
-                    onKeyDown={(e) => {
-                      onKeyUpEnter(e);
-                    }}
-                    className="w-fit"
-                  ></TextInput>
-                  <SelectInput
-                    type="input"
-                    id="years"
-                    value={yearsExp}
-                    onKeyDown={(e) => {
-                      onKeyUpEnter(e);
-                    }}
-                    onChange={(e) => {
-                      setYearsExp(e.target.value);
-                    }}
-                    options={NUMBERS_1TO50}
-                    className="w-fit"
-                    placeholder="Exp"
-                  ></SelectInput>
-                  <TextInput
-                    type="input"
-                    ref={organizationRef}
-                    defaultValue={user.profile.organization}
-                    placeholder="Organization"
-                    shadow
-                    onKeyDown={(e) => {
-                      onKeyUpEnter(e);
-                    }}
-                    className="w-fit"
-                  ></TextInput>
-                </div>
-              </form>
-            )}
-            {!editingCareer && (
-              <div className="flex justify-center -mt-2 gap-2">
-                {user.profile.occupational.occupation != "" && (
-                  <>
-                    <p className="text-gray-500">
-                      {user.profile.occupational.occupation}
-                    </p>
-                    <p className="text-gray-500"> - </p>
-                  </>
+                    onSubmit={submitLocation}
+                  >
+                    <div className="flex flex-row w-full items-center gap-2 scale-75 justify-center">
+                      <TextInput
+                        ref={cityRef}
+                        type="input"
+                        autoFocus
+                        className="w-fit"
+                        id="city"
+                        defaultValue={user.profile.location.city}
+                        placeholder="City"
+                        onChange={() => {
+                          cityRef.current
+                            ? (cityRef.current.style.background = "white")
+                            : {};
+                        }}
+                        shadow
+                      />
+                      <SelectInput
+                        type="input"
+                        id="state"
+                        value={state}
+                        onKeyDown={(e) => {
+                          cityRef.current.value
+                            ? onKeyUpEnter(e)
+                            : (cityRef.current.style.background = "red");
+                        }}
+                        onChange={(e) => {
+                          setState(e.target.value);
+                        }}
+                        options={STATES_LIST}
+                      />
+                    </div>
+                  </form>
                 )}
+                {!editingLocation && (
+                  <p className="font-light text-black -mt-2 mb-10 drop-shadow-[0_3px_3px_rgba(95,95,95)]">
+                    {user.profile.location.city +
+                      ", " +
+                      user.profile.location.state}
+                  </p>
+                )}
+              </div>
+              <div className="group justify-center mb-4">
+                <button
+                  class="hidden -mt-3 group-hover:inline-block text-black"
+                  onClick={editCareer}
+                >
+                  <EditIcon />
+                </button>
+                {editingCareer && (
+                  <form
+                    type="submit"
+                    className="flex-row justify center mb-4 -mt-2"
+                    onBlur={(e) => {
+                      e.currentTarget.contains(e.relatedTarget)
+                        ? {}
+                        : cancelEdit();
+                    }}
+                    onSubmit={submitCareer}
+                  >
+                    <div className="flex flex-row w-full items-center gap-2 scale-75 justify-center">
+                      <TextInput
+                        autoFocus
+                        ref={occupationRef}
+                        type="input"
+                        defaultValue={user.profile.occupation}
+                        placeholder="Occupation"
+                        shadow
+                        onKeyDown={(e) => {
+                          onKeyUpEnter(e);
+                        }}
+                        className="w-fit"
+                      ></TextInput>
+                      <SelectInput
+                        type="input"
+                        id="years"
+                        value={yearsExp}
+                        onKeyDown={(e) => {
+                          onKeyUpEnter(e);
+                        }}
+                        onChange={(e) => {
+                          setYearsExp(e.target.value);
+                        }}
+                        options={NUMBERS_1TO50}
+                        className="w-fit"
+                        placeholder="Exp"
+                      ></SelectInput>
+                      <TextInput
+                        type="input"
+                        ref={organizationRef}
+                        defaultValue={user.profile.organization}
+                        placeholder="Organization"
+                        shadow
+                        onKeyDown={(e) => {
+                          onKeyUpEnter(e);
+                        }}
+                        className="w-fit"
+                      ></TextInput>
+                    </div>
+                  </form>
+                )}
+                {!editingCareer && (
+                  <div className="flex justify-center -mt-2 gap-2 drop-shadow-[0_1.2px_1.2px_rgba(95,95,95)] ">
+                    {user.profile.occupational.occupation != "" && (
+                      <>
+                        <p className="text-black">
+                          {user.profile.occupational.occupation}
+                        </p>
+                        <p className="text-black"> - </p>
+                      </>
+                    )}
 
-                {user.profile.occupational.experience > 0 && (
-                  <>
-                    <p className="text-gray-500">
-                      {user.profile.occupational.experience}
+                    {user.profile.occupational.experience > 0 && (
+                      <>
+                        <p className="text-black">
+                          {user.profile.occupational.experience}
+                        </p>
+                        <p className="text-black"> Years - </p>
+                      </>
+                    )}
+                    <p className="text-black">
+                      {user.profile.occupational.organization}
                     </p>
-                    <p className="text-gray-500"> Years - </p>
-                  </>
+                  </div>
                 )}
-                <p className="text-gray-500">
-                  {user.profile.occupational.organization}
-                </p>
               </div>
-            )}
-          </div>
-          <div className="group justify-center">
-            <button
-              class="hidden group-hover:inline-block text-black"
-              onClick={editEducation}
-            >
-              <EditIcon />
-            </button>
-            {editingEducation && (
-              <form
-                type="submit"
-                className="flex-row justify center mb-4 -mt-2"
-                onBlur={(e) => {
-                  e.currentTarget.contains(e.relatedTarget) ? {} : cancelEdit();
-                }}
-                onSubmit={submitEducation}
-              >
-                <div className="flex flex-row w-full items-center gap-2 scale-75 justify-center">
-                  <TextInput
-                    ref={schoolRef}
-                    type="input"
-                    autoFocus
-                    className="w-fit"
-                    id="school"
-                    defaultValue={user.profile.education.school}
-                    placeholder="School"
-                    shadow
-                  ></TextInput>
-                  <SelectInput
-                    type="input"
-                    id="degree"
-                    value={degree}
-                    onKeyDown={(e) => onKeyUpEnter(e)}
-                    onChange={(e) => {
-                      setDegree(e.target.value);
+              <div className="group justify-center">
+                <button
+                  class="hidden group-hover:inline-block text-black"
+                  onClick={editEducation}
+                >
+                  <EditIcon />
+                </button>
+                {editingEducation && (
+                  <form
+                    type="submit"
+                    className="flex-row justify center mb-4 -mt-2"
+                    onBlur={(e) => {
+                      e.currentTarget.contains(e.relatedTarget)
+                        ? {}
+                        : cancelEdit();
                     }}
-                    options={EDUCATION}
-                  />
-                </div>
-              </form>
-            )}
-            {!editingEducation && (
-              <div className="flex justify-center gap-2">
-                <p className="-mt-2 text-gray-500">
-                  {user.profile.education.school}
-                </p>
-                {<p className="-mt-2 text-gray-500"> - </p>}
-                <p className="-mt-2 text-gray-500">
-                  {user.profile.education.degree}
-                </p>
+                    onSubmit={submitEducation}
+                  >
+                    <div className="flex flex-row w-full items-center gap-2 scale-75 justify-center">
+                      <TextInput
+                        ref={schoolRef}
+                        type="input"
+                        autoFocus
+                        className="w-fit"
+                        id="school"
+                        defaultValue={user.profile.education.school}
+                        placeholder="School"
+                        shadow
+                      ></TextInput>
+                      <SelectInput
+                        type="input"
+                        id="degree"
+                        value={degree}
+                        onKeyDown={(e) => onKeyUpEnter(e)}
+                        onChange={(e) => {
+                          setDegree(e.target.value);
+                        }}
+                        options={EDUCATION}
+                      />
+                    </div>
+                  </form>
+                )}
+                {!editingEducation && (
+                  <div className="flex justify-center gap-2 drop-shadow-[0_1.2px_1.2px_rgba(95,95,95)]">
+                    <p className="-mt-2 text-black">
+                      {user.profile.education.school}
+                    </p>
+                    {<p className="-mt-2 text-black"> - </p>}
+                    <p className="-mt-2 text-black">
+                      {user.profile.education.degree}
+                    </p>
+                  </div>
+                )}
               </div>
-            )}
+            </div>
           </div>
         </div>
-        <div className="group mt-12 flex justify-center">
-          <div className="flex items-center flex-col basis-3/4">
+        <div className="mt-12 flex justify-center drop-shadow-[0_4px_4px_rgba(95,95,95)]">
+          <div className="group flex bg-app_main items-center flex-col basis-3/4 p-4 rounded-md">
             <button
               className="hidden group-hover:inline-block text-center text-black"
               onClick={editAboutMe}
             >
               <EditIcon />
             </button>
-            <div className="w-full justify-center items-center content-center flex-row text-gray-600 text-center font-light lg:px-16 whitespace-pre-line">
+            <div className="w-full justify-center items-center content-center flex-row text-black text-center font-light lg:px-16 whitespace-pre-line">
               {addAboutMe && (
                 <>
                   <a
@@ -493,7 +513,7 @@ const ProfileDisplay = () => {
                 ></Textarea>
               )}
               {!editingAboutMe && (
-                <div className="max-w-[65ch] text-xl justify-center">
+                <div className="max-w-[55ch] text-xl border-x-8 break-words w-full p-4 border-double border-gray-300 justify-center drop-shadow-[0_1.2px_1.2px_rgba(95,95,95)]">
                   {user.profile.about ? user.profile.about : <p>[About ME]</p>}
                 </div>
               )}

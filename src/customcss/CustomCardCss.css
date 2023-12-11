@@ -76,7 +76,7 @@
     var(--tw-ring-color);
 }
 
-.carousel-container {
+.carousel div {
   border-radius: 0px;
 }
 
@@ -172,7 +172,8 @@ div[data-testid="modal-overlay"]:has(.form-handle) {
   .settings-sidebar {
     height: calc(100vh - 76px);
   }
-  .inner-settings-profile {
+  .inner-settings-profile,
+  .inner-settings-security {
     height: 100%;
     max-height: 750px;
     display: grid;
@@ -185,7 +186,8 @@ div[data-testid="modal-overlay"]:has(.form-handle) {
   .settings-sidebar {
     height: calc(100%);
   }
-  .inner-settings-profile {
+  .inner-settings-profile,
+  .inner-settings-security {
     height: fit-content;
     display: flex;
     flex-direction: column;
@@ -225,5 +227,55 @@ div[data-testid="modal-overlay"]:has(.form-handle) {
   0%,
   100% {
     -webkit-transform: translateX(0);
+  }
+}
+
+.scroll-container {
+  border: 3px solid black;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.scroll-text:hover {
+  /* animation properties */
+  -moz-transform: translateX(100%);
+  -webkit-transform: translateX(100%);
+  transform: translateX(100%);
+
+  -moz-animation: scroll-ltr 7.5s linear infinite;
+  -webkit-animation: scroll-ltr 7.5s linear infinite;
+  animation: scroll-ltr 7.5s linear infinite;
+}
+
+/* for Firefox */
+@-moz-keyframes scroll-ltr {
+  from {
+    -moz-transform: translateX(5%);
+  }
+  to {
+    -moz-transform: translateX(-105%);
+  }
+}
+
+/* for Chrome */
+@-webkit-keyframes scroll-ltr {
+  from {
+    -webkit-transform: translateX(5%);
+  }
+  to {
+    -webkit-transform: translateX(-105%);
+  }
+}
+
+@keyframes scroll-ltr {
+  from {
+    -moz-transform: translateX(5%);
+    -webkit-transform: translateX(5%);
+    transform: translateX(5%);
+  }
+  to {
+    -moz-transform: translateX(-105%);
+    -webkit-transform: translateX(-105%);
+    transform: translateX(-105%);
   }
 }

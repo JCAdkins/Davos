@@ -9,6 +9,7 @@ import ErrorModal from "../components/Modals/ErrorModal";
 import SuccessModal from "../components/Modals/SuccessModal";
 import { updatePassword } from "firebase/auth";
 import "../customcss/CustomCardCss.css";
+import SettingsSecurity from "../components/SettingsSecurity";
 
 const UserSettings = () => {
   const { user, setUser } = useContext(UserContext);
@@ -93,7 +94,13 @@ const UserSettings = () => {
               >
                 Profile
               </ListGroup.Item>
-              <ListGroup.Item>Security</ListGroup.Item>
+              <ListGroup.Item
+                onClick={() =>
+                  display != "security" ? setDisplay("security") : {}
+                }
+              >
+                Security
+              </ListGroup.Item>
               <ListGroup.Item
                 onClick={() =>
                   display != "membership" ? setDisplay("membership") : {}
@@ -118,7 +125,20 @@ const UserSettings = () => {
           ) : (
             <></>
           )}
-          {display === "" ? <></> : <></>}
+          {display === "security" ? (
+            <div className="setting-security-main flex-col col-span-3 w-full">
+              <div className="settings-header flex border-b-2 border-black items-center justify-evenly text-4xl">
+                <h1 className="text-center">Security Settings</h1>
+              </div>
+              <SettingsSecurity
+                user={user}
+                setUser={(uUser) => setUser(uUser)}
+                setSaveData={(data) => setSaveData(data)}
+              ></SettingsSecurity>
+            </div>
+          ) : (
+            <></>
+          )}
           {display === "profile" ? (
             <div className="setting-profile-main flex-col col-span-3 w-full">
               <div className="settings-header flex border-b-2 border-black items-center justify-evenly text-4xl">

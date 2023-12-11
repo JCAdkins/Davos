@@ -70,7 +70,16 @@ const NewAccountForm = () => {
       roles: [],
       permissions: [],
       subscribed: true,
+      settings: {
+        searchable: true,
+        showLocation: true,
+        viewable: true,
+      },
       events: [],
+      social: {
+        friends: [],
+        comments: [],
+      },
       created: new Date(),
       newUser: true,
       playlists: [

@@ -20,6 +20,7 @@ import paginatedCollection from "../services/paginatedCollection";
 import PaginatedTransitions from "../animations/PaginatedTransitions";
 import CardSkeleton from "../components/Skeletons/CardSkeleton";
 import UpcomingEvents from "../components/Icons/UpcomingEvents";
+import "../customcss/CustomCardCss.css";
 
 const skeletonList = [
   <CardSkeleton />,
@@ -59,13 +60,13 @@ const Events = () => {
                 }}
                 className="flex-col text-black whitespace-pre overflow-hidden focus:text-app_accent-900 hover:text-app_accent-900"
               >
-                <p>
+                <div className="scroll-text">
                   {data.title}
                   {" - "}
                   {data.date.toDate().getMonth() + 1}/
                   {data.date.toDate().getDate()}/
                   {data.date.toDate().getFullYear()}
-                </p>
+                </div>
               </ListGroup.Item>,
             ];
             setUserEvents(temp);

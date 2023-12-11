@@ -6,7 +6,7 @@ import OccupationForm from "../Forms/OccupationForm";
 import "../../customcss/CustomCardCss.css";
 import Draggable from "react-draggable";
 
-function SettingsProfileModal({ clearSettingsModal, data, submitData }) {
+function SettingsProfileModal({ clearSettingsModal, data, submitData, user }) {
   const [openModal, setOpenModal] = useState("dismissible");
   const [form, setForm] = useState(<></>);
   const modalRef = useRef(null);
@@ -34,6 +34,7 @@ function SettingsProfileModal({ clearSettingsModal, data, submitData }) {
     if (data.type === "education")
       setForm(
         <EducationForm
+          currentInfo={user.profile.education}
           onSubmit={(formData) =>
             submitForm({ type: "education", data: formData })
           }
@@ -42,6 +43,7 @@ function SettingsProfileModal({ clearSettingsModal, data, submitData }) {
     if (data.type === "work")
       setForm(
         <OccupationForm
+          currentInfo={user.profile.occupational}
           onSubmit={(formData) => submitForm({ type: "work", data: formData })}
         />
       );

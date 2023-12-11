@@ -39,6 +39,7 @@ const expandStreet = (streetName) => {
 const AddressForm = ({ houseRequired, onSubmit }) => {
   const myAPIkey = import.meta.env.VITE_GEOAPIFY_KEY;
   const [place, setPlace] = useState();
+  const [pickedAddressError, setPickedAddressError] = useState();
   const streetRef = useRef(null);
   const houseRef = useRef(null);
   const cityRef = useRef(null);
@@ -133,7 +134,8 @@ const AddressForm = ({ houseRequired, onSubmit }) => {
   };
 
   const addSelectedAddress = (address) => {
-    onSubmit(dataizeMeCapn(address));
+    if (address) onSubmit(dataizeMeCapn(address));
+    else setPickedAddressError(true);
   };
 
   const dataizeMeCapn = (data) => {
@@ -321,7 +323,10 @@ const AddressForm = ({ houseRequired, onSubmit }) => {
                 return (
                   <ListGroup.Item
                     key={ind}
-                    onClick={() => setChosenAddress(address)}
+                    onClick={() => {
+                      setPickedAddressError();
+                      setChosenAddress(address);
+                    }}
                     className="flex bg-gray-300 w-full h-fit first:rounded-t-lg last:rounded-b-lg"
                   >
                     {address.address_line1}, {address.address_line2}
@@ -330,6 +335,9 @@ const AddressForm = ({ houseRequired, onSubmit }) => {
               })
             )}
           </ListGroup>
+          {pickedAddressError && (
+            <div className="text-red-400">An address must be selected.</div>
+          )}
           <div className="flex justify-end gap-4 mt-6">
             <Button
               onClick={() => addSelectedAddress(chosenAddress)}

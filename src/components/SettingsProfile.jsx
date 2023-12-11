@@ -1,10 +1,12 @@
 import { useState, useRef, useEffect } from "react";
 import { TextInput, ToggleSwitch } from "flowbite-react";
+import { Timestamp } from "firebase/firestore";
 import InfoIcon from "../components/Icons/InfoIcon";
 import EditIcon from "../components/Icons/EditIcon";
 import { Tooltip } from "react-tooltip";
 import SettingsProfileModal from "./Modals/SettingsProfileModal";
 import "../customcss/CustomCardCss.css";
+import { Data } from "@react-google-maps/api";
 
 const SettingsProfile = ({ user, setSaveData }) => {
   const [searchableToggle, setSearchableToggle] = useState(
@@ -69,7 +71,7 @@ const SettingsProfile = ({ user, setSaveData }) => {
               <p>
                 {user.name.firstName} {user.name.lastName}
               </p>
-              <p>{user.credentials.userName}</p>
+              <p>{user.username}</p>
               <div>
                 {changingPassword ? (
                   <>
@@ -169,7 +171,11 @@ const SettingsProfile = ({ user, setSaveData }) => {
                   </button>
                 )}
               </div>
-              <p>{user.created.toDate().toLocaleString()}</p>
+              <p>
+                {user.created instanceof Timestamp
+                  ? user.created.toDate().toLocaleString()
+                  : new Data(user.created).toLocaleString()}
+              </p>
             </div>
           </div>
           <div className="">
@@ -458,7 +464,7 @@ const SettingsProfile = ({ user, setSaveData }) => {
                 )}
                 <p>Duties:</p>
               </div>
-              <div className="flex-col text-app_accent-700 text-left pl-1 h-full overflow-y-auto drop-shadow-[0_1.2px_1.2px_rgba(135,135,135)] ">
+              <div className="flex-col text-app_accent-700 text-left pl-1 h-full overflow-y-auto drop-shadow-[0_1.2px_1.2px_rgba(135,135,135)] whitespace-pre-wrap">
                 <p className="w-fit">
                   {work
                     ? work.occupation
@@ -506,6 +512,7 @@ const SettingsProfile = ({ user, setSaveData }) => {
             setModalData();
           }}
           data={modalData}
+          user={user}
           submitData={(data) => submitData(data)}
         />
       )}

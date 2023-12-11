@@ -104,7 +104,7 @@ const StickyNavbar = () => {
   );
 
   return (
-    <Navbar className="sticky bg-app_main top-0 z-10 h-max border-none max-w-full rounded-none py-1 px-4 lg:px-8 lg:py-1">
+    <Navbar className="sticky bg-app_main top-0 z-10 h-max border-none max-w-full rounded-none py-1 px-4 lg:px-8 lg:py-1 z-20">
       <div className="flex items-center justify-between text-blue-gray-900">
         <Link className="cursor-pointer py-1.5 font-medium" to="/">
           <div className="invert relative rounded-md w-full overflow-hidden hover:scale-105 hover:drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)] bg-cover bg-[50%] bg-no-repeat">

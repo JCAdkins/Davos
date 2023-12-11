@@ -1,6 +1,6 @@
 import { Button, Label, TextInput, Textarea } from "flowbite-react";
 
-const OccupationForm = ({ onSubmit }) => {
+const OccupationForm = ({ onSubmit, currentInfo }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = {
@@ -22,21 +22,24 @@ const OccupationForm = ({ onSubmit }) => {
         <div className="flex w-full gap-2">
           <div className="w-full">
             <Label htmlFor="occupation" value="Occupation" />
-            <TextInput id="occupation" />
+            <TextInput id="occupation" defaultValue={currentInfo.occupation} />
           </div>
           <div className="w-full">
             <Label htmlFor="industry" value="Industry" />
-            <TextInput id="industry" />
+            <TextInput id="industry" defaultValue={currentInfo.industry} />
           </div>
         </div>
         <div className="flex w-full gap-2">
           <div className="w-full">
             <Label htmlFor="company" value="Company" />
-            <TextInput id="company" />
+            <TextInput id="company" defaultValue={currentInfo.organization} />
           </div>
           <div className="w-full">
             <Label htmlFor="company_url" value="Company URL" />
-            <TextInput id="company_url" />
+            <TextInput
+              id="company_url"
+              defaultValue={currentInfo.company_url}
+            />
           </div>
         </div>
         <div className="flex w-full gap-2">
@@ -44,6 +47,7 @@ const OccupationForm = ({ onSubmit }) => {
             <Label htmlFor="number_employees" value="# of Employees" />
             <input
               className="rounded-lg text-black"
+              defaultValue={currentInfo.number_employees}
               id="number_employees"
               type="number"
               min="0"
@@ -54,6 +58,7 @@ const OccupationForm = ({ onSubmit }) => {
             <Label htmlFor="experience" value="Experience" />
             <input
               className="rounded-lg text-black"
+              defaultValue={currentInfo.experience}
               id="experience"
               type="number"
               min="0"
@@ -62,7 +67,7 @@ const OccupationForm = ({ onSubmit }) => {
           </div>
           <div className="flex flex-col w-full">
             <Label htmlFor="email" value="Email" />
-            <TextInput id="email" />
+            <TextInput id="email" defaultValue={currentInfo.email} />
           </div>
         </div>
         <div>
@@ -70,7 +75,8 @@ const OccupationForm = ({ onSubmit }) => {
           <Textarea
             id="responsibilities"
             placeholder="Responsiblities..."
-            rows={5}
+            defaultValue={currentInfo.responsibilities}
+            rows={7}
           />
         </div>
         <div className="w-full mt-4">

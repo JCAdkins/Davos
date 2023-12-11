@@ -9,10 +9,10 @@ const NewAccount = () => {
   return (
     <div className="relative">
       <div className="carousel-container absolute w-full h-full -z-10">
-        <DefaultCarousel className=" h-screen w-screen object-cover transition-opacity duration-300" />
+        <DefaultCarousel className="h-screen w-screen object-cover transition-opacity duration-300" />
       </div>
       <Alert
-        className={`fade-in-alert absolute left-0 p-2 top-10 right-0 ${hidden} -mb-2 text-sm`}
+        className={`fade-in-alert absolute tracking-tight rounded-none left-0 p-2 top-10 right-0 ${hidden} -mb-2 text-sm`}
         color="failure"
         onDismiss={() => setHidden("hidden")}
       >
