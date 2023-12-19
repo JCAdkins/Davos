@@ -179,14 +179,14 @@ const HomePage = () => {
               </div>
               <div className="flex w-full items-center justify-center text-center">
                 <div className=" max-w-[35ch]">
-                  <p className="italic">
+                  <div className="italic">
                     "I listen to the Davos On Air podcast all the time! They
                     talk about current events and bring on the best guest
-                    speakers with a wide variety of expertise."{" "}
-                    <strong className="not-italic text-black">
-                      -Nancy A.{" "}
-                    </strong>
-                  </p>
+                    speakers with a wide variety of expertise."
+                    <p className="not-italic font-bold text-black drop-shadow-[0_1px_1px_rgba(255,255,255)]">
+                      -Nancy A.
+                    </p>
+                  </div>
                 </div>
               </div>
               <div className="mt-4 pb-8 flex w-full justify-center">
@@ -306,41 +306,39 @@ const HomePage = () => {
             alt="podcast picture"
           ></img>
         </div>
-        <div className="bg-app_accent-900 lg:grid lg:grid-rows-2 flex-col lg:col-span-5 text-xl lg:text-2xl">
-          <div className="lg:row-span-1">
-            <div className="lg:flex-col h-full p-4 w-full text-2xl lg:text-4xl">
-              <div className="flex lg:h-1/5 w-full  lg:justify-start items-center justify-center">
-                <em className="text-black font-bold text-shadow shadow-app_accent-300 drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
-                  Davos On Air:
-                </em>
+        <div className="bg-app_accent-900 h-full w-full lg:grid lg:grid-rows-5 lg:col-span-5 text-xl lg:text-2xl">
+          <div className="lg:row-span-2 w-full">
+            <div className="seven-grid mx-auto lg:flex lg:grid lg:grid-cols-6 lg:grid-row-5 h-full p-4 w-full text-2xl lg:text-4xl">
+              <div className="col-start-1 row-start-1 col-span-2 text-black font-bold w-1/5 whitespace-nowrap text-shadow shadow-app_accent-300 drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
+                Davos On Air:
               </div>
-              <div className="flex lg:h-1/5 w-full ml-20 items-center  lg:justify-start justify-center">
-                <p className="whitespace-pre">The best </p>
+              <div className="flex row-start-2 col-start-2 col-span-2 w-1/5 whitespace-nowrap">
+                The best
               </div>
-              <div className="flex lg:h-1/5 justify-center">
-                <strong className="flex text-center text-red-500">
-                  conservative
-                </strong>{" "}
+              <div className="flex row-start-3 col-start-3 col-span-2 w-1/5 whitespace-nowrap text-red-500">
+                conservative
               </div>
-              <div className="flex justicy-center -ml-20 lg:justify-end items-center lg:h-1/5 w-full">
-                <p className="whitespace-pre"> podcast </p>
+              <div className="flex row-start-4 col-start-4 col-span-2 w-1/5 whitespace-nowrap">
+                podcast on
               </div>
 
-              <div className="flex lg:justify-end items-center lg:h-1/5 w-full">
-                <div className="flex h-1/3">on the web!</div>
+              <div className="flex row-start-5 col-start-5 col-span-2 text-end w-1/5 whitespace-nowrap">
+                <p>the web!</p>
               </div>
             </div>
           </div>
 
-          <div className="flex w-full h-full items-center justify-center lg:row-span-1">
+          <div className="flex w-full h-full items-center justify-center lg:row-span-3">
             <div className="flex-col">
-              <div className="flex max-w-[35ch] text-center">
-                <p className="italic">
+              <div className="flex max-w-[30ch] text-center">
+                <div className="italic">
                   "I listen to the Davos On Air podcast all the time! They talk
                   about current events and bring on the best guest speakers with
                   a wide variety of expertise."{" "}
-                  <strong className="not-italic text-black">-Nancy A. </strong>
-                </p>
+                  <p className="not-italic font-bold text-black drop-shadow-[0_1px_1px_rgba(255,255,255)]">
+                    -Nancy A.
+                  </p>
+                </div>
               </div>
               <div className="w-full">
                 <div className="flex-col mt-5 h-full justify-center items-center">
@@ -415,8 +413,8 @@ const HomePage = () => {
             alt="Events picture"
           ></img>
         </div>
-        <div className="flex-col h-full items-center justify-center lg:col-span-5 text-xl md:text-2xl">
-          <div className="flex grid grid-cols-3 grid-rows-2 h-fit text-center text-2xl lg:text-4xl whitespace-normal m-8">
+        <div className="flex flex-col h-full items-center justify-evenly lg:col-span-5 text-xl md:text-2xl">
+          <div className="flex grid grid-cols-3 grid-rows-2 h-fit text-center text-2xl lg:text-4xl whitespace-normal">
             <div className="flex row-span-1 col-span-2 justify-center text-center mb-1">
               Party & mingle
             </div>
@@ -440,7 +438,7 @@ const HomePage = () => {
               </div>
             </div>
           </div>
-          <div className="flex justify-center mt-16 w-full items-center">
+          <div className="flex justify-center h-fill w-full items-center">
             <div className="w-2/3">
               <Link to="/events">
                 <Button className="w-full" color="dark" size="md" pill>

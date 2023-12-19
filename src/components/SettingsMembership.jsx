@@ -9,7 +9,12 @@ import AddModal from "./Modals/AddModal";
 import { Timestamp } from "firebase/firestore";
 
 const formatDate = (date) => {
-  let dateObj = date.toDate();
+  const dateObj =
+    date instanceof Timestamp
+      ? date.toDate()
+      : date.seconds
+      ? convertSeconds(date)
+      : new Date(date);
   let month = dateObj.getUTCMonth() + 1; //months from 1-12
   let day = dateObj.getUTCDate();
   let year = dateObj.getUTCFullYear();
@@ -21,6 +26,21 @@ const formatDate = (date) => {
     "/" +
     year
   );
+};
+
+const makeDate = (data) => {
+  console.log(data);
+  return data instanceof Timestamp
+    ? data.toDate()
+    : data._seconds || data.seconds
+    ? convertSeconds(data)
+    : new Date(data);
+};
+
+const convertSeconds = (date) => {
+  return date.seconds
+    ? new Date(date.seconds * 1000)
+    : new Date(date._seconds * 1000);
 };
 
 const SettingsMembership = () => {
@@ -109,21 +129,10 @@ const SettingsMembership = () => {
           <p>
             Exp:{" "}
             <span className="text-app_accent-700">
-              {card.expiration instanceof Timestamp ? (
-                <>
-                  {card.expiration.toDate().getMonth() +
-                    1 +
-                    "/" +
-                    card.expiration.toDate().getUTCFullYear()}
-                </>
-              ) : (
-                <>
-                  {card.expiration.getMonth() +
-                    1 +
-                    "/" +
-                    card.expiration.getUTCFullYear()}
-                </>
-              )}
+              {makeDate(card.expiration).getMonth() +
+                1 +
+                "/" +
+                makeDate(card.expiration).getUTCFullYear()}
             </span>
           </p>
           <button

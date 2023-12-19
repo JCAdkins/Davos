@@ -11,6 +11,7 @@ import {
   Marker,
   useLoadScript,
 } from "@react-google-maps/api";
+import { Timestamp } from "firebase/firestore";
 
 const getHours = (hour) => {
   if (hour === 0) return "12";
@@ -18,11 +19,18 @@ const getHours = (hour) => {
   return hour;
 };
 const today = new Date();
-function toDateTime(secs) {
-  var t = new Date(1970, 0, 1); // Epoch
-  t.setSeconds(secs);
-  return t;
-}
+
+const makeDate = (data) => {
+  return data instanceof Timestamp
+    ? data.toDate()
+    : data._seconds
+    ? convertSeconds(data)
+    : new Date(data);
+};
+
+const convertSeconds = (date) => {
+  return new Date(date._seconds * 1000);
+};
 
 const EventInfo = () => {
   const location = useLocation();
@@ -36,7 +44,7 @@ const EventInfo = () => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
   });
-  const eventDate = toDateTime(event.date.seconds);
+  const eventDate = makeDate(event.date);
 
   let markers = [];
   event.parking.map((parking) => {

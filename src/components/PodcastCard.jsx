@@ -2,6 +2,7 @@ import { Button } from "flowbite-react";
 import ClockIcon from "../components/Icons/ClockIcon";
 import PodcastCalendar from "../components/Icons/PodcastCalendar";
 import MegaphoneIcon from "../components/Icons/MegaphoneIcon";
+import { Timestamp } from "firebase/firestore";
 
 const formatDate = (date) => {
   return [
@@ -10,11 +11,23 @@ const formatDate = (date) => {
     date.getFullYear(),
   ].join("/");
 };
+
+const convertSeconds = (date) => {
+  return new Date(date._seconds * 1000);
+};
+
 const padTo2Digits = (num) => {
   return num.toString().padStart(2, "0");
 };
 
 const PodcastCard = ({ podcast, playAudio, shadowColor, showDetails }) => {
+  const pcDate =
+    podcast.date instanceof Timestamp
+      ? podcast.date.toDate()
+      : podcast.date._seconds
+      ? convertSeconds(podcast.date)
+      : new Date(podcast.date);
+
   return (
     <div
       className={`speaker-div snap-center w-fit my-4 flex flex-col items-center bg-white rounded-lg shadow-lg shadow-${shadowColor} md:flex-row md:max-w-xl hover:scale-105 hover:shadow-${shadowColor} hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700`}
@@ -35,7 +48,7 @@ const PodcastCard = ({ podcast, playAudio, shadowColor, showDetails }) => {
           </div>
           <div className="flex w-fit gap-2 items-center text-black">
             <PodcastCalendar />
-            <p className="text-black">{formatDate(podcast.date.toDate())}</p>
+            <p className="text-black">{formatDate(pcDate)}</p>
           </div>
 
           <div className="flex w-fit gap-2 items-center text-black">

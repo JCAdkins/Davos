@@ -20,6 +20,7 @@ import paginatedCollection from "../services/paginatedCollection";
 import PaginatedTransitions from "../animations/PaginatedTransitions";
 import CardSkeleton from "../components/Skeletons/CardSkeleton";
 import UpcomingEvents from "../components/Icons/UpcomingEvents";
+import { Timestamp } from "firebase/firestore";
 import "../customcss/CustomCardCss.css";
 
 const skeletonList = [
@@ -30,6 +31,18 @@ const skeletonList = [
   <CardSkeleton />,
   <CardSkeleton />,
 ];
+
+const makeDate = (data) => {
+  return data instanceof Timestamp
+    ? data.toDate()
+    : data._seconds
+    ? convertSeconds(data)
+    : new Date(data);
+};
+
+const convertSeconds = (date) => {
+  return new Date(date._seconds * 1000);
+};
 
 const Events = () => {
   const { user } = useContext(UserContext);
@@ -63,9 +76,9 @@ const Events = () => {
                 <div className="scroll-text">
                   {data.title}
                   {" - "}
-                  {data.date.toDate().getMonth() + 1}/
-                  {data.date.toDate().getDate()}/
-                  {data.date.toDate().getFullYear()}
+                  {makeDate(data.date).getMonth() + 1}/
+                  {makeDate(data.date).getDate()}/
+                  {makeDate(data.date).getFullYear()}
                 </div>
               </ListGroup.Item>,
             ];
@@ -76,21 +89,17 @@ const Events = () => {
   }, [user]);
 
   useEffect(() => {
-    var evList = [];
-    getAllEvents().then((snapshot) => {
-      snapshot.docs.forEach((doc) => {
-        evList = [...evList, doc.data()];
-        setEventList(evList);
-      });
-      setLoadingInit(false);
+    getAllEvents().then((list) => {
+      setEventList(list);
     });
+    setLoadingInit(false);
   }, []);
 
   const events =
     eventList == null
       ? undefined
       : eventList.sort((a, b) => {
-          return a.date.toDate() - b.date.toDate();
+          return makeDate(a.date) - makeDate(b.date);
         });
 
   const todaysDate = new Date();
@@ -98,7 +107,7 @@ const Events = () => {
 
   const upcomingEvents = events
     .filter((event) => {
-      return event.date.toDate() >= todaysDate;
+      return makeDate(event.date) >= todaysDate;
     })
     .slice(0, 6)
     .map((event, ind) => (
@@ -120,7 +129,7 @@ const Events = () => {
   const setTileContent = (date) => {
     setDaysEvents(
       events.filter((event) => {
-        const eventDate = event.date.toDate();
+        const eventDate = makeDate(event.date);
         return (
           date.getDate() == eventDate.getDate() &&
           date.getMonth() == eventDate.getMonth() &&
@@ -143,7 +152,7 @@ const Events = () => {
           event.full_description
             .toLowerCase()
             .includes(searchVal.toLowerCase()) ||
-          event.date.toDate().toLocaleString().includes(searchVal) ||
+          makeDate(event.date).toLocaleString().includes(searchVal) ||
           event.location.address
             .toLowerCase()
             .includes(searchVal.toLowerCase()) ||

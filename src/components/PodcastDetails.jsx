@@ -3,6 +3,7 @@ import ClockIcon from "./Icons/ClockIcon";
 import PodcastCalendar from "./Icons/PodcastCalendar";
 import { Button, Tabs } from "flowbite-react";
 import HashtagIcon from "./Icons/HashtagIcon";
+import { Timestamp } from "firebase/firestore";
 
 const formatDate = (date) => {
   return [
@@ -15,7 +16,18 @@ const padTo2Digits = (num) => {
   return num.toString().padStart(2, "0");
 };
 
+const convertSeconds = (date) => {
+  return new Date(date._seconds * 1000);
+};
+
 const PodcastDetails = ({ podcast, addToPlaylist }) => {
+  const pcDate =
+    podcast.date instanceof Timestamp
+      ? podcast.date.toDate()
+      : podcast.date._seconds
+      ? convertSeconds(podcast.date)
+      : new Date(podcast.date);
+
   return (
     <div className="flex-col">
       <div className="pc-details flex flex-col sm:flex-row justify-center items-center gap-8 text-app_accent-900 my-4 font-dmserif">
@@ -43,9 +55,7 @@ const PodcastDetails = ({ podcast, addToPlaylist }) => {
             </div>
             <div className="flex w-fit gap-2 items-center text-black">
               <PodcastCalendar text={"app_accent-900"} />
-              <p className="text-app_accent-900">
-                {formatDate(podcast.date.toDate())}
-              </p>
+              <p className="text-app_accent-900">{formatDate(pcDate)}</p>
             </div>
             <div className="flex w-fit items-center">
               <HashtagIcon text={"app_accent-900"} />

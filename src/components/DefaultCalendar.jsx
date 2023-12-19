@@ -1,14 +1,26 @@
 import { useState } from "react";
 import Calendar from "react-calendar";
 import CarouselCard from "./CarouselCard";
+import { Timestamp } from "firebase/firestore";
 import "./DefaultCalendar.css";
+
+const makeDate = (data) => {
+  return data instanceof Timestamp
+    ? data.toDate()
+    : data._seconds
+    ? convertSeconds(data)
+    : new Date(data);
+};
+
+const convertSeconds = (date) => {
+  return new Date(date._seconds * 1000);
+};
 
 export default function DefaultCalendar(props) {
   const [value, onChange] = useState(new Date());
   const [showOverlay, setShowOverlay] = useState(false);
 
   const handleDateChange = (value) => {
-    console.log(value);
     onChange(value);
     setShowOverlay(!showOverlay);
     props.setTileContent(value);
@@ -26,7 +38,7 @@ export default function DefaultCalendar(props) {
             <Calendar
               tileContent={({ date }) => {
                 const temp = props.events.filter((event) => {
-                  const eventDate = event.date.toDate();
+                  const eventDate = makeDate(event.date);
                   return (
                     date.getDate() == eventDate.getDate() &&
                     date.getMonth() == eventDate.getMonth() &&

@@ -27,7 +27,7 @@ const UserSettings = () => {
 
   const saveProfile = () => {
     if (saveData.address) {
-      updateUser(auth.currentUser.uid, {
+      updateUser({
         profile: { ...user.profile, location: saveData.address },
       });
       setUser({
@@ -36,7 +36,7 @@ const UserSettings = () => {
       });
     }
     if (saveData.education) {
-      updateUser(auth.currentUser.uid, {
+      updateUser({
         profile: { ...user.profile, education: saveData.education },
       });
       setUser({
@@ -45,7 +45,7 @@ const UserSettings = () => {
       });
     }
     if (saveData.work) {
-      updateUser(auth.currentUser.uid, {
+      updateUser({
         profile: { ...user.profile, occupational: saveData.work },
       });
       setUser({
@@ -57,15 +57,6 @@ const UserSettings = () => {
       updatePassword(auth.currentUser, saveData.password)
         .then(() => console.log("Password change successful."))
         .catch((error) => setError(error));
-      if (!error) {
-        updateUser(auth.currentUser.uid, {
-          credentials: { ...user.credentials, password: saveData.password },
-        });
-        setUser({
-          ...user,
-          credentials: { ...user.credentials, password: saveData.password },
-        });
-      }
     }
     setSuccess("Successfully saved settings.");
     setSaveData({

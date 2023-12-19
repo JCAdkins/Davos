@@ -8,12 +8,21 @@ const getHours = (hour) => {
   return hour;
 };
 
+const makeDate = (data) => {
+  return data instanceof Timestamp
+    ? data.toDate()
+    : data._seconds
+    ? convertSeconds(data)
+    : new Date(data);
+};
+
+const convertSeconds = (date) => {
+  return new Date(date._seconds * 1000);
+};
+
 const CarouselCard = (props) => {
   const displayEvents = props.events.map((event, ind) => {
-    const date =
-      event.date instanceof Timestamp
-        ? event.date.toDate()
-        : new Date(event.date);
+    const date = makeDate(event.date);
     return (
       <Card
         key={ind}

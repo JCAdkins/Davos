@@ -8,6 +8,18 @@ const getHours = (hour) => {
 };
 const today = new Date();
 
+const makeDate = (data) => {
+  return data instanceof Timestamp
+    ? data.toDate()
+    : data._seconds
+    ? convertSeconds(data)
+    : new Date(data);
+};
+
+const convertSeconds = (date) => {
+  return new Date(date._seconds * 1000);
+};
+
 function EventInfoModal({ user, clearEventInfoModal }) {
   const [openModal, setOpenModal] = useState("dismissible");
 

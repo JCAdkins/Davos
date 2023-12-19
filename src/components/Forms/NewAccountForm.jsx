@@ -18,7 +18,7 @@ import SelectInput from "../Input/SelectInput";
 import { STATES_LIST } from "../../assets/STATES_LIST";
 
 const emailRegex = new RegExp(
-  /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,})$/
+  /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 );
 const phoneRegex = new RegExp(
   /^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/
@@ -39,19 +39,35 @@ const NewAccountForm = () => {
     formState: { errors },
     watch,
   } = useForm();
+  //uyukj
 
   const submitForm = async (event) => {
+    const today = new Date();
     const userData = {
       username: event.email,
       name: {
         firstName: event.firstName,
         lastName: event.lastName,
       },
+      membership: {
+        cards: [],
+        communication: { preference: "Phone", receive_promotions: true },
+        pay_period: {
+          begin: today,
+          end: new Date(
+            today.getFullYear() + 1,
+            today.getMonth(),
+            today.getDate() - 1
+          ),
+        },
+        shipping: [],
+        subscribed: true,
+        tier: "yearly",
+      },
       profile: {
         dob: new Date(event.dob),
         image:
           "https://firebasestorage.googleapis.com/v0/b/davos-57f96.appspot.com/o/tester_mctestington.png?alt=media&token=0c4ad935-6a4a-4424-b064-b47bebf25871&_gl=1*80ywfm*_ga*MTUzMzk2MTg0MC4xNjk3NTM3Mzk3*_ga_CW55HF8NVT*MTY5Nzc3MzE2OS4xNS4xLjE2OTc3NzMyOTQuNDMuMC4w",
-        background_image: "",
         occupational: {
           organization: event.organization,
           occupation: event.occupation,
@@ -67,8 +83,7 @@ const NewAccountForm = () => {
         phone: event.phone,
         about: "",
       },
-      roles: [],
-      permissions: [],
+      roles: ["user", "subscriber"],
       subscribed: true,
       settings: {
         searchable: true,
@@ -80,8 +95,8 @@ const NewAccountForm = () => {
         friends: [],
         comments: [],
       },
-      created: new Date(),
-      newUser: true,
+      created: today,
+      new: true,
       playlists: [
         {
           name: "current",
@@ -99,6 +114,7 @@ const NewAccountForm = () => {
   };
 
   const checkPage = (user) => {
+    console.log("checking page");
     if (page === 0) {
       const newUser = createUserEmailAndPassword(
         auth,
@@ -108,6 +124,7 @@ const NewAccountForm = () => {
 
       newUser.then((data) => {
         uidRef.current = data;
+        console.log(data);
         if (data) setPage(page + 1);
       });
     } else setPage(page + 1);

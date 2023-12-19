@@ -139,7 +139,6 @@ const AddressForm = ({ houseRequired, onSubmit }) => {
   };
 
   const dataizeMeCapn = (data) => {
-    console.log(data);
     if (data.properties)
       return {
         address: data.properties.address_line1,

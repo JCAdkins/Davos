@@ -1,4 +1,5 @@
 import { Button, Card } from "flowbite-react";
+import { Timestamp } from "firebase/firestore";
 
 const getHours = (hour) => {
   if (hour === 0) return "12";
@@ -6,13 +7,20 @@ const getHours = (hour) => {
   return hour;
 };
 
+const makeDate = (data) => {
+  return data instanceof Timestamp
+    ? data.toDate()
+    : data._seconds
+    ? convertSeconds(data)
+    : new Date(data);
+};
+
+const convertSeconds = (date) => {
+  return new Date(date._seconds * 1000);
+};
+
 const EventCard = ({ event, setEvent, setShowEvent }) => {
   const background = "white";
-  //   event.type === "course"
-  //     ? "blue-400"
-  //     : event.type === "cocktail_party"
-  //     ? "red-400"
-  //     : "yellow-200";
   return (
     <div className="w-full flex lg:flex-col p-4 sm:w-1/2 lg:w-1/3">
       <Card
@@ -20,21 +28,21 @@ const EventCard = ({ event, setEvent, setShowEvent }) => {
         imgAlt="Guest Speaker"
         imgSrc={event.img}
       >
-        <h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
+        <h5 className="text-lg font-bold leading-5 tracking-tight text-gray-900 dark:text-white">
           <p>{event.title}</p>
         </h5>
         <div className="flex-col text-gray-900 text-xs">
           <div className="flex whitespace-pre">
             <p>
-              {event.date.toDate().getMonth() + 1}/
-              {event.date.toDate().getDate()}/
-              {event.date.toDate().getFullYear()}
+              {makeDate(event.date).getMonth() + 1}/
+              {makeDate(event.date).getDate()}/
+              {makeDate(event.date).getFullYear()}
             </p>
             {" @ "}
             <p>
-              {getHours(event.date.toDate().getHours())}:
-              {event.date.toDate().getMinutes().toString().padStart(2, "0")}
-              {event.date.toDate().getHours() > 12 ? "PM" : "AM"}
+              {getHours(makeDate(event.date).getHours())}:
+              {makeDate(event.date).getMinutes().toString().padStart(2, "0")}
+              {makeDate(event.date).getHours() > 12 ? "PM" : "AM"}
             </p>
           </div>
           <p>

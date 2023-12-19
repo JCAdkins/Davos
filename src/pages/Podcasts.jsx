@@ -15,6 +15,7 @@ import RectangleStack from "../components/Icons/RectangleStack";
 import { SwitchTransition, CSSTransition } from "react-transition-group";
 import "../animations/PodcastDetailsTransition.css";
 import SearchBar from "../components/SearchBar";
+import { Timestamp } from "firebase/firestore";
 
 const emptyPodcastList = {
   title: "",
@@ -44,6 +45,10 @@ const skeletonCards = [
   <HorizonatalCardSkeleton />,
 ];
 
+const convertSeconds = (date) => {
+  return new Date(date._seconds * 1000);
+};
+
 const Podcasts = () => {
   const { user } = useContext(UserContext);
   const [_, setCurrentPodcast] = useState(emptyPodcastList);
@@ -72,9 +77,9 @@ const Podcasts = () => {
 
   useEffect(() => {
     var pcList = [];
-    getAllPodcasts({ exclude: false }).then((snapshot) => {
-      snapshot.docs.forEach((doc) => {
-        pcList = [...pcList, doc.data().podcast];
+    getAllPodcasts().then((data) => {
+      data.forEach((obj) => {
+        pcList = [...pcList, obj.podcast];
         setAllPC(pcList);
         setLoadingInit(false);
       });
@@ -159,13 +164,20 @@ const Podcasts = () => {
   const handleSearchBarChange = (searchVal) => {
     const filteredPCs = allPC
       .filter((podcast) => {
+        const pcDate =
+          podcast.date instanceof Timestamp
+            ? podcast.date.toDate()
+            : podcast.date._seconds
+            ? convertSeconds(podcast.date)
+            : new Date(podcast.date);
+
         return (
           podcast.title.toLowerCase().includes(searchVal.toLowerCase()) ||
           podcast.speaker.name
             .toLowerCase()
             .includes(searchVal.toLowerCase()) ||
           podcast.description.toLowerCase().includes(searchVal.toLowerCase()) ||
-          podcast.date.toDate().toLocaleString().includes(searchVal) ||
+          pcDate.toLocaleString().includes(searchVal) ||
           podcast.tag.toLowerCase().includes(searchVal.toLowerCase())
         );
       })

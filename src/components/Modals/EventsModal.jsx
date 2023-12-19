@@ -1,12 +1,13 @@
 import { Modal, Button } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import {
   GoogleMap,
   InfoWindow,
   Marker,
   useLoadScript,
 } from "@react-google-maps/api";
+import { Timestamp } from "firebase/firestore";
 import "../../customcss/CustomCardCss.css";
 
 const getHours = (hour) => {
@@ -15,6 +16,18 @@ const getHours = (hour) => {
   return hour;
 };
 const today = new Date();
+
+const makeDate = (data) => {
+  return data instanceof Timestamp
+    ? data.toDate()
+    : data._seconds
+    ? convertSeconds(data)
+    : new Date(data);
+};
+
+const convertSeconds = (date) => {
+  return new Date(date._seconds * 1000);
+};
 
 function EventsModal({ event, clearEventsModal }) {
   const [openModal, setOpenModal] = useState("dismissible");
@@ -77,17 +90,20 @@ function EventsModal({ event, clearEventsModal }) {
           <div className="grid grid-cols-2 gap-4">
             <div className="text-black flex flex-col items-center justify-end">
               <img src={event.img} alt="Event Picture"></img>
-              {event.date.toDate() < today ? (
+              {makeDate(event.date) < today ? (
                 <p>Event Completed</p>
               ) : (
                 <p className="whitespace-pre">
-                  {event.date.toDate().getMonth() + 1}/
-                  {event.date.toDate().getDate()}/
-                  {event.date.toDate().getFullYear()}
+                  {makeDate(event.date).getMonth() + 1}/
+                  {makeDate(event.date).getDate()}/
+                  {makeDate(event.date).getFullYear()}
                   {" @ "}
-                  {getHours(event.date.toDate().getHours())}:
-                  {event.date.toDate().getMinutes().toString().padStart(2, "0")}
-                  {event.date.toDate().getHours() > 12 ? "PM" : "AM"}
+                  {getHours(makeDate(event.date).getHours())}:
+                  {makeDate(event.date)
+                    .getMinutes()
+                    .toString()
+                    .padStart(2, "0")}
+                  {makeDate(event.date).getHours() > 12 ? "PM" : "AM"}
                 </p>
               )}
               <p>
@@ -137,7 +153,7 @@ function EventsModal({ event, clearEventsModal }) {
           >
             Full Details
           </Button>
-          {event.date.toDate() < today ? (
+          {makeDate(event.date) < today ? (
             <Button disabled className="bg-app_accent-900">
               Attend Event
             </Button>

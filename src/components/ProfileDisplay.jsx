@@ -17,6 +17,8 @@ function getAge(dateString) {
   var birthDate =
     dateString instanceof Timestamp
       ? dateString.toDate()
+      : dateString.seconds
+      ? convertSeconds(dateString)
       : new Date(dateString);
   var age = today.getFullYear() - birthDate.getFullYear();
   var m = today.getMonth() - birthDate.getMonth();
@@ -26,6 +28,10 @@ function getAge(dateString) {
   return age;
 }
 const cityRegEx = new RegExp(/[a-zA-Z-]+/);
+
+const convertSeconds = (date) => {
+  return new Date(date.seconds * 1000);
+};
 
 const ProfileDisplay = () => {
   const [addAboutMe, setAddAboutMe] = useState(false);
@@ -52,13 +58,14 @@ const ProfileDisplay = () => {
     setEditingAboutMe(true);
   };
   const submitAboutMe = () => {
-    updateUser(auth.currentUser.uid, {
+    const upU = updateUser({
       profile: { ...user.profile, about: aboutMeRef.current.value },
     });
     setUser({
       ...user,
       profile: { ...user.profile, about: aboutMeRef.current.value },
     });
+    console.log("upU: ", upU);
     setEditingAboutMe(false);
   };
 
@@ -67,7 +74,7 @@ const ProfileDisplay = () => {
   };
 
   const submitCareer = () => {
-    updateUser(auth.currentUser.uid, {
+    const upU = updateUser({
       profile: {
         ...user.profile,
         occupational: {
@@ -90,6 +97,7 @@ const ProfileDisplay = () => {
         },
       },
     });
+    console.log("upU: ", upU);
     setEditingCareer(false);
   };
 
@@ -99,7 +107,7 @@ const ProfileDisplay = () => {
 
   const submitEducation = (event) => {
     event ? event.preventDefault() : {};
-    updateUser(auth.currentUser.uid, {
+    const upU = updateUser({
       profile: {
         ...user.profile,
         education: { school: schoolRef.current.value, degree: degree },
@@ -112,6 +120,7 @@ const ProfileDisplay = () => {
         education: { school: schoolRef.current.value, degree: degree },
       },
     });
+    console.log("upU: ", upU);
     setEditingEducation(false);
   };
 
@@ -136,7 +145,7 @@ const ProfileDisplay = () => {
     // Make sure city entered is at least kinda valid before updating the db with the new data; maybe
     // utilize a way to check major cities in the future.
     if (cityRef.current.value.match(cityRegEx)) {
-      updateUser(auth.currentUser.uid, {
+      const upU = updateUser({
         profile: {
           ...user.profile,
           location: { city: cityRef.current.value, state: state },
@@ -149,6 +158,7 @@ const ProfileDisplay = () => {
           location: { city: cityRef.current.value, state: state },
         },
       });
+      console.log("upU: ", upU);
       setEditingLocation(false);
     }
     // If we reach this else block then the user input isn't valid
@@ -175,7 +185,7 @@ const ProfileDisplay = () => {
 
   const setUserProfPic = async (path) => {
     await path?.then((data) => {
-      updateUser(auth.currentUser.uid, {
+      const upU = updateUser({
         profile: {
           ...user.profile,
           image: data,
@@ -189,13 +199,14 @@ const ProfileDisplay = () => {
         },
       });
     });
+    console.log("upU: ", upU);
     setEditingProfilePic(false);
   };
 
   useEffect(() => {
     user.new
       ? setTimeout(() => {
-          updateUser(auth.currentUser.uid, { new: false });
+          const upU = updateUser({ new: false });
           setUser({ ...user, new: false });
           setAddProfilePic(true);
           setTimeout(() => {
@@ -491,7 +502,7 @@ const ProfileDisplay = () => {
                 <>
                   <a
                     data-tooltip-content="Add an about me"
-                    data-tooltip-place="bottom"
+                    data-tooltip-place="top"
                     data-tooltip-id="about-me-tooltip"
                   ></a>
                   <Tooltip id="about-me-tooltip" isOpen={addAboutMe} />

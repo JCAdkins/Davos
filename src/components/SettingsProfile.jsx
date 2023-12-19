@@ -6,7 +6,7 @@ import EditIcon from "../components/Icons/EditIcon";
 import { Tooltip } from "react-tooltip";
 import SettingsProfileModal from "./Modals/SettingsProfileModal";
 import "../customcss/CustomCardCss.css";
-import { Data } from "@react-google-maps/api";
+import { auth } from "../utils/firebase";
 
 const SettingsProfile = ({ user, setSaveData }) => {
   const [searchableToggle, setSearchableToggle] = useState(
@@ -27,6 +27,12 @@ const SettingsProfile = ({ user, setSaveData }) => {
   const retypePasswordRef = useRef(null);
   const [verifyPassword, setVerifyPassword] = useState();
   const [verifyError, setVerifyError] = useState();
+  const appUser = auth.currentUser;
+
+  const created =
+    user.created instanceof Timestamp
+      ? user.created.toDate().toLocaleString()
+      : new Date(user.created).toLocaleString();
 
   useEffect(() => {
     setSaveData({
@@ -51,10 +57,16 @@ const SettingsProfile = ({ user, setSaveData }) => {
     }
   };
 
+  const verifyUserPassword = (inputPassword) => {
+    signInWithEmailAndPassword(auth, user.username, inputPassword)
+      .then(() => setVerifyPassword("verified"))
+      .catch(() => setVerifyError("verify-password-error"));
+  };
+
   return (
     <div className="flex justify-center w-full h-full p-4 text-xl">
-      <div className="inner-settings-profile grid grid-cols-2 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0)] w-full gap-4">
-        <div className="flex flex-col bg-white bg-opacity-70 border-b-2 overflow-y-auto rounded-lg w-full h-full text-lg p-4 whitespace-pre divide-y divide-gray-200">
+      <div className="inner-settings-profile drop-shadow-[0_1.2px_1.2px_rgba(0,0,0)] w-full gap-4">
+        <div className="flex-col bg-white bg-opacity-70 border-b-2 rounded-lg w-full text-lg p-4 overflow-y-auto whitespace-pre divide-y divide-gray-200">
           <div className="flex drop-shadow-[0_1.2px_1.2px_rgba(135,135,135)] grid-cols-6 mb-3">
             <div className="flex flex-col pr-1 text-right">
               <p>Name:</p>
@@ -95,12 +107,9 @@ const SettingsProfile = ({ user, setSaveData }) => {
                           className="bg-app_accent-900 hover:bg-cyan-700 h-18 w-auto rounded-full px-2 text-sm text-white"
                           onClick={(event) => {
                             event.preventDefault();
-                            if (
-                              verifyPasswordRef.current?.value ===
-                              user.credentials.password
-                            )
-                              setVerifyPassword("verified");
-                            else setVerifyError("verify-password-error");
+                            verifyUserPassword(
+                              verifyPasswordRef.current?.value
+                            );
                           }}
                         >
                           {" "}
@@ -171,11 +180,9 @@ const SettingsProfile = ({ user, setSaveData }) => {
                   </button>
                 )}
               </div>
-              <p>
-                {user.created instanceof Timestamp
-                  ? user.created.toDate().toLocaleString()
-                  : new Data(user.created).toLocaleString()}
-              </p>
+              {[created].map((date, ind) => (
+                <p key={ind}>{date}</p>
+              ))}
             </div>
           </div>
           <div className="">
