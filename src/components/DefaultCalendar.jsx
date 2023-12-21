@@ -31,7 +31,7 @@ export default function DefaultCalendar(props) {
   };
 
   return (
-    <div>
+    <div className="">
       <div className="Calendar z-0">
         <div className="Calendar__container">
           <div className="Calendar__container__content">

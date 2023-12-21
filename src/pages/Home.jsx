@@ -122,22 +122,23 @@ const HomePage = () => {
               <a className="bg-black" href="http://videezy.com">
                 Free B-Roll provided by Videezy
               </a>
-              {/* <p className="bg-black text-white">
-                *Proper 4k video will look much more crisp.
-              </p> */}
             </div>
           </Suspense>
         </div>
-        <div className="flex relative w-2/3 h-1/2 m-12">
-          <div className="flex text-xl md:text-3xl lg:text-5xl w-full text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
-            <p className="drop-shadow-[0_1.2px_1.2px_rgba(0,0,0)]">
-              The{" "}
-              <span className="h-fit italic text-black drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)] text-3xl md:text-4xl lg:text-7xl">
-                premier
-              </span>{" "}
-              forum for elite business, thought & government leaders to
-              collaborate and build the future.
-            </p>
+        <div class="bb group sm:absolute relative flex justify-center mx-auto bg-white/30 hover:bg-white items-center sm:top-40 sm:left-20 hover:border-4 hover:border-black w-fit h-fit sm:h-[50px] sm:w-[75px] md:h-[70px] md:w-[100px] lg:h-[110px] lg:w-[150px] hover:lg:w-[638px] hover:lg:h-[340px] hover:md:w-[421px] hover:md:h-[252px] hover:sm:w-[301px] hover:sm:h-[212px] transition-all duration-1000 ease-in-out">
+          <div class="text-sm sm:text-[6px] sm:leading-[8px] group-hover:text-[20px] group-hover:leading-[28px] group-hover:md:text-[30px] group-hover:md:leading-[36px] group-hover:lg:text-[48px] group-hover:lg:leading-[52px] transition-all duration-100">
+            <div class="border-4 border-transparent w-full h-full sm:w-[70px] sm:h-[45px] md:h-[70px] md:w-[100px] lg:h-[105px] lg:w-[145px] bg-white/50 sm:pl-[2px] group-hover:sm:pl-[32px] group-hover:lg:pl-[44px] group-hover:sm:pt-[24px] group-hover:md:pt-[24px] group-hover:lg:w-[630px] group-hover:lg:h-[332px] group-hover:md:w-[412px] group-hover:md:h-[244px] group-hover:sm:w-[292px] group-hover:sm:h-[204px] transition-all duration-1000 ease-in-out">
+              <div class="flex w-[24ch] text-transparent group-hover:text-gray-300 group-hover:drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
+                <p className="group-hover:drop-shadow-[0_1.2px_1.2px_rgba(0,0,0)]">
+                  The{" "}
+                  <span className="italic text-transparent group-hover:text-black drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)] text-[1px] leading-[1px] group-hover:sm:text-[24px] group-hover:sm:leading-[32px] group-hover:md:text-[30px] group-hover:md:leading-[36px] group-hover:lg:text-[60px] group-hover:lg:leading-[66px] transition-all duration-1000">
+                    premier
+                  </span>{" "}
+                  forum for elite business, thought & government leaders to
+                  collaborate and build the future.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
         <div className="empty-container w-screen h-1/2"></div>

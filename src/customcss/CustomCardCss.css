@@ -283,3 +283,123 @@ div[data-testid="modal-overlay"]:has(.form-handle) {
     transform: translateX(-105%);
   }
 }
+
+/*======================================================================================================
+======================================================================================================*/
+CSS Pretty Print .bb,
+.bb::before,
+.bb::after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.bb {
+  color: #0c4a6e;
+  /* box-shadow: inset 0 0 0 1px white; */
+  border-radius: 5px;
+  animation: scaleAnimation 3s infinite;
+  -webkit-animation: scaleAnimation 20s infinite;
+  transition: transform 0.3s ease-in-out;
+}
+/* .bb::before,
+.bb::after {
+  content: "";
+  margin: -2.6%;
+  border-radius: 5px;
+  box-shadow: inset 0 0 0 4px;
+  animation: clipMe 12s linear infinite;
+  -webkit-animation: clipMe 12s linear infinite;
+} */
+/* .bb::before {
+  animation-delay: -6s;
+} */
+@keyframes clipMe {
+  0%,
+  100% {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 2%, 0% 2%);
+  }
+  25% {
+    clip-path: polygon(0% 0%, 2% 0%, 2% 100%, 0% 100%);
+  }
+  50% {
+    clip-path: polygon(0% 98%, 100% 98%, 100% 100%, 0% 100%);
+  }
+  75% {
+    clip-path: polygon(98% 0%, 100% 0%, 100% 100%, 98% 100%);
+  }
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+@keyframes scaleAnimation {
+  0%,
+  100% {
+  }
+  50% {
+  }
+}
+
+@media screen and (max-width: 539px) {
+  .bb::before,
+  .bb::after {
+    content: "";
+    margin: -10%;
+    border-radius: 5px;
+    box-shadow: inset 0 0 0 4px;
+    animation: clipMe 12s linear infinite;
+    -webkit-animation: clipMe 12s linear infinite;
+  }
+  .bb::before {
+    animation-delay: -6s;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .bb::before,
+  .bb::after {
+    content: "";
+    margin: -10%;
+    border-radius: 5px;
+    box-shadow: inset 0 0 0 4px;
+    animation: clipMe 12s linear infinite;
+    -webkit-animation: clipMe 12s linear infinite;
+  }
+  .bb::before {
+    animation-delay: -6s;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .bb::before,
+  .bb::after {
+    content: "";
+    margin: -4.5%;
+    border-radius: 5px;
+    box-shadow: inset 0 0 0 4px;
+    animation: clipMe 12s linear infinite;
+    -webkit-animation: clipMe 12s linear infinite;
+  }
+  .bb::before {
+    animation-delay: -6s;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .bb::before,
+  .bb::after {
+    content: "";
+    margin: -3%;
+    border-radius: 5px;
+    box-shadow: inset 0 0 0 4px;
+    animation: clipMe 12s linear infinite;
+    -webkit-animation: clipMe 12s linear infinite;
+  }
+  .bb::before {
+    animation-delay: -6s;
+  }
+}
