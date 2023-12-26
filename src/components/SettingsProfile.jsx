@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { TextInput, ToggleSwitch } from "flowbite-react";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { Timestamp } from "firebase/firestore";
 import InfoIcon from "../components/Icons/InfoIcon";
 import EditIcon from "../components/Icons/EditIcon";

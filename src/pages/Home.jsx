@@ -125,18 +125,18 @@ const HomePage = () => {
             </div>
           </Suspense>
         </div>
-        <div class="bb group sm:absolute relative flex justify-center mx-auto bg-white/30 hover:bg-white items-center sm:top-40 sm:left-20 hover:border-4 hover:border-black w-fit h-fit sm:h-[50px] sm:w-[75px] md:h-[70px] md:w-[100px] lg:h-[110px] lg:w-[150px] hover:lg:w-[638px] hover:lg:h-[340px] hover:md:w-[421px] hover:md:h-[252px] hover:sm:w-[301px] hover:sm:h-[212px] transition-all duration-1000 ease-in-out">
-          <div class="text-sm sm:text-[6px] sm:leading-[8px] group-hover:text-[20px] group-hover:leading-[28px] group-hover:md:text-[30px] group-hover:md:leading-[36px] group-hover:lg:text-[48px] group-hover:lg:leading-[52px] transition-all duration-100">
-            <div class="border-4 border-transparent w-full h-full sm:w-[70px] sm:h-[45px] md:h-[70px] md:w-[100px] lg:h-[105px] lg:w-[145px] bg-white/50 sm:pl-[2px] group-hover:sm:pl-[32px] group-hover:lg:pl-[44px] group-hover:sm:pt-[24px] group-hover:md:pt-[24px] group-hover:lg:w-[630px] group-hover:lg:h-[332px] group-hover:md:w-[412px] group-hover:md:h-[244px] group-hover:sm:w-[292px] group-hover:sm:h-[204px] transition-all duration-1000 ease-in-out">
+        <div class="bb group absolute flex  mx-auto bg-white/30 hover:bg-white top-32 left-10 items-center sm:top-40 sm:left-20 hover:border-4 hover:border-black w-fit h-fit sm:h-[50px] sm:w-[75px] md:h-[70px] md:w-[100px] lg:h-[110px] lg:w-[150px] hover:lg:w-[638px] hover:lg:h-[340px] hover:md:w-[421px] hover:md:h-[252px] hover:sm:w-[301px] hover:sm:h-[212px] transition-all duration-300 ease-in-out">
+          <div class="text-sm sm:text-[6px] sm:leading-[8px] group-hover:text-[20px] group-hover:leading-[28px] group-hover:md:text-[30px] group-hover:md:leading-[36px] group-hover:lg:text-[48px] group-hover:lg:leading-[52px] transition-all duration-75">
+            <div class="border-4 border-transparent w-full h-full sm:w-[70px] sm:h-[45px] md:h-[70px] md:w-[100px] lg:h-[105px] lg:w-[145px] bg-white/50 sm:pl-[2px] group-hover:sm:pl-[32px] group-hover:lg:pl-[44px] group-hover:sm:pt-[24px] group-hover:md:pt-[24px] group-hover:lg:w-[630px] group-hover:lg:h-[332px] group-hover:md:w-[412px] group-hover:md:h-[244px] group-hover:sm:w-[292px] group-hover:sm:h-[204px] transition-all duration-300 ease-in-out">
               <div class="flex w-[24ch] text-transparent group-hover:text-gray-300 group-hover:drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
-                <p className="group-hover:drop-shadow-[0_1.2px_1.2px_rgba(0,0,0)]">
+                <div className="drop-shadow-[0_1.2px_1.2px_rgba(0,0,0)]">
                   The{" "}
-                  <span className="italic text-transparent group-hover:text-black drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)] text-[1px] leading-[1px] group-hover:sm:text-[24px] group-hover:sm:leading-[32px] group-hover:md:text-[30px] group-hover:md:leading-[36px] group-hover:lg:text-[60px] group-hover:lg:leading-[66px] transition-all duration-1000">
+                  <p className="italic inline-block text-transparent text-md  group-hover:text-gray-600 drop-shadow-[0_1.7px_1.7px_rgba(0,0,0)] sm:text-[1px] sm:leading-[1px] group-hover:sm:text-[24px] group-hover:sm:leading-[32px] group-hover:md:text-[30px] group-hover:md:leading-[36px] group-hover:lg:text-[60px] group-hover:lg:leading-[66px] transition-all duration-[400ms]">
                     premier
-                  </span>{" "}
+                  </p>{" "}
                   forum for elite business, thought & government leaders to
                   collaborate and build the future.
-                </p>
+                </div>
               </div>
             </div>
           </div>
@@ -303,7 +303,7 @@ const HomePage = () => {
         <div className="flex lg:col-span-7  bg-app_accent-900 w-full h-full">
           <img
             className="home-images lg:w-full lg:h-auto lg:max-h-1/3"
-            src={IMAGES.podcast_home_1}
+            src={IMAGES.podcast_home_2}
             alt="podcast picture"
           ></img>
         </div>
@@ -332,11 +332,11 @@ const HomePage = () => {
           <div className="flex w-full h-full items-center justify-center lg:row-span-3">
             <div className="flex-col">
               <div className="flex max-w-[30ch] text-center">
-                <div className="italic">
+                <div className="flex flex-col italic items-center">
                   "I listen to the Davos On Air podcast all the time! They talk
                   about current events and bring on the best guest speakers with
                   a wide variety of expertise."{" "}
-                  <p className="not-italic font-bold text-black drop-shadow-[0_1px_1px_rgba(255,255,255)]">
+                  <p className="not-italic w-fit rounded-md pr-1 font-bold text-black bg-white">
                     -Nancy A.
                   </p>
                 </div>
@@ -386,7 +386,7 @@ const HomePage = () => {
               </div>
             </div>
             <div className="flex flex-col items-center justify-evenly">
-              <div className="text-red-500 -mt-6 text-center">
+              <div className="text-red-700 -mt-6 text-center">
                 <p className="">*Special offers available</p>
               </div>
               <div className="w-2/3">
