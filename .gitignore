@@ -1,3 +1,15 @@
 node_modules
 src/videos
 dist
+.firebaserc
+firebase.json
+firestore.indexes.json
+firestore.rules
+public/
+storage.rules
+functions/node_modules
+functions/service-key
+functions/database-debug.log
+functions/firestore-debug.log
+functions/.gitignore
+functions/.DS_Store
