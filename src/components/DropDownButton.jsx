@@ -24,7 +24,7 @@ export default function DropDownButton(props) {
             Settings
           </DropdownItem>
         </Link>
-        {user.permissions.includes("admin") ? (
+        {user.roles.includes("admin") ? (
           <Link to="/admin">
             <DropdownItem className="text-white hover:text-black">
               Admin Panel

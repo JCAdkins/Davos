@@ -8,7 +8,7 @@ import {
 } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
-import { useState, useContext, useRef } from "react";
+import { useState, useContext, useRef, useEffect } from "react";
 import addUser from "../../services/addUser";
 import UserContext from "../../contexts/UserContext";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -107,11 +107,14 @@ const NewAccountForm = () => {
 
     addUser(userData, uidRef.current);
     setUser(userData);
-    console.log("user: ", user);
-    navigate("/profile");
+    navigate("/profile")
 
     // Implement logic to check for a successful post code here
   };
+
+  useEffect(() => {
+    console.log("user: ", user);
+  }, [user])
 
   const checkPage = (user) => {
     console.log("checking page");

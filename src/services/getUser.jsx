@@ -4,8 +4,7 @@ import { db } from "../utils/firebase";
 const getUser = async (username) => {
   const q = query(collection(db, "users"), where("username", "==", username));
   const qSnap = await getDocs(q);
-  console.log(username);
-
+  
   if (qSnap.empty) console.log("User doesn't exist.");
   else return qSnap;
 };

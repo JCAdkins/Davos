@@ -7,7 +7,7 @@ const addUser = async (user) => {
   const test_url = "http://127.0.0.1:5001/davos-57f96/us-central1/addUser";
   getToken(appCheck, false).then((appToken) => {
     auth.currentUser.getIdToken().then((userToken) => {
-      fetch(test_url, {
+      fetch(url, {
         method: "POST",
         body: JSON.stringify({ data: { ...user } }),
         headers: {

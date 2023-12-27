@@ -48,8 +48,6 @@ function App() {
     });
   }, []);
 
-  useEffect(() => {}, [user]);
-
   return (
     <div className="bg-cover bg-fixed w-screen">
       <UserContext.Provider value={{ user, setUser }}>
