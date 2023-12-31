@@ -1,45 +1,23 @@
-import {
-  query,
-  orderBy,
-  collection,
-  startAfter,
-  limit,
-  getDocs,
-} from "firebase/firestore";
-import { db } from "../utils/firebase";
+import { appCheck } from "../utils/firebase";
+import { getToken } from "firebase/app-check";
 
 const paginatedCollection = async (col, sortBy, lim, dir) => {
-  const pages = [];
-  let lastVisible = null;
-  const direction = dir;
-
-  while (true) {
-    const myQuery = lastVisible
-      ? query(
-          collection(db, col),
-          orderBy(sortBy, direction),
-          limit(lim),
-          startAfter(lastVisible)
-        )
-      : query(collection(db, col), orderBy(sortBy, direction), limit(lim));
-
-    const querySnapshot = await getDocs(myQuery);
-
-    if (querySnapshot.empty) break;
-
-    const pageData = [];
-    querySnapshot.forEach((doc) => {
-      pageData.push(doc.data());
+  const url = "https://getcollectionpage-jxeq62gl4a-uc.a.run.app"
+  const test_url = "https://test.com"
+    const appToken = await getToken(appCheck, false);
+    const response = await fetch(url, {
+      method: "POST",
+      body: JSON.stringify({ data: { col: col, sortBy: sortBy, lim: lim, dir: dir } }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+        "X-Firebase-AppCheck": `Bearer ${appToken.token}`,
+      },
     });
-    pages.push(pageData);
-
-    if (querySnapshot.length < lim) break;
-
-    // Get the last visible document
-    lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
-  }
-
-  return pages;
+    
+    const pages = await response.json();
+    console.log("pages: ", pages);
+  
+    return pages;
 };
 
 export default paginatedCollection;

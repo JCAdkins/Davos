@@ -97,7 +97,7 @@ const Events = () => {
 
   const events =
     eventList == null
-      ? undefined
+      ? []
       : eventList.sort((a, b) => {
           return makeDate(a.date) - makeDate(b.date);
         });

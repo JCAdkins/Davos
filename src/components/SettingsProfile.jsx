@@ -376,7 +376,7 @@ const SettingsProfile = ({ user, setSaveData }) => {
                 <EditIcon />
               </div>
             </div>
-            <div className="flex grid-cols-6 justify-center pt-2">
+            <div className="potatoes flex w-full grid-cols-6 justify-center pt-2">
               <div className="flex flex-col text-right pr-1 drop-shadow-[0_1.2px_1.2px_rgba(135,135,135)] ">
                 {!work && (
                   <>
@@ -472,39 +472,39 @@ const SettingsProfile = ({ user, setSaveData }) => {
                 )}
                 <p>Duties:</p>
               </div>
-              <div className="flex-col text-app_accent-700 text-left pl-1 h-full overflow-y-auto drop-shadow-[0_1.2px_1.2px_rgba(135,135,135)] whitespace-pre-wrap">
-                <p className="w-fit">
+              <div className="flex-col text-app_accent-700 text-left pl-1 w-full h-full drop-shadow-[0_1.2px_1.2px_rgba(135,135,135)] whitespace-pre-wrap">
+                <p className="w-full">
                   {work
                     ? work.occupation
                     : user.profile.occupational.occupation}
                 </p>
-                <p className="w-fit">
+                <p className="w-full">
                   {work ? work.industry : user.profile.occupational.industry}
                 </p>
-                <p className="w-fit">
+                <p className="w-full">
                   {work
                     ? work.organization
                     : user.profile.occupational.organization}
                 </p>
-                <p className="w-fit">
+                <p className="w-full">
                   {work
                     ? work.experience
                     : user.profile.occupational.experience}
                 </p>
-                <p className="w-fit">
+                <p className="w-full">
                   {work
                     ? work.number_employees
                     : user.profile.occupational.number_employees}
                 </p>
-                <p className="w-fit break-all">
+                <p className="w-full break-all">
                   {work
                     ? work.company_url
                     : user.profile.occupational.company_url}
                 </p>
-                <p className="w-fit break-all">
+                <p className="w-full break-all">
                   {work ? work.email : user.profile.occupational.email}
                 </p>
-                <p className="w-fit overflow-scroll">
+                <p className="w-full break-words">
                   {work
                     ? work.responsibilities
                     : user.profile.occupational.responsibilities}

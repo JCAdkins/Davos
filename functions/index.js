@@ -16,6 +16,7 @@ const { logger } = require("firebase-functions");
 const { initializeApp } = require("firebase-admin/app");
 const cors = require("cors")({ origin: true });
 const admin = require("firebase-admin");
+const { last } = require("lodash");
 const app = initializeApp();
 const db = admin.firestore();
 // Create and deploy your first functions
@@ -28,7 +29,6 @@ const db = admin.firestore();
 
 exports.addUser = onCall(async (req) => {
   try {
-    console.log("auth: ", req);
     const uid = req.auth.uid;
 
     const docRef = await admin
@@ -66,7 +66,6 @@ exports.getCollection = onRequest((req, res) => {
       const snapshot = await admin.firestore().collection(req.body.data).get();
       // Convert query snapshot to an array of documents
       const documents = snapshot.docs.map((doc) => doc.data());
-      console.log(documents);
 
       // Send the array of documents as the response
       res.status(200).send({ documents: documents });
@@ -84,7 +83,6 @@ exports.getDoc = onRequest((req, res) => {
         .collection(req.body.data.col)
         .doc(req.body.data.id)
         .get();
-      console.log(docRef.data());
       res.status(200).send({ document: docRef.data() });
     } catch (error) {
       res.status(500).json({ error: error });
@@ -92,20 +90,50 @@ exports.getDoc = onRequest((req, res) => {
   });
 });
 
-// exports.getUser = onCall(async (req) => {
-//   try {
-//     const name = req.body.data
-//     const retVal = await admin
-//       .firestore()
-//       .collection("users")
-//       .doc(uid)
-//       .update(req.data.updatedData);
-//     console.log(retVal);
-//     return { message: "Update was a success!", data: retVal };
-//   } catch (error) {
-//     throw new HttpsError("invalid-argument", error.message);
-//   }
-// });
+// col, sortBy, lim, dir
+exports.getCollectionPage = onRequest((req, res) => {
+  cors(req, res, async () => {
+    const {col, sortBy, lim, dir } = req.body.data;
+    let lastVisible = null;
+    const pages = [];
+    const count = 0;
+    console.log("HI>>>>>>>>s")
+    try {
+      while (true){
+        if (count > 5)
+          break;
+      const query = lastVisible ?  admin.firestore().collection(col).orderBy(sortBy, dir).limit(lim).startAfter(lastVisible) : admin.firestore().collection(col).orderBy(sortBy, dir).limit(lim);
+      // Convert query snapshot to an array of documents
+      const querySnapshot = await query.get();
+
+      if (querySnapshot.empty) break;
+
+      // Loop through the documents in the snapshot and add them to the array
+      const pageData = []
+      querySnapshot.forEach((doc) => {
+        pageData.push(doc.data());
+      });
+      pages.push(pageData);
+      console.log("pages: ", pages);
+
+      if (querySnapshot.length < lim) break;
+
+      // Get the last visible document
+      console.log(">>>>>>>>lastVisible: ", lastVisible);
+      console.log(">>>>>>>>pageData[pageData.length - 1]: ", pageData[pageData.length - 1]);
+      lastVisible = pageData[pageData.length - 1];
+      console.log(">>>>>>>>lastVisible: ", lastVisible);
+count++;
+      
+      }
+      // Send the array of documents as the response
+      res.status(200).send({ data: pages });
+      
+    } catch (error) {
+      res.status(500).json({ error: error });
+    }
+  });
+})
 
 // exports.sendWelcomeEmail = functions.auth.user().onCreate((user) => {
 //   // ...

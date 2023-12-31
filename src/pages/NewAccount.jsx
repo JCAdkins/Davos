@@ -12,7 +12,7 @@ const NewAccount = () => {
         <DefaultCarousel className="h-screen w-screen object-cover transition-opacity duration-300" />
       </div>
       <Alert
-        className={`fade-in-alert absolute tracking-tight rounded-none left-0 p-2 top-10 right-0 ${hidden} -mb-2 text-sm`}
+        className={`fade-in-alert absolute tracking-tight rounded-none ${hidden} text-sm p-1`}
         color="failure"
         onDismiss={() => setHidden("hidden")}
       >
@@ -22,7 +22,7 @@ const NewAccount = () => {
         will be grandfathered.
       </Alert>
       <div className="flex justify-center items-center bg-transparent w-screen h-screen">
-        <div className="bg-white p-6 -mt-32 rounded-lg w-fit bg-opacity-90">
+        <div className="bg-white p-6 rounded-lg w-fit bg-opacity-90">
           <NewAccountForm />
         </div>
       </div>

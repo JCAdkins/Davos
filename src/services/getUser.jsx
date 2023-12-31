@@ -1,12 +1,18 @@
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from "../utils/firebase";
+import { appCheck } from "../utils/firebase";
+import { getToken } from "firebase/app-check";
+import { auth } from "../utils/firebase";
+import getDoc from "./getDoc";
 
-const getUser = async (username) => {
-  const q = query(collection(db, "users"), where("username", "==", username));
-  const qSnap = await getDocs(q);
+const getUser = async ({uid}) => {
   
-  if (qSnap.empty) console.log("User doesn't exist.");
-  else return qSnap;
-};
+  const url = "https://getuser-jxeq62gl4a-uc.a.run.app";
+  const test_url = "http://127.0.0.1:5001/davos-57f96/us-central1/getUser";
+
+  if (uid){
+    const doc = await getDoc({col: "users", id: uid})
+    return doc;
+  }
+  return {message: "Error: No UID provided."}
+  }
 
 export default getUser;

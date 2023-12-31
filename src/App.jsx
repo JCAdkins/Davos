@@ -35,12 +35,10 @@ function App() {
       if (tUser) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
-        const username = tUser.email;
-        getUser(username).then((data) => {
-          data.forEach((signedInUser) => {
-            setUser({ ...signedInUser.data() });
-          });
-        });
+        getUser({uid: tUser.uid}).then((data) => 
+           setUser({ ...data })
+          );
+        
       } else {
         // User is signed out
         setTimeout(() => setModal(true), 2000);

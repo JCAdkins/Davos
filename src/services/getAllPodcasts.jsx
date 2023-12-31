@@ -3,7 +3,7 @@ import { getToken } from "firebase/app-check";
 
 const getAllPodcasts = async () => {
   const url = "https://getcollection-jxeq62gl4a-uc.a.run.app";
-  const test_url = "http://127.0.0.1:5001/davos-57f96/us-central1/getPodcasts";
+  const test_url = "http://127.0.0.1:5001/davos-57f96/us-central1/getCollection";
 
   try {
     const appToken = await getToken(appCheck, false);
