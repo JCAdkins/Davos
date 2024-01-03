@@ -128,6 +128,20 @@ exports.getCollectionPage = onRequest((req, res) => {
   });
 })
 
+exports.getUserByEmail = onRequest((req,res) => {
+  cors(req, res, async () => {
+    try {
+      await admin.auth().getUserByEmail(req.body.data.username).then(userRecord =>{
+        res.status(200).send({ document: userRecord.toJSON() });
+      }) 
+    } catch (error) {
+      res.status(500).json({ error: error });
+    }
+  })
+})
+
+
+
 // exports.sendWelcomeEmail = functions.auth.user().onCreate((user) => {
 //   // ...
 // });

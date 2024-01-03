@@ -8,7 +8,7 @@ import {
 } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
-import { useState, useContext, useRef, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import addUser from "../../services/addUser";
 import UserContext from "../../contexts/UserContext";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -16,6 +16,7 @@ import { auth } from "../../utils/firebase";
 import { EDUCATION } from "../../assets/EDUCATION";
 import SelectInput from "../Input/SelectInput";
 import { STATES_LIST } from "../../assets/STATES_LIST";
+import getUserByEmail from "../../services/getUserByEmail";
 
 const emailRegex = new RegExp(
   /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
@@ -28,7 +29,6 @@ const NewAccountForm = () => {
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
   const [page, setPage] = useState(0);
-  const uidRef = useRef();
   const [userTaken, setUserTaken] = useState();
   const [degree, setDegree] = useState("");
   const [state, setState] = useState("");
@@ -39,7 +39,6 @@ const NewAccountForm = () => {
     formState: { errors },
     watch,
   } = useForm();
-  //uyukj
 
   const submitForm = async (event) => {
     const today = new Date();
@@ -104,59 +103,48 @@ const NewAccountForm = () => {
         },
       ],
     };
-
-    addUser(userData, uidRef.current);
     setUser(userData);
-    navigate("/profile")
-
-    // Implement logic to check for a successful post code here
+    createUserEmailAndPassword(auth, event.email, event.password, userData);
+    navigate("/profile");
   };
 
-  useEffect(() => {
-    console.log("user: ", user);
-  }, [user])
-
-  const checkPage = (user) => {
-    console.log("checking page");
+  const checkPage = (userInput) => {
     if (page === 0) {
-      const newUser = createUserEmailAndPassword(
-        auth,
-        user.email,
-        user.password
-      );
-
-      newUser.then((data) => {
-        uidRef.current = data;
-        console.log(data);
-        if (data) setPage(page + 1);
+      const exists = getUserByEmail(userInput.email);
+      exists.then((data) => {
+        if (data.document) setUserTaken("User name is taken.");
+        if (data.error) setPage(page + 1);
       });
     } else setPage(page + 1);
   };
 
-  const createUserEmailAndPassword = async (auth, email, password) => {
-    const uid = await createUserWithEmailAndPassword(auth, email, password)
+  const createUserEmailAndPassword = async (
+    auth,
+    email,
+    password,
+    userData
+  ) => {
+    const newUser = await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
-        const user = userCredential.user;
-        return user.uid;
+        addUser(userData, userCredential.user.uid);
+        return userCredential;
       })
       .catch((error) => {
         console.log("Error: ", error);
-        setUserTaken("Username is taken.");
+        return error;
       });
-    return uid;
+    return newUser;
   };
 
   return (
     <form className="flex max-w-md flex-col gap-4">
       {page === 0 && (
         <>
-          <div className="flex flex-row gap-4">
-            <div>
-              <div>
-                <div className="mb-2 block">
-                  <Label htmlFor="email" value="Email (username)" />
-                </div>
+          <div className="flex flex-col gap-2">
+            <div className="flex flex-row gap-4">
+              <div className="w-full">
+                <Label htmlFor="email" value="Email (username)" />
                 <TextInput
                   id="email"
                   placeholder="name@email.com"
@@ -176,10 +164,40 @@ const NewAccountForm = () => {
                 <p className="text-red-600 text-sm">{userTaken}</p>
                 <p className="text-red-600 text-sm">{errors.email?.message}</p>
               </div>
-              <div>
-                <div className="mb-2 block">
-                  <Label htmlFor="firstName" value="First Name" />
-                </div>
+              <div className="w-full">
+                <Label htmlFor="dob" value="Date of Birth" />
+                <Controller
+                  control={control}
+                  name="dob"
+                  render={({ field }) => (
+                    <Datepicker
+                      id="dob"
+                      shadow
+                      type="birthdate"
+                      onSelectedDateChanged={(dob) => field.onChange(dob)}
+                    />
+                  )}
+                  {...register("dob", {
+                    required: "Date of birth is required.",
+                    validate: {
+                      olderThan18: (date) => {
+                        const today = new Date();
+                        const eighteen = new Date(
+                          today.setFullYear(today.getFullYear() - 18)
+                        );
+                        return date > eighteen
+                          ? "Must be older than 18."
+                          : true;
+                      },
+                    },
+                  })}
+                ></Controller>
+                <p className="text-red-600 text-sm">{errors.dob?.message}</p>
+              </div>
+            </div>
+            <div className="flex flex-row gap-4">
+              <div className="w-full">
+                <Label htmlFor="firstName" value="First Name" />
                 <TextInput
                   id="firstName"
                   shadow
@@ -192,10 +210,25 @@ const NewAccountForm = () => {
                   {errors.firstName?.message}
                 </p>
               </div>
-              <div>
-                <div className="mb-2 block">
-                  <Label htmlFor="password" value="Password" />
-                </div>
+              <div className="w-full">
+                <Label htmlFor="lastName" value="Last Name" />
+
+                <TextInput
+                  id="lastName"
+                  shadow
+                  type="name"
+                  {...register("lastName", {
+                    required: "Last name is required.",
+                  })}
+                />
+                <p className="text-red-600 text-sm">
+                  {errors.lastName?.message}
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-row gap-4">
+              <div className="w-full">
+                <Label htmlFor="password" value="Password" />
                 <TextInput
                   id="password"
                   shadow
@@ -209,60 +242,8 @@ const NewAccountForm = () => {
                   {errors.password?.message}
                 </p>
               </div>
-            </div>
-            <div>
-              <div>
-                <div>
-                  <div className="mb-2 block">
-                    <Label htmlFor="dob" value="Date of Birth" />
-                  </div>{" "}
-                  <Controller
-                    control={control}
-                    name="dob"
-                    render={({ field }) => (
-                      <Datepicker
-                        id="dob"
-                        shadow
-                        type="birthdate"
-                        onSelectedDateChanged={(dob) => field.onChange(dob)}
-                      />
-                    )}
-                    {...register("dob", {
-                      required: "Date of birth is required.",
-                      validate: {
-                        olderThan18: (date) => {
-                          const today = new Date();
-                          const eighteen = new Date(
-                            today.setFullYear(today.getFullYear() - 18)
-                          );
-                          return date > eighteen
-                            ? "Must be older than 18."
-                            : true;
-                        },
-                      },
-                    })}
-                  ></Controller>
-                  <p className="text-red-600 text-sm">{errors.dob?.message}</p>
-                </div>
-                <div className="mb-2 block">
-                  <Label htmlFor="lastName" value="Last Name" />
-                </div>
-                <TextInput
-                  id="lastName"
-                  shadow
-                  type="name"
-                  {...register("lastName", {
-                    required: "Last name is required.",
-                  })}
-                />
-                <p className="text-red-600 text-sm">
-                  {errors.lastName?.message}
-                </p>
-              </div>
-              <div>
-                <div className="mb-2 block">
-                  <Label htmlFor="repeat_password" value="Repeat password" />
-                </div>
+              <div className="w-full">
+                <Label htmlFor="repeat_password" value="Repeat password" />
                 <TextInput
                   id="repeat_password"
                   shadow

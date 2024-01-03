@@ -23,7 +23,7 @@ function SuccessModal({ message, clearSuccessModal }) {
         show={openModal}
         onClose={() => clearModal()}
       >
-        <Modal.Header className="">Success</Modal.Header>
+        <Modal.Header className="bg-[#6EE7B7]">Success</Modal.Header>
         <Modal.Body className="text-black">
           <div>{message}</div>
         </Modal.Body>

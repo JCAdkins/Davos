@@ -35,10 +35,10 @@ function App() {
       if (tUser) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
-        getUser({uid: tUser.uid}).then((data) => 
-           setUser({ ...data })
-          );
-        
+        getUser({ uid: tUser.uid }).then((data) => {
+          console.log("data: ", data);
+          data ? setUser({ ...data }) : {};
+        });
       } else {
         // User is signed out
         setTimeout(() => setModal(true), 2000);
@@ -71,9 +71,7 @@ function App() {
                 path="/admin"
                 element={
                   <ProtectedRoute
-                    isAllowed={
-                      user ? user.permissions?.includes("admin") : false
-                    }
+                    isAllowed={user ? user.roles?.includes("admin") : false}
                   >
                     <Admin />
                   </ProtectedRoute>
