@@ -139,7 +139,7 @@ const Podcasts = () => {
   const loadAllPodcasts = () => {
     setLoadingAllPCS(true);
     paginatedCollection("podcasts", "podcast.date", 6, "desc").then((data) => {
-      setPaginatedPodcasts(data);
+      setPaginatedPodcasts(data.data);
     });
   };
 
@@ -240,7 +240,7 @@ const Podcasts = () => {
                         </div>
                         {!searchPCs && (
                           <div className="featured-pc-container">
-                            <div className="featured-flex-container flex flex-wrap gap-8 justify-evenly mb-8">
+                            <div className="featured-flex-container flex flex-wrap justify-evenly mb-4">
                               {loadingInit ? (
                                 <>{...skeletonCards}</>
                               ) : (
@@ -251,7 +251,7 @@ const Podcasts = () => {
                         )}
                         {searchPCs && (
                           <div className="search-pc-container">
-                            <div className="search-flex-container flex flex-wrap gap-8 justify-evenly mb-8">
+                            <div className="search-flex-container flex flex-wrap justify-evenly mb-4">
                               {...searchPCs}
                             </div>
                           </div>
@@ -261,7 +261,6 @@ const Podcasts = () => {
                           className="bg-app_accent-900 w-full rounded-none drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]"
                           size="xs"
                           onClick={() => {
-                            console.log("clicked");
                             loadAllPodcasts();
                           }}
                         >
@@ -288,7 +287,7 @@ const Podcasts = () => {
                         </div>
                         {searchPCs && (
                           <div className="search-pc-container">
-                            <div className="search-flex-container flex flex-wrap gap-8 justify-evenly mb-8">
+                            <div className="search-flex-container flex flex-wrap justify-evenly mb-4">
                               {...searchPCs}
                             </div>
                           </div>
@@ -296,7 +295,7 @@ const Podcasts = () => {
                         {!searchPCs && (
                           <PaginatedTransitions>
                             <div className="paginated-pc-container">
-                              <div className="paginated-flex-container flex flex-wrap gap-8 justify-evenly mb-8">
+                              <div className="paginated-flex-container flex flex-wrap justify-evenly mb-4">
                                 {currentPage.map((podcast, ind) => {
                                   return (
                                     <PodcastCard

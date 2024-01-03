@@ -122,7 +122,7 @@ const Events = () => {
   const loadAllEvents = () => {
     setLoadingAllEvents(true);
     paginatedCollection("events", "date", 6).then((data) => {
-      setPaginatedEvents(data);
+      setPaginatedEvents(data.data);
     });
   };
 
@@ -196,7 +196,7 @@ const Events = () => {
                 <Accordion.Content className="bg-gray-400">
                   <div className="flex-col">
                     {searchEvents && (
-                      <div className="flex overflow-x-scroll justify-content text-center mb-6">
+                      <div className="flex overflow-x-scroll justify-content text-center mb-4">
                         <div className="flex-1 min-w-[25ch] h-full">
                           {...searchEvents}
                         </div>
@@ -204,7 +204,7 @@ const Events = () => {
                     )}
                     {!currentPage && !searchEvents && (
                       <>
-                        <div className="flex overflow-x-scroll justify-content text-center mb-6">
+                        <div className="flex overflow-x-scroll justify-content text-center mb-4">
                           <div className="flex-1 min-w-[25ch] h-full">
                             {...upcomingEvents}
                           </div>
@@ -387,7 +387,7 @@ const Events = () => {
                     )}
                     {!searchEvents && (
                       <PaginatedTransitions>
-                        <div className="-mx-4 flex flex-wrap justify-evenly mb-12">
+                        <div className="-mx-4 flex flex-wrap justify-evenly mb-4">
                           {currentPage.map((event, ind) => {
                             return (
                               <EventCard

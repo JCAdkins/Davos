@@ -15,8 +15,6 @@ const paginatedCollection = async (col, sortBy, lim, dir) => {
     });
     
     const pages = await response.json();
-    console.log("pages: ", pages);
-  
     return pages;
 };
 

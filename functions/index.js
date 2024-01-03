@@ -96,12 +96,9 @@ exports.getCollectionPage = onRequest((req, res) => {
     const {col, sortBy, lim, dir } = req.body.data;
     let lastVisible = null;
     const pages = [];
-    const count = 0;
-    console.log("HI>>>>>>>>s")
     try {
       while (true){
-        if (count > 5)
-          break;
+       
       const query = lastVisible ?  admin.firestore().collection(col).orderBy(sortBy, dir).limit(lim).startAfter(lastVisible) : admin.firestore().collection(col).orderBy(sortBy, dir).limit(lim);
       // Convert query snapshot to an array of documents
       const querySnapshot = await query.get();
@@ -111,19 +108,15 @@ exports.getCollectionPage = onRequest((req, res) => {
       // Loop through the documents in the snapshot and add them to the array
       const pageData = []
       querySnapshot.forEach((doc) => {
-        pageData.push(doc.data());
+        pageData.push(doc.data())
       });
       pages.push(pageData);
-      console.log("pages: ", pages);
 
-      if (querySnapshot.length < lim) break;
+      if (pageData.length < lim) break;
 
       // Get the last visible document
-      console.log(">>>>>>>>lastVisible: ", lastVisible);
-      console.log(">>>>>>>>pageData[pageData.length - 1]: ", pageData[pageData.length - 1]);
-      lastVisible = pageData[pageData.length - 1];
-      console.log(">>>>>>>>lastVisible: ", lastVisible);
-count++;
+      lastVisible = col === "podcasts" ? pageData[pageData.length - 1].podcast.date : pageData[pageData.length - 1].date
+      
       
       }
       // Send the array of documents as the response
