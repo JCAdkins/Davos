@@ -14,6 +14,7 @@ const IMAGES = {
 
   parking_location: new URL("./parking-location.png", import.meta.url).href,
   event_location: new URL("./event-location.png", import.meta.url).href,
+  davos_icon: new URL("./davos_icon.png", import.meta.url).href,
 };
 
 export default IMAGES;

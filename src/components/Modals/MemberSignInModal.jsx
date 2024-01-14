@@ -1,16 +1,14 @@
 import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import UserContext from "../../contexts/UserContext";
 import { Link } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../utils/firebase";
-import getUser from "../../services/getUser";
+import generateSessionCookie from "../../services/generateSessionCookie";
 
 const MemberSignInModal = (props) => {
   const [openModal, _] = useState("form-elements");
   const [errorMessage, setErrorMessage] = useState();
-  const { setUser } = useContext(UserContext);
   const emailRegex = new RegExp(
     /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
   );
@@ -23,23 +21,18 @@ const MemberSignInModal = (props) => {
 
   const logInClick = async (creds) => {
     signInWithEmailAndPassword(auth, creds.email, creds[`current-password`])
-      .then((userCredential) => {
+      .then(async (userCredential) => {
         // Signed in
-        logInAuthorized(userCredential.user);
+        const idToken = await userCredential.user.getIdToken();
+        const sessionCookie = await generateSessionCookie(idToken);
+        //const crossAppLogin = await setCrossAppLogIn(sessionCookie.cookies)
+        console.log("cookie set: ", sessionCookie);
+        props.resetModal();
       })
       .catch((error) => {
         logInDenied();
         console.log(error);
       });
-  };
-
-  const logInAuthorized = (u) => {
-    getUser(u.email).then((data) => {
-      data.forEach((signInUser) => {
-        setUser({ ...signInUser.data() });
-      });
-    });
-    props.resetModal();
   };
 
   const logInDenied = () => {
@@ -111,36 +104,38 @@ const MemberSignInModal = (props) => {
               </p>
               <p className="text-white">Easter Egg!</p>
             </div>
-            <div className="flex justify-between">
-              <div className="flex items-center gap-2">
-                <Checkbox id="remember" />
-                <Label htmlFor="remember">Remember me</Label>
+            <div className="flex flex-col justify-evenly gap-2">
+              <div className="flex justify-between">
+                <div className="flex items-center gap-2">
+                  <Checkbox id="remember" />
+                  <Label htmlFor="remember">Remember me</Label>
+                </div>
+                <a
+                  href="/modal"
+                  className="text-sm text-app_accent-700 hover:underline dark:text-app_accent-500"
+                >
+                  Lost Password?
+                </a>
               </div>
-              <a
-                href="/modal"
-                className="text-sm text-app_accent-700 hover:underline dark:text-app_accent-500"
-              >
-                Lost Password?
-              </a>
-            </div>
-            <div className="w-full">
-              <Button
-                className="bg-app_accent-900"
-                type="submit"
-                onClick={handleSubmit(logInClick)}
-              >
-                Log in to your account
-              </Button>
-            </div>
-            <div className="flex justify-between text-sm font-medium text-gray-500 dark:text-gray-300">
-              Not registered?&nbsp;
-              <Link
-                to="/new_account"
-                className="text-app_accent-700 hover:underline dark:text-app_accent-500"
-                onClick={() => props.resetModal()}
-              >
-                Create account
-              </Link>
+              <div className="w-full">
+                <Button
+                  className="bg-app_accent-900"
+                  type="submit"
+                  onClick={handleSubmit(logInClick)}
+                >
+                  Log in to your account
+                </Button>
+              </div>
+              <div className="flex justify-between text-sm font-medium text-gray-500 dark:text-gray-300">
+                Not registered?&nbsp;
+                <Link
+                  to="/new_account"
+                  className="text-app_accent-700 hover:underline dark:text-app_accent-500"
+                  onClick={() => props.resetModal()}
+                >
+                  Create account
+                </Link>
+              </div>
             </div>
           </form>
         </div>

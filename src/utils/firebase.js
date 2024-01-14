@@ -21,6 +21,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
+// As httpOnly cookies are to be used, do not persist any state client side.
+//firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 //export const db = getDataBase(app);
 export const db = getFirestore(app);
 //const analytics = getAnalytics(app);
@@ -29,7 +31,7 @@ export const cloudStorage = getStorage(app);
 export const functions = getFunctions(app);
 // Pass your reCAPTCHA v3 site key (public key) to activate(). Make sure this
 // key is the counterpart to the secret key you set in the Firebase console.
-self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+//self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
 export const appCheck = initializeAppCheck(app, {
   provider: new ReCaptchaV3Provider(import.meta.env.VITE_RECAPTCHA_KEY),
 

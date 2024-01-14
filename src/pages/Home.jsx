@@ -148,7 +148,7 @@ const HomePage = () => {
           <div className="w-full">
             <div className="sm:hidden w-screen">
               <div className="flex flex-wrap max-w-[38ch] items-center justify-center text-center text-2xl whitespace-pre py-4 px-8">
-                <em className="text-black font-bold text-shadow shadow-app_accent-300 drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
+                <em className="text-black font-bold drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
                   Davos On Air:
                 </em>{" "}
                 The best{" "}
@@ -168,7 +168,7 @@ const HomePage = () => {
             <div className="flex-col items-center justify-center sm:border-double sm:border-x-8 sm:border-white text-center">
               <div className="hidden sm:block">
                 <div className="flex flex-wrap max-w-[38ch] items-center justify-center text-center text-2xl whitespace-pre p-8">
-                  <em className="text-black font-bold text-shadow shadow-app_accent-300 drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
+                  <em className="text-black font-bold drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
                     Davos On Air:
                   </em>{" "}
                   The best{" "}
@@ -204,7 +204,7 @@ const HomePage = () => {
           <div className="flex flex-col justify-center items-center w-full border-y-2 border-white sm:border-none">
             <div className="sm:hidden flex flex-wrap items-center justify-center text-center text-2xl whitespace-pre p-4">
               <p>Become a </p>
-              <em className="text-black font-bold text-shadow shadow-app_accent-300 drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
+              <em className="text-black font-bold  drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
                 Davos In The Desert{" "}
               </em>
               member now
@@ -220,7 +220,7 @@ const HomePage = () => {
                   <div className="hidden sm:block">
                     <div className="flex flex-wrap items-center justify-center text-center text-2xl whitespace-pre p-8">
                       <p>Become a </p>
-                      <em className="text-black font-bold text-shadow shadow-app_accent-300 drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
+                      <em className="text-black font-bold  drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
                         Davos In The Desert{" "}
                       </em>
                       member now
@@ -255,7 +255,7 @@ const HomePage = () => {
         <div className="flex flex-col justify-center items-center w-full border-double border-white border-x-8 border-b-8 sm:border-none">
           <div className="sm:hidden flex flex-wrap items-center justify-center text-center text-2xl whitespace-pre my-8 sm:px-14">
             Party & mingle with all of your{" "}
-            <em className="text-black font-bold text-shadow shadow-app_accent-300 drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
+            <em className="text-black font-bold  drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
               Davos{" "}
             </em>
             pals
@@ -270,7 +270,7 @@ const HomePage = () => {
               <div className="hidden sm:block">
                 <div className="flex flex-wrap items-center justify-center text-center text-2xl whitespace-pre my-8 sm:px-14">
                   Party & mingle with all of your{" "}
-                  <em className="text-black font-bold text-shadow shadow-app_accent-300 drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
+                  <em className="text-black font-bold  drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
                     Davos{" "}
                   </em>
                   pals
@@ -310,7 +310,7 @@ const HomePage = () => {
         <div className="bg-app_accent-900 h-full w-full lg:grid lg:grid-rows-5 lg:col-span-5 text-xl lg:text-2xl">
           <div className="lg:row-span-2 w-full">
             <div className="seven-grid mx-auto lg:flex lg:grid lg:grid-cols-6 lg:grid-row-5 h-full p-4 w-full text-2xl lg:text-4xl">
-              <div className="col-start-1 row-start-1 col-span-2 text-black font-bold w-1/5 whitespace-nowrap text-shadow shadow-app_accent-300 drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
+              <div className="col-start-1 row-start-1 col-span-2 text-black font-bold w-1/5 whitespace-nowrap drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
                 Davos On Air:
               </div>
               <div className="flex row-start-2 col-start-2 col-span-2 w-1/5 whitespace-nowrap">
@@ -365,7 +365,7 @@ const HomePage = () => {
 
               <div className="flex w-full h-1/3 justify-center">
                 <p>
-                  <em className="text-black font-bold text-shadow shadow-app_accent-300 drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
+                  <em className="text-black font-bold  drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
                     Davos In The Desert
                   </em>
                 </p>
@@ -421,7 +421,7 @@ const HomePage = () => {
             </div>
             <div className="flex row-start-2 col-start-2 row-span-1 col-span-2 justify-center text-center mt-1">
               with
-              <strong className="text-black font-bold text-shadow shadow-app_accent-300 drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)] whitespace-pre">
+              <strong className="text-black font-bold  drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)] whitespace-pre">
                 {" "}
                 Davos{" "}
               </strong>

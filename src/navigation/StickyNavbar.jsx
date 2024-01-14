@@ -56,12 +56,27 @@ const StickyNavbar = () => {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <Link
+        <a
           className="flex items-center hover:scale-110 hover:drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]"
-          to="/members"
+          href="https://davos-shop.web.app/"
         >
-          Members
-        </Link>
+          <div className="flex flex-col divide-y divide-dashed divide-black items-center">
+            <div className="flex flex-row w-full justify-evenly">
+              <p>D</p>
+              <p>a</p>
+              <p>v</p>
+              <p>o</p>
+              <p>s</p>
+            </div>
+            <div className="flex flex-row w-full justify-evenly">
+              <p>S</p>
+              <p>t</p>
+              <p>o</p>
+              <p>r</p>
+              <p>e</p>
+            </div>
+          </div>
+        </a>
       </Typography>
       <Typography
         as="li"
@@ -119,7 +134,6 @@ const StickyNavbar = () => {
                 src="https://davosinthedesert.us/wp-content/uploads/2023/02/davos-logo-v3.png"
                 alt="Davos In The Desert"
               ></DefaultImage>
-              <div className="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-fixed opacity-50"></div>
             </div>
           </Link>
 

@@ -20,6 +20,7 @@ import MemberSignInModal from "./components/Modals/MemberSignInModal";
 import EventInfo from "./pages/EventInfo";
 import DavosFooter from "./navigation/DavosFooter";
 import "react-tooltip/dist/react-tooltip.css";
+import checkSessionCookie from "./services/checkSessionCookie";
 
 function App() {
   const [user, setUser] = useState();
@@ -31,12 +32,12 @@ function App() {
   };
 
   useEffect(() => {
+    checkSessionCookie();
     onAuthStateChanged(auth, (tUser) => {
       if (tUser) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
         getUser({ uid: tUser.uid }).then((data) => {
-          console.log("data: ", data);
           data ? setUser({ ...data }) : {};
         });
       } else {
