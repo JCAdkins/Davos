@@ -13,3 +13,4 @@ functions/database-debug.log
 functions/firestore-debug.log
 functions/.gitignore
 functions/.DS_Store
+ui-debug.log
