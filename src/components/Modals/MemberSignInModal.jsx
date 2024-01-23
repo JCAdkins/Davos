@@ -2,7 +2,11 @@ import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  setPersistence,
+  inMemoryPersistence,
+} from "firebase/auth";
 import { auth } from "../../utils/firebase";
 import generateSessionCookie from "../../services/generateSessionCookie";
 
@@ -20,15 +24,22 @@ const MemberSignInModal = (props) => {
   } = useForm();
 
   const logInClick = async (creds) => {
-    signInWithEmailAndPassword(auth, creds.email, creds[`current-password`])
-      .then(async (userCredential) => {
-        // Signed in
-        const idToken = await userCredential.user.getIdToken();
-        const sessionCookie = await generateSessionCookie(idToken);
-        //const crossAppLogin = await setCrossAppLogIn(sessionCookie.cookies)
-        console.log("cookie set: ", sessionCookie);
-        props.resetModal();
-      })
+    setPersistence(auth, inMemoryPersistence)
+      .then(() =>
+        signInWithEmailAndPassword(
+          auth,
+          creds.email,
+          creds[`current-password`]
+        ).then(async (userCredential) => {
+          // Signed in
+          const idToken = await userCredential.user.getIdToken();
+          const sessionCookie = await generateSessionCookie(idToken);
+          if (sessionCookie.error) {
+            props.setError(sessionCookie.error);
+          }
+          props.resetModal();
+        })
+      )
       .catch((error) => {
         logInDenied();
         console.log(error);

@@ -16,10 +16,36 @@
     }
   ],
   "hosting": {
-    "public": "public",
+    "public": "dist",
     "headers": [
       {
+        "source": "/authLogout",
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          },
+          {
+            "key": "Access-Control-Allow-Credentials",
+            "value": "true"
+          }
+        ]
+      },
+      {
         "source": "/generateSessionCookie",
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          },
+          {
+            "key": "Access-Control-Allow-Credentials",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "source": "/authStatus",
         "headers": [
           {
             "key": "Access-Control-Allow-Origin",
@@ -35,19 +61,24 @@
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
+        "source": "/authLogout",
+        "function": {
+          "functionId": "authLogout",
+          "region": "us-central1"
+        }
+      },
+      {
         "source": "/generateSessionCookie",
         "function": {
           "functionId": "generateSessionCookie",
-          "region": "us-central1",
-          "pinTag": true
+          "region": "us-central1"
         }
       },
       {
         "source": "/authStatus",
         "function": {
           "functionId": "authStatus",
-          "region": "us-central1",
-          "pinTag": true
+          "region": "us-central1"
         }
       }
     ]

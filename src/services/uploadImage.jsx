@@ -1,14 +1,13 @@
 import { cloudStorage } from "../utils/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-const upLoadImage = (currentUser, image) => {
+const upLoadImage = async (currentUser, image) => {
   const storageRef = ref(
     cloudStorage,
-    `profile_images/${currentUser.email}/${image.name}`
+    `profile_images/${currentUser.uid}/${image.name}`
   );
-  return uploadBytes(storageRef, image).then((snapShot) =>
-    getDownloadURL(snapShot.ref)
-  );
+  const snapShot = await uploadBytes(storageRef, image);
+  return await getDownloadURL(snapShot.ref);
 };
 
 export default upLoadImage;

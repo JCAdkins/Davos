@@ -13,8 +13,10 @@ import MemberSignInModal from "../components/Modals/MemberSignInModal";
 import UserContext from "../contexts/UserContext";
 import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import "../customcss/CustomCardCss.css";
+import clearSessionCookie from "../services/clearSessionCookie";
 import SuccessModal from "../components/Modals/SuccessModal";
+import ShopInTheDesertAnchor from "../components/ShopInTheDesertAnchor";
+import "../customcss/CustomCardCss.css";
 
 const StickyNavbar = () => {
   const [openNav, setOpenNav] = useState(false);
@@ -33,7 +35,11 @@ const StickyNavbar = () => {
   const logOut = () => {
     signOut(auth)
       .then(() => {
+        setUser();
+        // User signed out we need to remove cookie from their cookies
+        clearSessionCookie().then((data) => console.log(data));
         setSuccessModal(`${user.username} has successfully signed out.`);
+        setTimeout(() => signIn(), 2000);
       })
       .catch((error) => {
         console.log(error);
@@ -52,37 +58,24 @@ const StickyNavbar = () => {
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <Typography
         as="li"
-        variant="small"
+        variant="large"
         color="blue-gray"
-        className="p-1 font-normal"
+        className="flex w-full justify-evenly p-1 font-normal"
       >
-        <a
+        <Link
           className="flex items-center hover:scale-110 hover:drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]"
-          href="https://davos-shop.web.app/"
+          to="/"
         >
-          <div className="flex flex-col divide-y divide-dashed divide-black items-center">
-            <div className="flex flex-row w-full justify-evenly">
-              <p>D</p>
-              <p>a</p>
-              <p>v</p>
-              <p>o</p>
-              <p>s</p>
-            </div>
-            <div className="flex flex-row w-full justify-evenly">
-              <p>S</p>
-              <p>t</p>
-              <p>o</p>
-              <p>r</p>
-              <p>e</p>
-            </div>
+          <div className="flex items-center hover:scale-110 hover:drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]">
+            Home
           </div>
-        </a>
+        </Link>
       </Typography>
       <Typography
         as="li"
-        variant="small"
+        variant="large"
         color="blue-gray"
-        className="p-1 font-normal"
+        className="flex w-full justify-evenly p-1 font-normal"
       >
         <Link
           className="flex items-center hover:scale-110 hover:drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]"
@@ -93,9 +86,9 @@ const StickyNavbar = () => {
       </Typography>
       <Typography
         as="li"
-        variant="small"
+        variant="large"
         color="blue-gray"
-        className="p-1 font-normal"
+        className="flex w-full justify-evenly p-1 font-normal"
       >
         <Link
           className="flex items-center hover:scale-110 hover:drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]"
@@ -106,9 +99,9 @@ const StickyNavbar = () => {
       </Typography>
       <Typography
         as="li"
-        variant="small"
+        variant="large"
         color="blue-gray"
-        className="p-1 font-normal"
+        className="flex w-full justify-evenly p-1 font-normal"
       >
         <Link
           className="flex items-center hover:scale-110 hover:drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]"
@@ -124,7 +117,7 @@ const StickyNavbar = () => {
     <>
       <Navbar
         variant="gradient"
-        className="sticky bg-app_main top-0 z-10 h-max border-none max-w-full rounded-none py-1 px-4 lg:px-8 lg:py-1 z-20"
+        className="sticky bg-app_main top-0 z-10 border-none h-[76px] max-w-full rounded-none py-1 px-4 lg:px-8 lg:py-1 z-20"
       >
         <div className="flex items-center justify-between text-blue-gray-900">
           <Link className="cursor-pointer py-1.5 font-medium" to="/">
@@ -139,6 +132,9 @@ const StickyNavbar = () => {
 
           <div className="flex items-center gap-4">
             <div className="mr-4 hidden lg:block">{navList}</div>
+            <div className="-ml-12 -mr-2 hidden lg:block">
+              <ShopInTheDesertAnchor />
+            </div>
             {user ? (
               <div className="flex justify-evenly gap-4 drop-down">
                 <DropDownButton onClick={logOut} />
@@ -147,7 +143,7 @@ const StickyNavbar = () => {
               <Button
                 variant="gradient"
                 size="sm"
-                className="hidden lg:inline-block"
+                className="hidden lg:inline-block bg-app_accent-600 active:drop-shadow-[0_2px_2px_rgba(95,95,95)] shadow hover:drop-shadow-[0_3px_3px_rgba(95,95,95)] hover:shadow-lg font-medium transition transform active:bg-app_accent-700 hover:scale-105 hover:-translate-y-0.5"
                 onClick={signIn}
               >
                 <span>Sign In</span>
@@ -192,18 +188,31 @@ const StickyNavbar = () => {
             </IconButton>
           </div>
         </div>
-        <Collapse open={openNav}>
+        <Collapse open={openNav} className="bg-gray-200 rounded-b-lg">
           {navList}
-          <Button
-            onClick={signIn}
-            variant="gradient"
-            size="sm"
-            fullWidth
-            className="mb-2"
-          >
-            <span>Sign In</span>
-          </Button>
+          {user ? (
+            <Button
+              onClick={logOut}
+              variant="gradient"
+              size="sm"
+              fullWidth
+              className="mb-2"
+            >
+              <span>Sign Out</span>
+            </Button>
+          ) : (
+            <Button
+              onClick={signIn}
+              variant="gradient"
+              size="sm"
+              fullWidth
+              className="mb-2"
+            >
+              <span>Sign In</span>
+            </Button>
+          )}
         </Collapse>
+
         {openSignInModal && <MemberSignInModal resetModal={resetModal} />}
       </Navbar>
       {successModal && (

@@ -14,25 +14,14 @@ const {
 } = require("firebase-functions/v2/https");
 const { logger } = require("firebase-functions");
 const { initializeApp } = require("firebase-admin/app");
+const admin = require("firebase-admin");
 const app = initializeApp();
 const cors = require("cors")({ origin: true, credentials: true });
-const admin = require("firebase-admin");
+
 const db = admin.firestore();
 
 //const { last } = require("lodash");
 
-const shopConfig = {
-  apiKey: "AIzaSyBVC071f65--uqNJNpKoueyHEtC3jQWMTU",
-  authDomain: "davos-57f96.firebaseapp.com",
-  databaseURL: "https://davos-57f96-default-rtdb.firebaseio.com",
-  projectId: "davos-57f96",
-  storageBucket: "davos-57f96.appspot.com",
-  messagingSenderId: "1038612395003",
-  appId: "1:1038612395003:web:b5e0adc9f1075b99d1515e",
-  measurementId: "G-ZVZ8BM18J4",
-};
-
-const shopApp = initializeApp(shopConfig, "shopApp");
 // Create and deploy your first functions
 // https://firebase.google.com/docs/functions/get-started
 
@@ -158,7 +147,18 @@ exports.getUserByEmail = onRequest((req, res) => {
 
 exports.generateSessionCookie = onRequest((req, res) => {
   cors(req, res, async () => {
-    const idToken = req.body.data;
+    // Extract the Authorization header from the request
+    const authorizationHeader = req.headers["authorization"];
+
+    // Check if the Authorization header is present
+    if (!authorizationHeader) {
+      return res
+        .status(401)
+        .json({ error: "Unauthorized - Missing Authorization header" });
+    }
+
+    // Extract the token from the Authorization header
+    const idToken = authorizationHeader.replace("Bearer ", "");
     const expiresIn = 86400 * 1000 * 5; // 5 days
     try {
       // If idToken isn't valid an error will be thrown
@@ -175,7 +175,7 @@ exports.generateSessionCookie = onRequest((req, res) => {
         httpOnly: true,
         secure: true,
         domain: ".adadkins.com",
-        sameSite: "none",
+        sameSite: "Strict",
       });
       res.end(JSON.stringify({ status: "success: session cookie set" }));
     } catch (error) {
@@ -185,55 +185,52 @@ exports.generateSessionCookie = onRequest((req, res) => {
   });
 });
 
-exports.logInAllApps = onRequest((req, res) => {
-  cors(req, res, async () => {
-    app.auth().signIn;
-  });
-});
-
 // Check the session status and return a custom token for cross-domain authentication
 exports.authStatus = onRequest((req, res) => {
   cors(req, res, async () => {
-    logger.log(">>>>myReq: ", req);
-    logger.log(">>>>>cookies: ", req.headers.cookie);
-    res.status(200).json({ document: "Success!" });
+    try {
+      const sessionCookie = req.headers.cookie;
+      logger.log(">>>>sessionCookie: ", sessionCookie);
+      const cookie = sessionCookie.replace("__session=", "");
+      logger.log("<<<<<<<cookie: ", cookie);
+      // Check if the session cookie exists
+      if (!cookie) {
+        res.status(401).send("Unauthorized");
+        return;
+      }
+
+      // Validate the session cookie
+      const cookieClaims = await admin.auth().verifySessionCookie(cookie);
+      logger.log(">>>>>>cookieClaims: ", cookieClaims);
+      // If validation is successful, create a custom token (replace <uid> with the actual UID)
+      const customToken = await admin
+        .auth()
+        .createCustomToken(cookieClaims.uid);
+
+      // Return the custom token to the client
+      res.status(200).json({ customToken });
+    } catch (error) {
+      if (error.code === "auth/invalid-session-cookie") {
+        console.error("Invalid sessionCookie. Error:", error.message);
+      } else {
+        console.error("Error verifying sessionCookie:", error.message);
+      }
+      console.error("Error in authStatus:", error);
+      res.status(401).json("Error: Request Unauthorized");
+    }
   });
-
-  //   // cors(req, res, async () => {
-  //   //   try {
-  //   //     const sessionCookie = req.cookies.__session;
-
-  //   //     // Check if the session cookie exists
-  //   //     if (!sessionCookie) {
-  //   //       res.status(401).send("Unauthorized");
-  //   //       return;
-  //   //     }
-
-  //   //     // Validate the session cookie
-  //   //     await admin.auth().verifySessionCookie(sessionCookie);
-
-  //   //     // If validation is successful, create a custom token (replace <uid> with the actual UID)
-  //   //     const customToken = await admin.auth().createCustomToken("<uid>");
-
-  //   //     // Return the custom token to the client
-  //   //     res.status(200).json({ customToken });
-  //   //   } catch (error) {
-  //   //     console.error("Error in authStatus:", error);
-  //   //     res.status(401).send("Unauthorized");
-  //   //   }
-  //   // });
 });
 
 // Logout endpoint to clear the session cookie
 exports.authLogout = onRequest((req, res) => {
   cors(req, res, () => {
     res.clearCookie("__session", {
-      domain: ".web.app", // Adjust to your domain
+      domain: ".adadkins.com", // Adjust to your domain
       secure: true,
       httpOnly: true,
-      sameSite: "strict",
+      sameSite: "Strict",
     });
-    res.status(200).send("Logged out successfully");
+    res.status(200).json("Logged out successfully");
   });
 });
 

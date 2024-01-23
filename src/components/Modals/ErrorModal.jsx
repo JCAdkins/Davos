@@ -16,11 +16,11 @@ function ErrorModal({ error, clearErrorModal }) {
       show={openModal}
       onClose={() => clearModal()}
     >
-      <Modal.Header className="error-modal-header bg-gray-300 text-black">
+      <Modal.Header className="error-modal-header bg-red-600 text-white">
         Error
       </Modal.Header>
       <Modal.Body className="bg-white text-red-400">
-        <div>{error.message}</div>
+        <div>{error.message ? error.message : error}</div>
       </Modal.Body>
     </Modal>
   );

@@ -11,12 +11,17 @@ import { Controller, useForm } from "react-hook-form";
 import { useState, useContext, useEffect } from "react";
 import addUser from "../../services/addUser";
 import UserContext from "../../contexts/UserContext";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  setPersistence,
+  inMemoryPersistence,
+} from "firebase/auth";
 import { auth } from "../../utils/firebase";
 import { EDUCATION } from "../../assets/EDUCATION";
 import SelectInput from "../Input/SelectInput";
 import { STATES_LIST } from "../../assets/STATES_LIST";
 import getUserByEmail from "../../services/getUserByEmail";
+import generateSessionCookie from "../../services/generateSessionCookie";
 
 const emailRegex = new RegExp(
   /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
@@ -104,7 +109,19 @@ const NewAccountForm = () => {
       ],
     };
     setUser(userData);
-    createUserEmailAndPassword(auth, event.email, event.password, userData);
+    setPersistence(auth, inMemoryPersistence).then(() =>
+      createUserEmailAndPassword(
+        auth,
+        event.email,
+        event.password,
+        userData
+      ).then(async (newUser) => {
+        console.log("newUser: ", newUser);
+        const idToken = await newUser.user.getIdToken();
+        generateSessionCookie(idToken);
+      })
+    );
+
     navigate("/profile");
   };
 
@@ -124,16 +141,8 @@ const NewAccountForm = () => {
     password,
     userData
   ) => {
-    const newUser = await createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        addUser(userData, userCredential.user.uid);
-        return userCredential;
-      })
-      .catch((error) => {
-        console.log("Error: ", error);
-        return error;
-      });
+    const newUser = await createUserWithEmailAndPassword(auth, email, password);
+    addUser(userData, newUser.user.uid);
     return newUser;
   };
 

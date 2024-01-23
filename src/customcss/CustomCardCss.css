@@ -184,6 +184,20 @@ div[data-testid="modal-overlay"]:has(.form-handle) {
   }
 }
 
+@media screen and (max-width: 600px) {
+  .settings-grid-container {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .settings-grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
 @media screen and (max-width: 780px) {
   .settings-body,
   .settings-sidebar {

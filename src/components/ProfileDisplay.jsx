@@ -1,7 +1,6 @@
 import { useEffect, useState, useContext, useRef } from "react";
 import { Timestamp } from "firebase/firestore";
 import { Tooltip } from "react-tooltip";
-import { auth } from "../utils/firebase";
 import updateUser from "../services/updateUser";
 import UserContext from "../contexts/UserContext";
 import EditIcon from "./Icons/EditIcon";
@@ -58,14 +57,13 @@ const ProfileDisplay = () => {
     setEditingAboutMe(true);
   };
   const submitAboutMe = () => {
-    const upU = updateUser({
+    updateUser({
       profile: { ...user.profile, about: aboutMeRef.current.value },
     });
     setUser({
       ...user,
       profile: { ...user.profile, about: aboutMeRef.current.value },
     });
-    console.log("upU: ", upU);
     setEditingAboutMe(false);
   };
 
@@ -107,7 +105,7 @@ const ProfileDisplay = () => {
 
   const submitEducation = (event) => {
     event ? event.preventDefault() : {};
-    const upU = updateUser({
+    updateUser({
       profile: {
         ...user.profile,
         education: { school: schoolRef.current.value, degree: degree },
@@ -120,7 +118,6 @@ const ProfileDisplay = () => {
         education: { school: schoolRef.current.value, degree: degree },
       },
     });
-    console.log("upU: ", upU);
     setEditingEducation(false);
   };
 
@@ -145,7 +142,7 @@ const ProfileDisplay = () => {
     // Make sure city entered is at least kinda valid before updating the db with the new data; maybe
     // utilize a way to check major cities in the future.
     if (cityRef.current.value.match(cityRegEx)) {
-      const upU = updateUser({
+      updateUser({
         profile: {
           ...user.profile,
           location: { city: cityRef.current.value, state: state },
@@ -158,7 +155,6 @@ const ProfileDisplay = () => {
           location: { city: cityRef.current.value, state: state },
         },
       });
-      console.log("upU: ", upU);
       setEditingLocation(false);
     }
     // If we reach this else block then the user input isn't valid
@@ -185,7 +181,7 @@ const ProfileDisplay = () => {
 
   const setUserProfPic = async (path) => {
     await path?.then((data) => {
-      const upU = updateUser({
+      updateUser({
         profile: {
           ...user.profile,
           image: data,
@@ -199,14 +195,13 @@ const ProfileDisplay = () => {
         },
       });
     });
-    console.log("upU: ", upU);
     setEditingProfilePic(false);
   };
 
   useEffect(() => {
     user.new
       ? setTimeout(() => {
-          const upU = updateUser({ new: false });
+          updateUser({ new: false });
           setUser({ ...user, new: false });
           setAddProfilePic(true);
           setTimeout(() => {

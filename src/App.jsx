@@ -13,9 +13,15 @@ import UserContext from "./contexts/UserContext";
 import PodcastProvider from "./contexts/PodcastProvider";
 import ProtectedRoute from "./navigation/ProtectedRoute";
 import NewAccount from "./pages/NewAccount";
-import { onAuthStateChanged } from "firebase/auth";
+import {
+  onAuthStateChanged,
+  signInWithCustomToken,
+  setPersistence,
+  inMemoryPersistence,
+} from "firebase/auth";
 import { auth } from "./utils/firebase";
 import getUser from "./services/getUser";
+import ErrorModal from "./components/Modals/ErrorModal";
 import MemberSignInModal from "./components/Modals/MemberSignInModal";
 import EventInfo from "./pages/EventInfo";
 import DavosFooter from "./navigation/DavosFooter";
@@ -26,13 +32,23 @@ function App() {
   const [user, setUser] = useState();
   const [podcast, setPodcast] = useState();
   const [modal, setModal] = useState();
+  const [errorModal, setErrorModal] = useState();
 
   const resetModal = () => {
     setModal(false);
   };
 
+  const setError = () => {
+    setErrorModal(
+      "An error occurred. Automatic cross-site log-in may not work."
+    );
+  };
+
+  const clearErrorModal = () => {
+    setErrorModal();
+  };
+
   useEffect(() => {
-    checkSessionCookie();
     onAuthStateChanged(auth, (tUser) => {
       if (tUser) {
         // User is signed in, see docs for a list of available properties
@@ -40,10 +56,17 @@ function App() {
         getUser({ uid: tUser.uid }).then((data) => {
           data ? setUser({ ...data }) : {};
         });
-      } else {
-        // User is signed out
-        setTimeout(() => setModal(true), 2000);
       }
+    });
+
+    // If __session cookie exists then we use that to log user in, otherwise we
+    // open the login modal after 2 second delay
+    checkSessionCookie().then((data) => {
+      if (data.customToken)
+        setPersistence(auth, inMemoryPersistence).then(() =>
+          signInWithCustomToken(auth, data.customToken)
+        );
+      else setTimeout(() => setModal(true), 2000);
     });
   }, []);
 
@@ -107,7 +130,15 @@ function App() {
                 }
               />
             </Routes>
-            {modal && <MemberSignInModal resetModal={resetModal} />}
+            {modal && (
+              <MemberSignInModal setError={setError} resetModal={resetModal} />
+            )}
+            {errorModal && (
+              <ErrorModal
+                error={errorModal}
+                clearErrorModal={clearErrorModal}
+              />
+            )}
             <DavosFooter />
           </Router>
         </PodcastProvider.Provider>

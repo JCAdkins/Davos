@@ -70,10 +70,10 @@ const UserSettings = () => {
   return (
     <div className="settings-body bg-app_bg font-dmserif text-black">
       <div className="settings-container flex flex-col w-screen h-full">
-        <div className="settings-grid-container flex flex-col sm:grid sm:grid-cols-4">
-          <div className="settings-sidebar flex flex-col bg-app_accent-900 items-center gap-4 p-4 break-all">
+        <div className="settings-grid-container">
+          <div className="settings-sidebar flex flex-col bg-app_accent-900 items-center gap-4 p-4">
             <img
-              className="rounded-none w-auto h-auto border-1 sm:border-2 sm:border-app_main p-0 sm:p-1 md:p-2"
+              className="rounded-none w-auto h-auto border-2 border-app_main p-2"
               src={user.profile.image}
               alt={user.name}
             />
@@ -97,9 +97,12 @@ const UserSettings = () => {
                   display != "membership" ? setDisplay("membership") : {}
                 }
               >
-                Membership/Purchase
+                <p className="text-start">Membership / Purchase</p>
               </ListGroup.Item>
             </ListGroup>
+            <button className="bg-white hover:bg-gray-100 hover:text-cyan-700 focus:text-cyan-700 focus:outline-none dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white w-full h-fit rounded-lg">
+              Delete Account
+            </button>
           </div>
           {display === "membership" ? (
             <div className="setting-profile-main flex-col col-span-3 w-full">
