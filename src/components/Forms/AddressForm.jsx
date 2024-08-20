@@ -129,16 +129,16 @@ const AddressForm = ({ houseRequired, onSubmit }) => {
       }
     }
     if (place) {
-      onSubmit(dataizeMeCapn(place));
+      onSubmit(datatizeMeCapn(place));
     }
   };
 
   const addSelectedAddress = (address) => {
-    if (address) onSubmit(dataizeMeCapn(address));
+    if (address) onSubmit(datatizeMeCapn(address));
     else setPickedAddressError(true);
   };
 
-  const dataizeMeCapn = (data) => {
+  const datatizeMeCapn = (data) => {
     if (data.properties)
       return {
         address: data.properties.address_line1,

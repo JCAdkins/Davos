@@ -1,20 +1,18 @@
-//const apiStacksKey = import.meta.env.VITE_APISTACKS_KEY;
-const rapidApiKey = import.meta.env.VITE_RAPIDAPI_KEY;
+const apiVerveUrlKey = import.meta.env.VITE_APIVERVE_KEY;
 
 const validateCard = async (data) => {
   const cardNumber = data.number;
-  const rapidApiUrl = `https://card-validator-and-generator.p.rapidapi.com/validate?number=${cardNumber}`;
+  const apiVerveUrl = `https://api.apiverve.com/v1/cardvalidator?number=${cardNumber}`;
 
-  const rapidApiOptions = {
+  const apiVerveOptions = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": rapidApiKey,
-      "X-RapidAPI-Host": "card-validator-and-generator.p.rapidapi.com",
+      "x-api-key": apiVerveUrlKey,
     },
   };
 
   try {
-    const response = await fetch(rapidApiUrl, rapidApiOptions);
+    const response = await fetch(apiVerveUrl, apiVerveOptions);
 
     if (!response.ok) {
       throw new Error(response.status);

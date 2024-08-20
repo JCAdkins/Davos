@@ -284,7 +284,7 @@ const ProfileDisplay = () => {
               <div className="group justify-center">
                 <button
                   // class="hidden -mt-3 group-hover:inline-block text-black"
-                  class="hidden -mt-3 text-black"
+                  className="hidden -mt-3 text-black"
                   onClick={() => {
                     editLocation();
                   }}

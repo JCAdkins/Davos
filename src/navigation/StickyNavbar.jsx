@@ -58,7 +58,7 @@ const StickyNavbar = () => {
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <Typography
         as="li"
-        variant="large"
+        variant="lead"
         color="blue-gray"
         className="flex w-full justify-evenly p-1 font-normal"
       >
@@ -73,7 +73,7 @@ const StickyNavbar = () => {
       </Typography>
       <Typography
         as="li"
-        variant="large"
+        variant="lead"
         color="blue-gray"
         className="flex w-full justify-evenly p-1 font-normal"
       >
@@ -86,7 +86,7 @@ const StickyNavbar = () => {
       </Typography>
       <Typography
         as="li"
-        variant="large"
+        variant="lead"
         color="blue-gray"
         className="flex w-full justify-evenly p-1 font-normal"
       >
@@ -99,7 +99,7 @@ const StickyNavbar = () => {
       </Typography>
       <Typography
         as="li"
-        variant="large"
+        variant="lead"
         color="blue-gray"
         className="flex w-full justify-evenly p-1 font-normal"
       >

@@ -50,6 +50,7 @@ function App() {
 
   useEffect(() => {
     onAuthStateChanged(auth, (tUser) => {
+      console.log("user: " + tUser);
       if (tUser) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
@@ -62,6 +63,7 @@ function App() {
     // If __session cookie exists then we use that to log user in, otherwise we
     // open the login modal after 2 second delay
     checkSessionCookie().then((data) => {
+      if (data.data) console.log(data.data);
       if (data.customToken)
         setPersistence(auth, inMemoryPersistence).then(() =>
           signInWithCustomToken(auth, data.customToken)

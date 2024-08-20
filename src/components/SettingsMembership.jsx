@@ -147,7 +147,8 @@ const SettingsMembership = () => {
   };
 
   const addItem = (saveData) => {
-    updateUser(auth.currentUser.uid, {
+    console.log("saveData", saveData);
+    updateUser({
       membership: {
         ...user.membership,
         cards:
@@ -282,7 +283,7 @@ const SettingsMembership = () => {
           item.data.address != address.address ||
           item.data.zip != address.zip
       );
-      updateUser(auth.currentUser.uid, {
+      updateUser({
         membership: { ...user.membership, shipping: filteredAddresses },
       });
       setUser({
@@ -302,7 +303,7 @@ const SettingsMembership = () => {
           card.number != item.data.number ||
           card.type != item.data.type
       );
-      updateUser(auth.currentUser.uid, {
+      updateUser({
         membership: { ...user.membership, cards: filteredPayments },
       });
       setUser({

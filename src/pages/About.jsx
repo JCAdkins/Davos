@@ -88,9 +88,8 @@ const About = () => {
         </div>
         <div className="flex flex-col sm:col-span-4 items-center text-black gap-2">
           <div ref={historyRef} className="flex w-full justify-center p-6">
-            {/* <div className="flex flex-col items-center bg-white rounded-lg max-w-[65ch] text-center shadow-md drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)] divide-y divide-gray-400 p-2"> */}
             <div className="flex flex-col w-full items-center text-center p-2">
-              <h1 className="font-bold w-full bg-gradient-to-r from-white/0 via-white/100 to-white/0 active:from-white/100 active:via-white/0 active:to-white/100 hover:drop-shadow-[0_3px_3px_rgba(0,0,0)]  drop-shadow-[0_1.2px_1.2px_rgba(70,70,70)] text-3xl p-2">
+              <h1 className="font-bold w-full bg-gradient-to-r from-white/0 via-white/100 to-white/0 active:from-white/100 active:via-white/0 active:to-white/100 hover:drop-shadow-[0_3px_3px_rgba(0,0,0)]  drop-shadow-[0_1.2px_1.2px_rgba(70,70,70)] active:transition-all active:duration-300 active:ease-in-out text-3xl p-2">
                 <span>History</span>
               </h1>
               <div className="mt-2 pt-2 px-8 max-w-[76ch] antialiased border-x-8 border-double border-app_accent-900">

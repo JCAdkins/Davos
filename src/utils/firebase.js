@@ -29,7 +29,7 @@ export const cloudStorage = getStorage(app);
 export const functions = getFunctions(app);
 
 // NEEDED FOR LOCAL HOST DEVELOPMENT
-//self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+// self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
 
 export const appCheck = initializeAppCheck(app, {
   provider: new ReCaptchaV3Provider(import.meta.env.VITE_RECAPTCHA_KEY),

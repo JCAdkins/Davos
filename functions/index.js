@@ -47,7 +47,9 @@ exports.addUser = onCall(async (req) => {
 exports.updateUser = onCall(async (req) => {
   try {
     const uid = req.auth.uid;
-    const retVal = await db.collection("users").doc(uid).update(req.data);
+    const data = req.data;
+    logger.log(">>>>Data: ", data);
+    const retVal = await db.collection("users").doc(uid).update(data);
     return {
       status: 200,
       message: "Update was a success!",
@@ -162,7 +164,7 @@ exports.generateSessionCookie = onRequest((req, res) => {
     const expiresIn = 86400 * 1000 * 5; // 5 days
     try {
       // If idToken isn't valid an error will be thrown
-      const decodedToken = await admin.auth().verifyIdToken(idToken);
+      await admin.auth().verifyIdToken(idToken);
 
       // Create session cookie
       const sessionCookie = await admin
@@ -195,7 +197,10 @@ exports.authStatus = onRequest((req, res) => {
       logger.log("<<<<<<<cookie: ", cookie);
       // Check if the session cookie exists
       if (!cookie) {
-        res.status(401).send("Unauthorized");
+        // res.status(401).send("Unauthorized");
+        res
+          .status(401)
+          .send({ error: "Cannot auto-login. No session cookie found." });
         return;
       }
 
