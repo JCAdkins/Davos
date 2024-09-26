@@ -2,7 +2,11 @@ import { appCheck } from "../utils/firebase";
 import { getToken } from "firebase/app-check";
 
 const clearSessionCookie = async () => {
-  const url = "https://adkinthesky.adadkins.com/authLogout";
+  // Dynamically set the URL based on the current domain
+  const baseUrl = window.location.hostname.includes("adadkins.com")
+    ? "https://adkinthesky.adadkins.com"
+    : "https://davos-57f96.web.app";
+  const url = `${baseUrl}/authLogout`;
   try {
     const appToken = await getToken(appCheck, false);
     const response = await fetch(url, {

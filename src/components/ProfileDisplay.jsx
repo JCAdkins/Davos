@@ -347,7 +347,7 @@ const ProfileDisplay = () => {
               <div className="group justify-center mb-4">
                 <button
                   // class="hidden -mt-3 group-hover:inline-block text-black"
-                  class="hidden -mt-3 text-black"
+                  className="hidden -mt-3 text-black"
                   onClick={editCareer}
                 >
                   <EditIcon />
@@ -432,7 +432,7 @@ const ProfileDisplay = () => {
               <div className="group justify-center">
                 <button
                   // class="hidden group-hover:inline-block text-black"
-                  class="hidden text-black"
+                  className="hidden text-black"
                   onClick={editEducation}
                 >
                   <EditIcon />

@@ -31,7 +31,7 @@ const HomePage = () => {
 
   useEffect(() => {
     if (videoIndex === 0) {
-      if (vid1Ref.current) vid1Ref.current.playbackRate = 2.0;
+      if (vid1Ref.current) vid1Ref.current.playbackRate = 1.75;
 
       vid1Ref.current?.play();
       vid4Ref.current ? (vid4Ref.current.currentTime = 0) : {};
@@ -40,6 +40,7 @@ const HomePage = () => {
       setVideo1Disp("block");
     }
     if (videoIndex === 1) {
+      if (vid2Ref.current) vid2Ref.current.playbackRate = 2;
       vid2Ref.current?.play();
       vid1Ref.current ? (vid1Ref.current.currentTime = 0) : {};
       //Video3.preload();
@@ -47,6 +48,7 @@ const HomePage = () => {
       setVideo2Disp("block");
     }
     if (videoIndex === 2) {
+      if (vid3Ref.current) vid3Ref.current.playbackRate = 0.75;
       vid3Ref.current?.play();
       vid2Ref.current ? (vid2Ref.current.currentTime = 0) : {};
       //Video4.preload();
@@ -146,31 +148,12 @@ const HomePage = () => {
         </div>
         <div className="empty-container w-screen h-1/2"></div>
       </div>
-      <div className="lg:hidden bg-app_accent-900 flex flex-col text-xl">
-        <div className="flex flex-col justify-center items-center w-full border-double border-x-8 border-t-8 sm:border-none border-white">
-          <div className="w-full">
-            <div className="sm:hidden w-screen">
-              <div className="flex flex-wrap max-w-[38ch] items-center justify-center text-center text-2xl whitespace-pre py-4 px-8">
-                <em className="text-black font-bold drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
-                  Davos On Air:
-                </em>{" "}
-                The best{" "}
-                <strong className="flex text-center text-red-400">
-                  conservative{" "}
-                </strong>{" "}
-                podcast on the web!
-              </div>
-            </div>
-            <img
-              className="w-full h-auto"
-              src={IMAGES.podcast_home_2}
-              alt="podcast picture"
-            ></img>
-          </div>
-          <div className="flex w-full items-center justify-center text-center">
-            <div className="flex-col items-center justify-center sm:border-double sm:border-x-8 sm:border-white text-center">
-              <div className="hidden sm:block">
-                <div className="flex flex-wrap max-w-[38ch] items-center justify-center text-center text-2xl whitespace-pre p-8">
+      <div className="md:mt-56 lg:mt-82">
+        <div className="lg:hidden bg-app_accent-900 flex flex-col text-xl">
+          <div className="flex flex-col justify-center items-center w-full border-double border-x-8 border-t-8 sm:border-none border-white">
+            <div className="w-full">
+              <div className="sm:hidden w-screen">
+                <div className="flex flex-wrap max-w-[38ch] items-center justify-center text-center text-2xl whitespace-pre py-4 px-8">
                   <em className="text-black font-bold drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
                     Davos On Air:
                   </em>{" "}
@@ -181,121 +164,147 @@ const HomePage = () => {
                   podcast on the web!
                 </div>
               </div>
-              <div className="flex w-full items-center justify-center text-center">
-                <div className=" max-w-[35ch]">
-                  <div className="italic">
-                    "I listen to the Davos On Air podcast all the time! They
-                    talk about current events and bring on the best guest
-                    speakers with a wide variety of expertise."
-                    <p className="not-italic font-bold text-black drop-shadow-[0_1px_1px_rgba(255,255,255)]">
-                      -Nancy A.
-                    </p>
+              <img
+                className="w-full h-auto"
+                src={IMAGES.podcast_home_2}
+                alt="podcast picture"
+              ></img>
+            </div>
+            <div className="flex w-full items-center justify-center text-center">
+              <div className="flex-col items-center justify-center sm:border-double sm:border-x-8 sm:border-white text-center">
+                <div className="hidden sm:block">
+                  <div className="flex flex-wrap max-w-[38ch] items-center justify-center text-center text-2xl whitespace-pre p-8">
+                    <em className="text-black font-bold drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
+                      Davos On Air:
+                    </em>{" "}
+                    The best{" "}
+                    <strong className="flex text-center text-red-400">
+                      conservative{" "}
+                    </strong>{" "}
+                    podcast on the web!
                   </div>
                 </div>
-              </div>
-              <div className="mt-4 pb-8 flex w-full justify-center">
-                <Link to="/podcasts">
-                  <Button color="dark" size="md" pill>
-                    Listen Now
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col justify-center items-center w-full border-double border-white border-x-8 sm:border-none">
-          <div className="flex flex-col justify-center items-center w-full border-y-2 border-white sm:border-none">
-            <div className="sm:hidden flex flex-wrap items-center justify-center text-center text-2xl whitespace-pre p-4">
-              <p>Become a </p>
-              <em className="text-black font-bold  drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
-                Davos In The Desert{" "}
-              </em>
-              member now
-            </div>
-            <img
-              className="w-full h-auto"
-              src={IMAGES.member_home_1}
-              alt="podcast picture"
-            ></img>
-            <div className="flex w-full items-center justify-center text-center">
-              <div className="flex w-full items center justify-center">
-                <div className="flex-col items-center justify-center text-center sm:border-double sm:border-x-8 sm:border-white">
-                  <div className="hidden sm:block">
-                    <div className="flex flex-wrap items-center justify-center text-center text-2xl whitespace-pre p-8">
-                      <p>Become a </p>
-                      <em className="text-black font-bold  drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
-                        Davos In The Desert{" "}
-                      </em>
-                      member now
-                    </div>
-                  </div>
-                  <div className="flex w-full items-center justify-center text-center">
-                    <div>
-                      <p className="text-center max-w-[30ch]">
-                        ...and join thousands of people just like you! Have your
-                        voice heard by those that want to <span>DO</span>{" "}
-                        something about it. Now is the time to take actions.
+                <div className="flex w-full items-center justify-center text-center">
+                  <div className=" max-w-[35ch]">
+                    <div className="italic">
+                      "I listen to the Davos On Air podcast all the time! They
+                      talk about current events and bring on the best guest
+                      speakers with a wide variety of expertise."
+                      <p className="not-italic font-bold text-black drop-shadow-[0_1px_1px_rgba(255,255,255)]">
+                        -Nancy A.
                       </p>
                     </div>
                   </div>
-                  <div className="mt-4 mb-2 text-red-500 text-center">
-                    <p className="">*Special offers available</p>
-                  </div>
-                  <div className="flex w-full justify-center">
-                    <div className="mb-8 flex w-2/3 justify-center">
-                      <Link to="/new_account">
-                        <Button className="w-full" color="dark" size="md" pill>
-                          Sign Up
-                        </Button>
-                      </Link>
+                </div>
+                <div className="mt-4 pb-8 flex w-full justify-center">
+                  <Link to="/podcasts">
+                    <Button color="dark" size="md" pill>
+                      Listen Now
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col justify-center items-center w-full border-double border-white border-x-8 sm:border-none">
+            <div className="flex flex-col justify-center items-center w-full border-y-2 border-white sm:border-none">
+              <div className="sm:hidden flex flex-wrap items-center justify-center text-center text-2xl whitespace-pre p-4">
+                <p>Become a </p>
+                <em className="text-black font-bold  drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
+                  Davos In The Desert{" "}
+                </em>
+                member now
+              </div>
+              <img
+                className="w-full h-auto"
+                src={IMAGES.member_home_1}
+                alt="podcast picture"
+              ></img>
+              <div className="flex w-full items-center justify-center text-center">
+                <div className="flex w-full items center justify-center">
+                  <div className="flex-col items-center justify-center text-center sm:border-double sm:border-x-8 sm:border-white">
+                    <div className="hidden sm:block">
+                      <div className="flex flex-wrap items-center justify-center text-center text-2xl whitespace-pre p-8">
+                        <p>Become a </p>
+                        <em className="text-black font-bold  drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
+                          Davos In The Desert{" "}
+                        </em>
+                        member now
+                      </div>
+                    </div>
+                    <div className="flex w-full items-center justify-center text-center">
+                      <div>
+                        <p className="text-center max-w-[30ch]">
+                          ...and join thousands of people just like you! Have
+                          your voice heard by those that want to <span>DO</span>{" "}
+                          something about it. Now is the time to take actions.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="mt-4 mb-2 text-red-500 text-center">
+                      <p className="">*Special offers available</p>
+                    </div>
+                    <div className="flex w-full justify-center">
+                      <div className="mb-8 flex w-2/3 justify-center">
+                        <Link to="/new_account">
+                          <Button
+                            className="w-full"
+                            color="dark"
+                            size="md"
+                            pill
+                          >
+                            Sign Up
+                          </Button>
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="flex flex-col justify-center items-center w-full border-double border-white border-x-8 border-b-8 sm:border-none">
-          <div className="sm:hidden flex flex-wrap items-center justify-center text-center text-2xl whitespace-pre my-8 sm:px-14">
-            Party & mingle with all of your{" "}
-            <em className="text-black font-bold  drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
-              Davos{" "}
-            </em>
-            pals
-          </div>
-          <img
-            className="w-full h-auto"
-            src={IMAGES.event_homepage}
-            alt="podcast picture"
-          ></img>
-          <div className="flex w-full items-center justify-center text-center">
-            <div className="flex-col sm:border-b-0 items-center justify-center text-center sm:border-double sm:border-x-8 sm:border-white">
-              <div className="hidden sm:block">
-                <div className="flex flex-wrap items-center justify-center text-center text-2xl whitespace-pre my-8 sm:px-14">
-                  Party & mingle with all of your{" "}
-                  <em className="text-black font-bold  drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
-                    Davos{" "}
-                  </em>
-                  pals
+          <div className="flex flex-col justify-center items-center w-full border-double border-white border-x-8 border-b-8 sm:border-none">
+            <div className="sm:hidden flex flex-wrap items-center justify-center text-center text-2xl whitespace-pre my-8 sm:px-14">
+              Party & mingle with all of your{" "}
+              <em className="text-black font-bold  drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
+                Davos{" "}
+              </em>
+              pals
+            </div>
+            <img
+              className="w-full h-auto"
+              src={IMAGES.event_homepage}
+              alt="podcast picture"
+            ></img>
+            <div className="flex w-full items-center justify-center text-center">
+              <div className="flex-col sm:border-b-0 items-center justify-center text-center sm:border-double sm:border-x-8 sm:border-white">
+                <div className="hidden sm:block">
+                  <div className="flex flex-wrap items-center justify-center text-center text-2xl whitespace-pre my-8 sm:px-14">
+                    Party & mingle with all of your{" "}
+                    <em className="text-black font-bold  drop-shadow-[0_1.2px_1.2px_rgba(255,255,255)]">
+                      Davos{" "}
+                    </em>
+                    pals
+                  </div>
                 </div>
-              </div>
-              <div className="flex w-full items-center justify-center text-center">
-                <div>
-                  <p className="text-center max-w-[30ch]">
-                    Events are held frequently and you do not want to miss out
-                    on all of the fun. Socialize and grow your political
-                    network. What can you achieve with your newfound
-                    connections?
-                  </p>
+                <div className="flex w-full items-center justify-center text-center">
+                  <div>
+                    <p className="text-center max-w-[30ch]">
+                      Events are held frequently and you do not want to miss out
+                      on all of the fun. Socialize and grow your political
+                      network. What can you achieve with your newfound
+                      connections?
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div className="flex w-full justify-center">
-                <div className="mt-4 mb-8 flex w-2/3 justify-center">
-                  <Link to="/events">
-                    <Button className="w-full" color="dark" size="md" pill>
-                      View Events
-                    </Button>
-                  </Link>
+                <div className="flex w-full justify-center">
+                  <div className="mt-4 mb-8 flex w-2/3 justify-center">
+                    <Link to="/events">
+                      <Button className="w-full" color="dark" size="md" pill>
+                        View Events
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
@@ -454,7 +463,7 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className="w-screen mt-32">
+      <div className="w-screen mt-32 md:mt-64 lg:mt-96">
         <img src={IMAGES.reagan_home_2} alt="Ronald Reagan Quote"></img>
       </div>
     </div>

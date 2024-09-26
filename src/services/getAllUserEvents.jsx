@@ -4,7 +4,8 @@ const getAllUserEvents = (user) => {
   let events = [];
 
   user.events.map((event) => {
-    events = [...events, getEvent(event)];
+    console.log("identifier: ", event.identifier);
+    events = [...events, getEvent(event.identifier)];
   });
   return events;
 };

@@ -60,6 +60,21 @@ const StickyNavbar = () => {
         as="li"
         variant="lead"
         color="blue-gray"
+        className="flex w-full justify-evenly p-1 font-normal lg:hidden"
+      >
+        <div className="flex items-center hover:scale-110 hover:drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]">
+          <a
+            className="flex items-center hover:scale-110 hover:drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]"
+            href="https://shop.adadkins.com/"
+          >
+            Davos Shop
+          </a>
+        </div>
+      </Typography>
+      <Typography
+        as="li"
+        variant="lead"
+        color="blue-gray"
         className="flex w-full justify-evenly p-1 font-normal"
       >
         <Link
@@ -188,7 +203,7 @@ const StickyNavbar = () => {
             </IconButton>
           </div>
         </div>
-        <Collapse open={openNav} className="bg-gray-200 rounded-b-lg">
+        <Collapse open={openNav} className="bg-gray-200 rounded-b-lg mt-1">
           {navList}
           {user ? (
             <Button

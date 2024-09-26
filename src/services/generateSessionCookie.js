@@ -2,7 +2,12 @@ import { getToken } from "firebase/app-check";
 import { appCheck } from "../utils/firebase";
 
 const generateSessionCookie = async (idToken) => {
-  const url = "https://adkinthesky.adadkins.com/generateSessionCookie";
+  // Dynamically set the URL based on the current domain
+  const baseUrl = window.location.hostname.includes("adadkins.com")
+    ? "https://adkinthesky.adadkins.com"
+    : "https://davos-57f96.web.app";
+  const url = `${baseUrl}/generateSessionCookie`;
+  console.log("url: ", url);
   try {
     const appToken = await getToken(appCheck, false);
     const response = await fetch(url, {

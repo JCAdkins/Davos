@@ -29,7 +29,13 @@ const convertSeconds = (date) => {
   return new Date(date._seconds * 1000);
 };
 
-function EventsModal({ event, clearEventsModal }) {
+function EventsModal({
+  event,
+  clearEventsModal,
+  addEvent,
+  attending,
+  removeEvent,
+}) {
   const [openModal, setOpenModal] = useState("dismissible");
   const navigate = useNavigate();
   const [mapRef, setMapRef] = useState();
@@ -39,14 +45,12 @@ function EventsModal({ event, clearEventsModal }) {
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
   });
 
+  console.log("attending? ", attending);
+
   const handleFullDetailsClick = () => {
     navigate("/events/info", {
       state: { event: event, isJoiningEvent: false },
     });
-  };
-
-  const handleAttendEventClick = () => {
-    navigate("/events/info", { state: { event: event, isJoiningEvent: true } });
   };
 
   const markers = [
@@ -157,10 +161,17 @@ function EventsModal({ event, clearEventsModal }) {
             <Button disabled className="bg-app_accent-900">
               Attend Event
             </Button>
+          ) : attending ? (
+            <Button
+              className="bg-app_accent-900"
+              onClick={() => removeEvent(event.title)}
+            >
+              Remove Event
+            </Button>
           ) : (
             <Button
               className="bg-app_accent-900"
-              onClick={handleAttendEventClick}
+              onClick={() => addEvent(event.title)}
             >
               Attend Event
             </Button>

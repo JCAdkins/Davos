@@ -10,7 +10,7 @@ import {
 import { auth } from "../../utils/firebase";
 import generateSessionCookie from "../../services/generateSessionCookie";
 
-const MemberSignInModal = (props) => {
+const MemberSignInModal = ({ setError, resetModal }) => {
   const [openModal, _] = useState("form-elements");
   const [errorMessage, setErrorMessage] = useState();
   const emailRegex = new RegExp(
@@ -35,19 +35,15 @@ const MemberSignInModal = (props) => {
           const idToken = await userCredential.user.getIdToken();
           const sessionCookie = await generateSessionCookie(idToken);
           if (sessionCookie.error) {
-            props.setError(sessionCookie.error);
+            setError(sessionCookie.error);
           }
-          props.resetModal();
+          resetModal();
         })
       )
       .catch((error) => {
-        logInDenied();
+        setErrorMessage("Email/Password is incorrect.");
         console.log(error);
       });
-  };
-
-  const logInDenied = () => {
-    setErrorMessage("Email/Password is incorrect.");
   };
 
   const clearErrorMessage = () => {
@@ -60,7 +56,7 @@ const MemberSignInModal = (props) => {
       show={openModal === "form-elements"}
       size="md"
       popup
-      onClose={() => props.resetModal()}
+      onClose={() => resetModal()}
     >
       <Modal.Header />
       <Modal.Body>
@@ -142,7 +138,7 @@ const MemberSignInModal = (props) => {
                 <Link
                   to="/new_account"
                   className="text-app_accent-700 hover:underline dark:text-app_accent-500"
-                  onClick={() => props.resetModal()}
+                  onClick={() => resetModal()}
                 >
                   Create account
                 </Link>

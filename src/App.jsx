@@ -7,7 +7,7 @@ import Podcasts from "./pages/Podcasts";
 import Members from "./pages/Members";
 import Profile from "./pages/Profile";
 import UserSettings from "./pages/UserSettings";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import UserContext from "./contexts/UserContext";
 import PodcastProvider from "./contexts/PodcastProvider";
@@ -33,6 +33,16 @@ function App() {
   const [podcast, setPodcast] = useState();
   const [modal, setModal] = useState();
   const [errorModal, setErrorModal] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    try {
+      const cookie = checkForCookie(); // Async session check
+      setIsLoading(false);
+    } catch (error) {
+      console.log("something happened.");
+    }
+  }, []);
 
   const resetModal = () => {
     setModal(false);
@@ -48,7 +58,20 @@ function App() {
     setErrorModal();
   };
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   // If __session cookie exists then we use that to log user in, otherwise we
+  //   // open the login modal after 2 second delay
+  //   checkSessionCookie().then((data) => {
+  //     if (data.data) console.log(data.data);
+  //     if (data.customToken)
+  //       setPersistence(auth, inMemoryPersistence).then(() =>
+  //         signInWithCustomToken(auth, data.customToken)
+  //       );
+  //     else setTimeout(() => setModal(true), 2000);
+  //   });
+  // }, []);
+
+  const checkForCookie = async () => {
     onAuthStateChanged(auth, (tUser) => {
       console.log("user: " + tUser);
       if (tUser) {
@@ -60,19 +83,22 @@ function App() {
       }
     });
 
-    // If __session cookie exists then we use that to log user in, otherwise we
-    // open the login modal after 2 second delay
     checkSessionCookie().then((data) => {
       if (data.data) console.log(data.data);
       if (data.customToken)
-        setPersistence(auth, inMemoryPersistence).then(() =>
+        return setPersistence(auth, inMemoryPersistence).then(() =>
           signInWithCustomToken(auth, data.customToken)
         );
-      else setTimeout(() => setModal(true), 2000);
+      else {
+        setTimeout(() => setModal(true), 2000);
+        return false;
+      }
     });
-  }, []);
+  };
 
-  return (
+  return isLoading ? (
+    <div className="bg-cover bg-fixed w-screen">Loading...</div>
+  ) : (
     <div className="bg-cover bg-fixed w-screen">
       <UserContext.Provider value={{ user, setUser }}>
         <PodcastProvider.Provider value={{ podcast, setPodcast }}>

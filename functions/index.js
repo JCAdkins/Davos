@@ -149,34 +149,34 @@ exports.getUserByEmail = onRequest((req, res) => {
 
 exports.generateSessionCookie = onRequest((req, res) => {
   cors(req, res, async () => {
-    // Extract the Authorization header from the request
     const authorizationHeader = req.headers["authorization"];
 
-    // Check if the Authorization header is present
     if (!authorizationHeader) {
       return res
         .status(401)
         .json({ error: "Unauthorized - Missing Authorization header" });
     }
 
-    // Extract the token from the Authorization header
     const idToken = authorizationHeader.replace("Bearer ", "");
     const expiresIn = 86400 * 1000 * 5; // 5 days
     try {
-      // If idToken isn't valid an error will be thrown
       await admin.auth().verifyIdToken(idToken);
 
-      // Create session cookie
       const sessionCookie = await admin
         .auth()
         .createSessionCookie(idToken, { expiresIn });
 
-      // Set the session cookie with domain-wide access
+      // Determine domain based on the request hostname
+      const domain = req.hostname.includes("adadkins.com")
+        ? ".adadkins.com"
+        : ".web.app";
+
+      // Set the session cookie with domain-specific access
       res.cookie("__session", sessionCookie, {
         maxAge: expiresIn,
         httpOnly: true,
         secure: true,
-        domain: ".adadkins.com",
+        domain: domain,
         sameSite: "Strict",
       });
       res.end(JSON.stringify({ status: "success: session cookie set" }));
@@ -191,9 +191,14 @@ exports.generateSessionCookie = onRequest((req, res) => {
 exports.authStatus = onRequest((req, res) => {
   cors(req, res, async () => {
     try {
+      logger.log(">>>>>>>>req: ", req);
+      logger.log(">>>>>>req.headers.cookie: ", req.headers.cookie);
       const sessionCookie = req.headers.cookie;
       logger.log(">>>>sessionCookie: ", sessionCookie);
-      const cookie = sessionCookie.replace("__session=", "");
+      let cookie;
+      logger.log("~~cookie~~:", cookie);
+      if (sessionCookie !== undefined)
+        cookie = sessionCookie.replace("__session=", "");
       logger.log("<<<<<<<cookie: ", cookie);
       // Check if the session cookie exists
       if (!cookie) {
@@ -229,8 +234,12 @@ exports.authStatus = onRequest((req, res) => {
 // Logout endpoint to clear the session cookie
 exports.authLogout = onRequest((req, res) => {
   cors(req, res, () => {
+    // Determine domain based on the request hostname
+    const domain = req.hostname.includes("adadkins.com")
+      ? ".adadkins.com"
+      : ".web.app";
     res.clearCookie("__session", {
-      domain: ".adadkins.com", // Adjust to your domain
+      domain: domain, // Adjust to your domain
       secure: true,
       httpOnly: true,
       sameSite: "Strict",

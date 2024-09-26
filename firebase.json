@@ -80,6 +80,30 @@
           "functionId": "authStatus",
           "region": "us-central1"
         }
+      },
+      {
+        "source": "/events",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/podcasts",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/about",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/profile",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/settings",
+        "destination": "/index.html"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
       }
     ]
   },

@@ -21,7 +21,10 @@ import PaginatedTransitions from "../animations/PaginatedTransitions";
 import CardSkeleton from "../components/Skeletons/CardSkeleton";
 import UpcomingEvents from "../components/Icons/UpcomingEvents";
 import { Timestamp } from "firebase/firestore";
+import addEventToUserList from "../services/addEventToUserList";
 import "../customcss/CustomCardCss.css";
+import "./Events.css";
+import { getAuth } from "firebase/auth";
 
 const skeletonList = [
   <CardSkeleton />,
@@ -64,6 +67,7 @@ const Events = () => {
     user
       ? getAllUserEvents(user).forEach((event) => {
           event.then((data) => {
+            console.log("event: ", data);
             temp = [
               ...temp,
               <ListGroup.Item
@@ -88,11 +92,23 @@ const Events = () => {
       : {};
   }, [user]);
 
+  const addEvent = (title) => {
+    if (!user) {
+      return console.log("User is not authenticated");
+    }
+    const event = addEventToUserList(title, getAuth().currentUser.uid);
+    console.log(">>>>>>event: ", event);
+  };
+
+  const removeEvent = (title) => {
+    console.log("remove title: ", title);
+  };
+
   useEffect(() => {
     getAllEvents().then((list) => {
       setEventList(list);
+      setLoadingInit(false);
     });
-    setLoadingInit(false);
   }, []);
 
   const events =
@@ -138,6 +154,22 @@ const Events = () => {
       })
     );
   };
+
+  // const showWhatsGoingOn = () => {
+  //   console.log("event: ", event);
+  //   for (let a = 0; a < userEvents.length; a++) {
+  //     console.log("eventId: ", event);
+  //     console.log("userEventId: ", userEvents[a].id);
+  //     console.log(
+  //       "userEvents[a].props.children.props.children[0]: ",
+  //       userEvents[a].props.children.props.children[0]
+  //     );
+  //     console.log(
+  //       "equal? ",
+  //       event.title === userEvents[a].props.children.props.children[0]
+  //     );
+  //   }
+  // };
 
   useEffect(() => {
     paginatedEvents ? setCurrentPage(paginatedEvents[0]) : {};
@@ -526,7 +558,7 @@ const Events = () => {
       </div>
 
       <div className="sticky h-[20%] hidden lg:block right-0 pt-6 px-2 top-20 lg:items-center">
-        <div className="divide-y mb-4 divide-black">
+        <div className="mb-4">
           {!user && (
             <Card className="mt-4 text-black text-center justify-center">
               Log in to see your events.
@@ -537,8 +569,9 @@ const Events = () => {
               <h1 className="mb-2 drop-shadow-[0_1.2px_1.2px_rgba(70,70,70)]">
                 My Events
               </h1>
-              <div className="drop-shadow-[0_1.2px_1.2px_rgba(120,120,120)]">
-                <ListGroup>{...userEvents}</ListGroup>
+              <div className="event-list rounded-lg bg-white mt-4 text-black text-center justify-center drop-shadow-[0_1.2px_1.2px_rgba(70,70,70)]">
+                {...userEvents}
+                {userEvents.length > 0 ? "" : "No Events Planned."}
               </div>
             </div>
           )}
@@ -576,12 +609,20 @@ const Events = () => {
           </div>
         </div>
       </div>
+      {/* {showWhatsGoingOn()} */}
       {showEvent && (
         <EventsModal
           clearEventsModal={() => {
             setShowEvent(false);
           }}
+          attending={
+            userEvents.filter(
+              (evnt) => event.title === evnt.props.children.props.children[0]
+            ).length > 0
+          }
           event={event}
+          addEvent={(title) => addEvent(title)}
+          removeEvent={(e) => removeEvent(e)}
         />
       )}
     </div>

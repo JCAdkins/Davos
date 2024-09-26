@@ -5,7 +5,7 @@ import { getFunctions } from "firebase/functions";
 import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
-import { getPerformance } from "firebase/performance";
+// import { getPerformance } from "firebase/performance";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -21,20 +21,19 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-export const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
-export const perf = getPerformance(app);
-export const auth = getAuth(app);
-export const cloudStorage = getStorage(app);
-export const functions = getFunctions(app);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+// const perf = getPerformance(app);
+const auth = getAuth(app);
+const cloudStorage = getStorage(app);
+const functions = getFunctions(app);
 
 // NEEDED FOR LOCAL HOST DEVELOPMENT
-// self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+self.FIREBASE_APPCHECK_DEBUG_TOKEN = "61D30AAC-F0B9-4E29-97B1-5506CD6127CE";
 
-export const appCheck = initializeAppCheck(app, {
+const appCheck = initializeAppCheck(app, {
   provider: new ReCaptchaV3Provider(import.meta.env.VITE_RECAPTCHA_KEY),
-
-  // Optional argument. If true, the SDK automatically refreshes App Check
-  // tokens as needed.
   isTokenAutoRefreshEnabled: true,
 });
+
+export { app, appCheck, auth, cloudStorage, db, functions /*perf*/ };
