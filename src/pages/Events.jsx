@@ -113,41 +113,6 @@ const Events = () => {
     }
   }, [user]); // Only depend on the `user` object
 
-  // useEffect(() => {
-  //   // Check if user is defined and has events
-  //   if (user && user.events && user.events.length > 0) {
-  //     // Use Promise.all to handle all promises in user.events
-  //     const promises = user.events.map(async (eventPromise) => {
-  //       const data = await eventPromise; // Wait for each event
-  //       return (
-  //         <ListGroup.Item
-  //           key={data.id} // Ensure to set a unique key for each item
-  //           onClick={() => {
-  //             setEvent(data);
-  //             setShowEvent(true);
-  //           }}
-  //           className="flex-col text-black whitespace-pre overflow-hidden focus:text-app_accent-900 hover:text-app_accent-900"
-  //         >
-  //           <div className="scroll-text">
-  //             {data.title} {" - "} {makeDate(data.date).getMonth() + 1}/
-  //             {makeDate(data.date).getDate()}/
-  //             {makeDate(data.date).getFullYear()}
-  //           </div>
-  //         </ListGroup.Item>
-  //       );
-  //     });
-
-  //     // Resolve all promises and update the state
-  //     Promise.all(promises).then((resolvedEvents) => {
-  //       setUserEvents(resolvedEvents); // Update userEvents with resolved items
-  //       console.log("resolvedEvents: ", resolvedEvents);
-  //     });
-  //   } else {
-  //     // Clear userEvents if there's no user
-  //     setUserEvents([]);
-  //   }
-  // }, [user, user?.events]);
-
   const addEvent = (title) => {
     if (!user) {
       return console.log("User is not authenticated");
