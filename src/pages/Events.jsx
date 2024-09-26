@@ -23,7 +23,6 @@ import UpcomingEvents from "../components/Icons/UpcomingEvents";
 import { Timestamp } from "firebase/firestore";
 import addEventToUserList from "../services/addEventToUserList";
 import "../customcss/CustomCardCss.css";
-import "./Events.css";
 import { getAuth } from "firebase/auth";
 
 const skeletonList = [
@@ -48,7 +47,7 @@ const convertSeconds = (date) => {
 };
 
 const Events = () => {
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [daysEvents, setDaysEvents] = useState([]);
   const [eventList, setEventList] = useState([]);
   const [userEvents, setUserEvents] = useState([]);
@@ -63,41 +62,118 @@ const Events = () => {
   const searchRef = useRef(null);
 
   useEffect(() => {
-    let temp = [];
-    user
-      ? getAllUserEvents(user).forEach((event) => {
-          event.then((data) => {
-            console.log("event: ", data);
-            temp = [
-              ...temp,
-              <ListGroup.Item
-                onClick={() => {
-                  setEvent(data);
-                  setShowEvent(true);
-                }}
-                className="flex-col text-black whitespace-pre overflow-hidden focus:text-app_accent-900 hover:text-app_accent-900"
-              >
-                <div className="scroll-text">
-                  {data.title}
-                  {" - "}
-                  {makeDate(data.date).getMonth() + 1}/
-                  {makeDate(data.date).getDate()}/
-                  {makeDate(data.date).getFullYear()}
-                </div>
-              </ListGroup.Item>,
-            ];
-            setUserEvents(temp);
-          });
-        })
-      : {};
-  }, [user]);
+    if (user) {
+      // Fetch user events only once
+      const fetchUserEvents = async () => {
+        try {
+          const userEvents = getAllUserEvents(user); // Fetch all user events
+          const eventPromises = userEvents.map((eventPromise) =>
+            eventPromise.then((data) => ({
+              ...data, // Spread the event data to maintain other properties
+              dateObject: makeDate(data.date), // Create a date object for sorting
+            }))
+          );
+
+          // Resolve all event promises in one go
+          const resolvedEvents = await Promise.all(eventPromises);
+
+          // Sort the events by the date field
+          const sortedEvents = resolvedEvents.sort(
+            (a, b) => a.dateObject - b.dateObject
+          );
+
+          // Map the sorted events to ListGroup items and set state
+          const sortedEventItems = sortedEvents.map((data) => (
+            <ListGroup.Item
+              key={data.id} // Ensure unique keys for each item
+              onClick={() => {
+                setEvent(data);
+                setShowEvent(true);
+              }}
+              className="flex-col text-black whitespace-pre overflow-hidden focus:text-app_accent-900 hover:text-app_accent-900"
+            >
+              <div className="scroll-text">
+                {data.title} {" - "}
+                {data.dateObject.getMonth() + 1}/{data.dateObject.getDate()}/
+                {data.dateObject.getFullYear()}
+              </div>
+            </ListGroup.Item>
+          ));
+
+          setUserEvents(sortedEventItems);
+        } catch (error) {
+          console.error("Error fetching user events:", error);
+        }
+      };
+
+      fetchUserEvents(); // Trigger the async event fetching
+    } else {
+      // Clear the user events if no user is logged in
+      setUserEvents([]);
+    }
+  }, [user]); // Only depend on the `user` object
+
+  // useEffect(() => {
+  //   // Check if user is defined and has events
+  //   if (user && user.events && user.events.length > 0) {
+  //     // Use Promise.all to handle all promises in user.events
+  //     const promises = user.events.map(async (eventPromise) => {
+  //       const data = await eventPromise; // Wait for each event
+  //       return (
+  //         <ListGroup.Item
+  //           key={data.id} // Ensure to set a unique key for each item
+  //           onClick={() => {
+  //             setEvent(data);
+  //             setShowEvent(true);
+  //           }}
+  //           className="flex-col text-black whitespace-pre overflow-hidden focus:text-app_accent-900 hover:text-app_accent-900"
+  //         >
+  //           <div className="scroll-text">
+  //             {data.title} {" - "} {makeDate(data.date).getMonth() + 1}/
+  //             {makeDate(data.date).getDate()}/
+  //             {makeDate(data.date).getFullYear()}
+  //           </div>
+  //         </ListGroup.Item>
+  //       );
+  //     });
+
+  //     // Resolve all promises and update the state
+  //     Promise.all(promises).then((resolvedEvents) => {
+  //       setUserEvents(resolvedEvents); // Update userEvents with resolved items
+  //       console.log("resolvedEvents: ", resolvedEvents);
+  //     });
+  //   } else {
+  //     // Clear userEvents if there's no user
+  //     setUserEvents([]);
+  //   }
+  // }, [user, user?.events]);
 
   const addEvent = (title) => {
     if (!user) {
       return console.log("User is not authenticated");
     }
     const event = addEventToUserList(title, getAuth().currentUser.uid);
-    console.log(">>>>>>event: ", event);
+    event.then((e) => {
+      const eventList = [...user.events, e];
+      eventList.sort((a, b) => {
+        const aSeconds = a.date.seconds || a.date._seconds;
+        const aNanoseconds = a.date.nanoseconds || a.date._nanoseconds;
+
+        const bSeconds = b.date.seconds || b.date._seconds;
+        const bNanoseconds = b.date.nanoseconds || b.date._nanoseconds;
+
+        // Compare by seconds first, then by nanoseconds
+        if (aSeconds !== bSeconds) {
+          return aSeconds - bSeconds;
+        } else {
+          return aNanoseconds - bNanoseconds;
+        }
+      });
+      setUser({
+        ...user,
+        events: eventList,
+      });
+    });
   };
 
   const removeEvent = (title) => {

@@ -75,6 +75,7 @@ const MemberSignInModal = ({ setError, resetModal }) => {
               <TextInput
                 id="email"
                 placeholder="name@company.com"
+                autoComplete="username"
                 {...register("email", {
                   required: "Email is required.",
                   pattern: {
@@ -94,6 +95,7 @@ const MemberSignInModal = ({ setError, resetModal }) => {
               </div>
               <TextInput
                 id="current-password"
+                autoComplete="current-password"
                 type="password"
                 onChange={clearErrorMessage}
                 {...register("current-password", {

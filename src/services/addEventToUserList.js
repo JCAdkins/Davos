@@ -1,6 +1,5 @@
 import {
   doc,
-  getDoc,
   collection,
   query,
   where,
@@ -17,7 +16,6 @@ const addEventToUserList = async (eventTitle, userId) => {
     const eventsRef = collection(db, "events"); // Assuming 'events' is the collection where events are stored
     const q = query(eventsRef, where("title", "==", eventTitle));
     const querySnapshot = await getDocs(q);
-    console.log("snapshot: ", querySnapshot);
 
     if (querySnapshot.empty) {
       console.log("No matching event found.");
@@ -30,18 +28,14 @@ const addEventToUserList = async (eventTitle, userId) => {
       eventData = doc.data(); // Get the event data
     });
 
-    console.log(">>>>>eventData: ", eventData);
-
     // Step 3: Add the event to the user's event list
     const userRef = doc(db, "users", userId); // Assuming 'users' is the collection where user data is stored
-    console.log("userRef: ", userRef);
 
     // Update the user document to include the event in an array (assuming the user's events are stored in an array field called 'events')
     await updateDoc(userRef, {
       events: arrayUnion(eventData), // Adds the event data to the user's event array
     });
 
-    console.log(`Event '${eventTitle}' added to user's list.`);
     return eventData;
   } catch (error) {
     console.error("Error adding event to user's list:", error);

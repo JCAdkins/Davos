@@ -45,8 +45,6 @@ function EventsModal({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
   });
 
-  console.log("attending? ", attending);
-
   const handleFullDetailsClick = () => {
     navigate("/events/info", {
       state: { event: event, isJoiningEvent: false },
@@ -164,14 +162,20 @@ function EventsModal({
           ) : attending ? (
             <Button
               className="bg-app_accent-900"
-              onClick={() => removeEvent(event.title)}
+              onClick={() => {
+                removeEvent(event.title);
+                clearModal();
+              }}
             >
               Remove Event
             </Button>
           ) : (
             <Button
               className="bg-app_accent-900"
-              onClick={() => addEvent(event.title)}
+              onClick={() => {
+                addEvent(event.title);
+                clearModal();
+              }}
             >
               Attend Event
             </Button>

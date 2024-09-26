@@ -7,7 +7,6 @@ const generateSessionCookie = async (idToken) => {
     ? "https://adkinthesky.adadkins.com"
     : "https://davos-57f96.web.app";
   const url = `${baseUrl}/generateSessionCookie`;
-  console.log("url: ", url);
   try {
     const appToken = await getToken(appCheck, false);
     const response = await fetch(url, {
