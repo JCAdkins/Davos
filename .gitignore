@@ -1,6 +1,7 @@
 node_modules
 src/videos
 dist
+.firebase
 .firebaserc
 firebase.json
 firestore.indexes.json

@@ -28,7 +28,7 @@ const MemberSignInModal = ({ setError, resetModal }) => {
       .then(() =>
         signInWithEmailAndPassword(
           auth,
-          creds.email,
+          creds.signin_email,
           creds[`current-password`]
         ).then(async (userCredential) => {
           // Signed in
@@ -70,13 +70,13 @@ const MemberSignInModal = ({ setError, resetModal }) => {
           <form>
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="email" value="Your email" />
+                <Label htmlFor="signin_email" value="Your email" />
               </div>
               <TextInput
-                id="email"
+                id="signin_email"
                 placeholder="name@company.com"
                 autoComplete="username"
-                {...register("email", {
+                {...register("signin_email", {
                   required: "Email is required.",
                   pattern: {
                     value: emailRegex,

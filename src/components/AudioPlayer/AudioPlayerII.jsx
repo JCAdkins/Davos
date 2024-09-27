@@ -1,5 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
+import AudioBack from "../Icons/AudioBack";
 import Xicon from "../Xicon";
+import AudioForward from "../Icons/AudioForward";
+import AudioPlay from "../Icons/AudioPlay";
+import AudioPaused from "../Icons/AudioPaused";
 
 const AudioPlayerII = (props) => {
   const [index, setIndex] = useState(0);
@@ -9,8 +13,10 @@ const AudioPlayerII = (props) => {
   const currentPodcast = podcastList[index];
   const [zInd, setZInd] = useState(0);
 
+  console.log("podcastList: ", podcastList);
+
   const showInfo = () => {
-    !currentPodcast.disabled ? props.showPodcastInfo(podcastList[index]) : {};
+    currentPodcast.disabled ? {} : props.showPodcastInfo(podcastList[index]);
   };
 
   const playerRef = useRef(null);
@@ -18,72 +24,6 @@ const AudioPlayerII = (props) => {
   const playheadRef = useRef(null);
   const hoverPlayheadRef = useRef(null);
   const containerRef = useRef(null);
-
-  const back = (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth="1.5"
-      stroke="currentColor"
-      className="w-6 h-6"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M21 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953l7.108-4.062A1.125 1.125 0 0121 8.688v8.123zM11.25 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953L9.567 7.71a1.125 1.125 0 011.683.977v8.123z"
-      />
-    </svg>
-  );
-  const forward = (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth="1.5"
-      stroke="currentColor"
-      className="w-6 h-6"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M3 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062A1.125 1.125 0 013 16.81V8.688zM12.75 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062a1.125 1.125 0 01-1.683-.977V8.688z"
-      />
-    </svg>
-  );
-
-  const play = (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth="1.5"
-      stroke="currentColor"
-      className="w-6 h-6"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"
-      />
-    </svg>
-  );
-  const paused = (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth="1.5"
-      stroke="currentColor"
-      className="w-6 h-6"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M15.75 5.25v13.5m-7.5-13.5v13.5"
-      />
-    </svg>
-  );
 
   const changeCurrentTime = (e) => {
     const duration = playerRef.current.duration;
@@ -122,13 +62,15 @@ const AudioPlayerII = (props) => {
   };
 
   const timeUpdate = () => {
-    const duration = playerRef.current.duration; // duration is correct
-    const timelineWidth =
-      timelineRef.current.offsetWidth - playheadRef.current.offsetWidth; // timelineWidth is how much time is left on the song and shrinks accordingly it is correct
-    const playPercent = 100 * (playerRef.current.currentTime / duration); // playPercent is correct
-    playheadRef.current.style.width = playPercent + "%";
-    const currentTime = formatTime(parseInt(playerRef.current.currentTime));
-    setCurrentTime(currentTime);
+    if (playerRef.current && timelineRef.current && playheadRef.current) {
+      const duration = playerRef.current.duration; // duration is correct
+      const timelineWidth =
+        timelineRef.current.offsetWidth - playheadRef.current.offsetWidth; // timelineWidth is how much time is left on the song and shrinks accordingly it is correct
+      const playPercent = 100 * (playerRef.current.currentTime / duration); // playPercent is correct
+      playheadRef.current.style.width = playPercent + "%";
+      const currentTime = formatTime(parseInt(playerRef.current.currentTime));
+      setCurrentTime(currentTime);
+    }
   };
 
   const formatTime = (currentTime) => {
@@ -264,23 +206,31 @@ const AudioPlayerII = (props) => {
             onClick={prevPodcast}
             className="text-app_accent-900 hover:scale-110"
           >
-            <i className="fas fa-backward">{back}</i>
+            <i className="fas fa-backward">
+              <AudioBack />
+            </i>
           </button>
           <button
-            onClick={playOrPause}
+            onClick={podcastList[0].title === "" ? () => {} : playOrPause}
             className="border-2 border-gray-300 rounded-full w-12 h-12 flex items-center justify-center text-app_accent-900 hover:shadow-lg"
           >
-            {!pause ? (
-              <i className="fas fa-play">{play}</i>
+            {pause ? (
+              <i className="fas fa-pause">
+                <AudioPaused />
+              </i>
             ) : (
-              <i className="fas fa-pause">{paused}</i>
+              <i className="fas fa-play">
+                <AudioPlay />
+              </i>
             )}
           </button>
           <button
             onClick={nextPodcast}
             className="text-app_accent-900 hover:scale-110"
           >
-            <i className="fas fa-forward">{forward}</i>
+            <i className="fas fa-forward">
+              <AudioForward />
+            </i>
           </button>
         </div>
       </div>

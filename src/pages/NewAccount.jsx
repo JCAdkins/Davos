@@ -12,14 +12,17 @@ const NewAccount = () => {
         <DefaultCarousel className="h-screen w-screen object-cover transition-opacity duration-300" />
       </div>
       <Alert
-        className={`fade-in-alert w-fullabsolute tracking-tight rounded-none ${hidden} text-sm p-1`}
+        className={`create-account-alert fade-in-alert w-full absolute tracking-tight rounded-none ${hidden} text-sm p-1`}
         color="failure"
         onDismiss={() => setHidden("hidden")}
       >
-        <span className="font-medium">Hurry!</span> The $75 application fee is
-        waived for a limited time. The $19 a month membership dues will soon
-        rise to $29 a month. Become a member today and your $19 a month dues
-        will be grandfathered.
+        <div className="font-medium w-full flex justify-center">
+          <span className="w-fit text-center">
+            Hurry! The $75 application fee is waived for a limited time. The $19
+            a month membership dues will soon rise to $29 a month. Become a
+            member today and your $19 a month dues will be grandfathered.
+          </span>
+        </div>
       </Alert>
       <div className="flex justify-center items-center bg-transparent w-screen h-screen">
         <div className="bg-white p-6 rounded-lg w-fit bg-opacity-90">

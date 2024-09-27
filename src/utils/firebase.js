@@ -29,7 +29,7 @@ const cloudStorage = getStorage(app);
 const functions = getFunctions(app);
 
 // NEEDED FOR LOCAL HOST DEVELOPMENT
-self.FIREBASE_APPCHECK_DEBUG_TOKEN = "61D30AAC-F0B9-4E29-97B1-5506CD6127CE";
+self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
 
 const appCheck = initializeAppCheck(app, {
   provider: new ReCaptchaV3Provider(import.meta.env.VITE_RECAPTCHA_KEY),

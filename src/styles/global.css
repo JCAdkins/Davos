@@ -50,6 +50,10 @@
   list-style-type: none; /* This removes the bullet or number marker */
 }
 
+.create-account-alert div {
+  width: 100%;
+}
+
 /* .error-modal-header svg {
   color: black;
 } */

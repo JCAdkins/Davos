@@ -425,7 +425,9 @@ const Events = () => {
                   </div>
                   <SearchBar
                     ref={searchRef}
-                    value={searchRef.current?.value}
+                    value={
+                      searchRef.current?.value ? searchRef.current?.value : ""
+                    }
                     onChange={() =>
                       handleSearchBarChange(searchRef.current.value)
                     }
@@ -680,6 +682,7 @@ const Events = () => {
           removeEvent={(e) => removeEvent(e)}
         />
       )}
+      {}
     </div>
   );
 };

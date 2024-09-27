@@ -232,7 +232,11 @@ const Podcasts = () => {
 
                           <SearchBar
                             ref={searchRef}
-                            value={searchRef.current?.value}
+                            value={
+                              searchRef.current?.value
+                                ? searchRef.current?.value
+                                : ""
+                            }
                             onChange={() =>
                               handleSearchBarChange(searchRef.current.value)
                             }
@@ -279,7 +283,11 @@ const Podcasts = () => {
                           </div>
                           <SearchBar
                             ref={searchRef}
-                            value={searchRef.current?.value}
+                            value={
+                              searchRef.current?.value
+                                ? searchRef.current?.value
+                                : ""
+                            }
                             onChange={() =>
                               handleSearchBarChange(searchRef.current.value)
                             }

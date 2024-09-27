@@ -115,9 +115,7 @@ function EventsModal({
               {event.description}
             </div>
             <div className="text-black h-full w-full">
-              {!isLoaded ? (
-                <h1>Loading...</h1>
-              ) : (
+              {isLoaded ? (
                 <GoogleMap
                   mapContainerClassName="map-container"
                   onLoad={onMapLoad}
@@ -144,6 +142,8 @@ function EventsModal({
                     </Marker>
                   ))}
                 </GoogleMap>
+              ) : (
+                <h1>Loading...</h1>
               )}
             </div>
           </div>

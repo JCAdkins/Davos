@@ -7,12 +7,8 @@ const checkSessionCookie = async () => {
     ? "https://adkinthesky.adadkins.com"
     : "https://davos-57f96.web.app";
   const url = `${baseUrl}/authStatus`;
-  console.log("url: ", url);
   try {
-    console.log("in here");
     const appToken = await getToken(appCheck, false);
-    console.log("past here");
-    console.log("appToken: ", appToken);
     const response = await fetch(url, {
       method: "GET",
       headers: {
