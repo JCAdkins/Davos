@@ -12,7 +12,7 @@ const NewAccount = () => {
         <DefaultCarousel className="h-screen w-screen object-cover transition-opacity duration-300" />
       </div>
       <Alert
-        className={`fade-in-alert absolute tracking-tight rounded-none ${hidden} text-sm p-1`}
+        className={`fade-in-alert w-fullabsolute tracking-tight rounded-none ${hidden} text-sm p-1`}
         color="failure"
         onDismiss={() => setHidden("hidden")}
       >
