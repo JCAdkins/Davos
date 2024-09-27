@@ -24,6 +24,7 @@ import { Timestamp } from "firebase/firestore";
 import addEventToUserList from "../services/addEventToUserList";
 import "../customcss/CustomCardCss.css";
 import { getAuth } from "firebase/auth";
+import removeEventFromUserList from "../services/removeEventFromUserList";
 
 const skeletonList = [
   <CardSkeleton />,
@@ -61,6 +62,15 @@ const Events = () => {
   const [searchEvents, setSearchEvents] = useState();
   const searchRef = useRef(null);
 
+  // useEffect called just once
+  useEffect(() => {
+    getAllEvents().then((list) => {
+      setEventList(list);
+      setLoadingInit(false);
+    });
+  }, []);
+
+  // useEffect called whenever user is changed
   useEffect(() => {
     if (user) {
       // Fetch user events only once
@@ -111,8 +121,9 @@ const Events = () => {
       // Clear the user events if no user is logged in
       setUserEvents([]);
     }
-  }, [user]); // Only depend on the `user` object
+  }, [user]);
 
+  // This adds an event to a users event list in both Firestore as well as on the app. Since user is updated it will refresh the screen
   const addEvent = (title) => {
     if (!user) {
       return console.log("User is not authenticated");
@@ -141,17 +152,30 @@ const Events = () => {
     });
   };
 
-  const removeEvent = (title) => {
-    console.log("remove title: ", title);
+  // This removers an event to a users event list in both Firestore as well as on the app. Since user is updated it will refresh the screen
+  const removeEvent = (event) => {
+    const removedEvent = removeEventFromUserList(
+      event,
+      getAuth().currentUser.uid
+    );
+
+    let updatedEventList;
+    removedEvent
+      .then((rmEvent) => {
+        // Filter out the event that was removed
+        updatedEventList = user.events.filter(
+          (e) => e.identifier !== rmEvent.identifier
+        );
+      })
+      .then(() => {
+        setUser({
+          ...user,
+          events: updatedEventList,
+        });
+      });
   };
 
-  useEffect(() => {
-    getAllEvents().then((list) => {
-      setEventList(list);
-      setLoadingInit(false);
-    });
-  }, []);
-
+  // Set the events to be displayed after sorting them according to date
   const events =
     eventList == null
       ? []
@@ -162,6 +186,7 @@ const Events = () => {
   const todaysDate = new Date();
   todaysDate.setHours(0, 0, 0, 0);
 
+  // Filter out past events; should they still be on the list?
   const upcomingEvents = events
     .filter((event) => {
       return makeDate(event.date) >= todaysDate;
@@ -176,6 +201,7 @@ const Events = () => {
       />
     ));
 
+  // This will load all the events, even past ones, as a paginated collection
   const loadAllEvents = () => {
     setLoadingAllEvents(true);
     paginatedCollection("events", "date", 6).then((data) => {
@@ -183,6 +209,8 @@ const Events = () => {
     });
   };
 
+  // This does not technically set the tile content. This filters the events according to the calendar date. setDaysEvents is what
+  // actually sets the tile content.
   const setTileContent = (date) => {
     setDaysEvents(
       events.filter((event) => {
@@ -196,26 +224,12 @@ const Events = () => {
     );
   };
 
-  // const showWhatsGoingOn = () => {
-  //   console.log("event: ", event);
-  //   for (let a = 0; a < userEvents.length; a++) {
-  //     console.log("eventId: ", event);
-  //     console.log("userEventId: ", userEvents[a].id);
-  //     console.log(
-  //       "userEvents[a].props.children.props.children[0]: ",
-  //       userEvents[a].props.children.props.children[0]
-  //     );
-  //     console.log(
-  //       "equal? ",
-  //       event.title === userEvents[a].props.children.props.children[0]
-  //     );
-  //   }
-  // };
-
+  // Refresh the page whenever the full paginated events collection is loaded
   useEffect(() => {
     paginatedEvents ? setCurrentPage(paginatedEvents[0]) : {};
   }, [paginatedEvents]);
 
+  // Handle user searches
   const handleSearchBarChange = (searchVal) => {
     const filteredEvents = eventList
       .filter((event) => {

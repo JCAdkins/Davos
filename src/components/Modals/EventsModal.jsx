@@ -163,7 +163,7 @@ function EventsModal({
             <Button
               className="bg-app_accent-900"
               onClick={() => {
-                removeEvent(event.title);
+                removeEvent(event);
                 clearModal();
               }}
             >
@@ -173,7 +173,7 @@ function EventsModal({
             <Button
               className="bg-app_accent-900"
               onClick={() => {
-                addEvent(event.title);
+                addEvent(event.identifier);
                 clearModal();
               }}
             >
