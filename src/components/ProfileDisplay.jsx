@@ -18,6 +18,7 @@ const convertSeconds = (date) => {
 };
 
 function getAge(dateString) {
+  // This will convert a date string to a number
   console.log(dateString);
   var today = new Date();
   var birthDate =
