@@ -28,12 +28,19 @@ const SettingsProfile = ({ user, setSaveData }) => {
   const retypePasswordRef = useRef(null);
   const [verifyPassword, setVerifyPassword] = useState();
   const [verifyError, setVerifyError] = useState();
-  const appUser = auth.currentUser;
+
+  const convertSeconds = (date) => {
+    return date.seconds
+      ? new Date(date.seconds * 1000)
+      : new Date(date._seconds * 1000);
+  };
 
   const created =
     user.created instanceof Timestamp
-      ? user.created.toDate().toLocaleString()
-      : new Date(user.created).toLocaleString();
+      ? user.created.toDate()
+      : user.created.seconds || user.created._seconds
+      ? convertSeconds(user.created)
+      : new Date(user.created);
 
   useEffect(() => {
     setSaveData({
@@ -181,9 +188,9 @@ const SettingsProfile = ({ user, setSaveData }) => {
                   </button>
                 )}
               </div>
-              {[created].map((date, ind) => (
-                <p key={ind}>{date}</p>
-              ))}
+              {[created].map((date, ind) => {
+                return <p key={ind}>{date.toLocaleDateString()}</p>;
+              })}
             </div>
           </div>
           <div className="">

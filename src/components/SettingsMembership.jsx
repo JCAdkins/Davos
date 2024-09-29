@@ -12,7 +12,7 @@ const formatDate = (date) => {
   const dateObj =
     date instanceof Timestamp
       ? date.toDate()
-      : date.seconds
+      : date.seconds || date._seconds
       ? convertSeconds(date)
       : new Date(date);
   let month = dateObj.getUTCMonth() + 1; //months from 1-12
@@ -29,7 +29,6 @@ const formatDate = (date) => {
 };
 
 const makeDate = (data) => {
-  console.log(data);
   return data instanceof Timestamp
     ? data.toDate()
     : data._seconds || data.seconds

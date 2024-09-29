@@ -11,14 +11,22 @@ import { NUMBERS_1TO50 } from "../assets/NUMBERS_1TO50";
 import { EDUCATION } from "../assets/EDUCATION";
 import ProfilePicModal from "./Modals/ProfilePicModal";
 
+const convertSeconds = (date) => {
+  return date.seconds
+    ? new Date(date.seconds * 1000)
+    : new Date(date._seconds * 1000);
+};
+
 function getAge(dateString) {
+  console.log(dateString);
   var today = new Date();
   var birthDate =
     dateString instanceof Timestamp
       ? dateString.toDate()
-      : dateString.seconds
+      : dateString.seconds || dateString._seconds
       ? convertSeconds(dateString)
       : new Date(dateString);
+  console.log(birthDate);
   var age = today.getFullYear() - birthDate.getFullYear();
   var m = today.getMonth() - birthDate.getMonth();
   if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
@@ -27,10 +35,6 @@ function getAge(dateString) {
   return age;
 }
 const cityRegEx = new RegExp(/[a-zA-Z-]+/);
-
-const convertSeconds = (date) => {
-  return new Date(date.seconds * 1000);
-};
 
 const ProfileDisplay = () => {
   const [addAboutMe, setAddAboutMe] = useState(false);
