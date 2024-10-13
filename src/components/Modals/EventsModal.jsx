@@ -157,7 +157,7 @@ function EventsModal({
           </Button>
           {makeDate(event.date) < today ? (
             <Button disabled className="bg-app_accent-900">
-              Attend Event
+              Event Complete
             </Button>
           ) : attending ? (
             <Button

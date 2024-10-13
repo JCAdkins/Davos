@@ -13,10 +13,11 @@ import SettingsSecurity from "../components/SettingsSecurity";
 
 const UserSettings = () => {
   const { user, setUser } = useContext(UserContext);
-  const [display, setDisplay] = useState();
+  const [display, setDisplay] = useState("profile");
   const [saveData, setSaveData] = useState();
   const [error, setError] = useState();
   const [success, setSuccess] = useState();
+  const [first, setFirst] = useState(true);
 
   const cancelProfile = () => {
     setDisplay("loadProfile");
@@ -86,16 +87,16 @@ const UserSettings = () => {
                 Profile
               </ListGroup.Item>
               <ListGroup.Item
-                onClick={() =>
-                  display != "security" ? setDisplay("security") : {}
-                }
+                onClick={() => {
+                  display != "security" ? setDisplay("security") : {};
+                }}
               >
                 Security
               </ListGroup.Item>
               <ListGroup.Item
-                onClick={() =>
-                  display != "membership" ? setDisplay("membership") : {}
-                }
+                onClick={() => {
+                  display != "membership" ? setDisplay("membership") : {};
+                }}
               >
                 <p className="text-start">Membership / Purchase</p>
               </ListGroup.Item>
