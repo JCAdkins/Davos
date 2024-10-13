@@ -1,5 +1,5 @@
 import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import {
@@ -16,6 +16,14 @@ const MemberSignInModal = ({ setError, resetModal }) => {
   const emailRegex = new RegExp(
     /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
   );
+  const emailInputRef = useRef(null); // Create the ref
+
+  // Use useEffect to set focus when the component mounts or at any specific time
+  useEffect(() => {
+    if (emailInputRef.current) {
+      emailInputRef.current.focus(); // Set focus on the email input
+    }
+  }, []); // Empty dependency array to set focus only on initial mount
 
   const {
     register,
@@ -54,6 +62,7 @@ const MemberSignInModal = ({ setError, resetModal }) => {
     <Modal
       id="memberModal"
       show={openModal === "form-elements"}
+      aria-label="User Login"
       size="md"
       popup
       onClose={() => resetModal()}
@@ -76,6 +85,7 @@ const MemberSignInModal = ({ setError, resetModal }) => {
                 id="signin_email"
                 placeholder="name@company.com"
                 autoComplete="username"
+                ref={emailInputRef}
                 {...register("signin_email", {
                   required: "Email is required.",
                   pattern: {

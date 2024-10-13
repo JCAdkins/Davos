@@ -35,7 +35,7 @@ const HomePage = () => {
 
       vid1Ref.current?.play();
       vid4Ref.current ? (vid4Ref.current.currentTime = 0) : {};
-      //Video2.preload();
+      // Video2.preload();
       setVideo4Disp("hidden");
       setVideo1Disp("block");
     }
@@ -43,7 +43,7 @@ const HomePage = () => {
       if (vid2Ref.current) vid2Ref.current.playbackRate = 2;
       vid2Ref.current?.play();
       vid1Ref.current ? (vid1Ref.current.currentTime = 0) : {};
-      //Video3.preload();
+      // Video3.preload();
       setVideo1Disp("hidden");
       setVideo2Disp("block");
     }
@@ -51,7 +51,7 @@ const HomePage = () => {
       if (vid3Ref.current) vid3Ref.current.playbackRate = 0.75;
       vid3Ref.current?.play();
       vid2Ref.current ? (vid2Ref.current.currentTime = 0) : {};
-      //Video4.preload();
+      // Video4.preload();
       setVideo2Disp("hidden");
       setVideo3Disp("block");
     }
@@ -64,12 +64,12 @@ const HomePage = () => {
     }
   }, [videoIndex]);
 
-  useEffect(() => {
-    Video1.preload();
-    Video2.preload();
-    Video3.preload();
-    Video4.preload();
-  }, []);
+  // useEffect(() => {
+  // Video1.preload();
+  // Video2.preload();
+  // Video3.preload();
+  // Video4.preload();
+  // }, []);
 
   return (
     <div className="flex-col bg-app_bg font-dmserif">

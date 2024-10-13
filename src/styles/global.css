@@ -54,6 +54,10 @@
   width: 100%;
 }
 
+.color-me-first {
+  background: "#0ea5e9";
+  color: "#bae6fd";
+}
 /* .error-modal-header svg {
   color: black;
 } */
