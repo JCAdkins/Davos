@@ -13,8 +13,6 @@ const AudioPlayerII = (props) => {
   const currentPodcast = podcastList[index];
   const [zInd, setZInd] = useState(0);
 
-  console.log("podcastList: ", podcastList);
-
   const showInfo = () => {
     currentPodcast.disabled ? {} : props.showPodcastInfo(podcastList[index]);
   };

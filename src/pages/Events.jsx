@@ -77,6 +77,7 @@ const Events = () => {
       const fetchUserEvents = async () => {
         try {
           const userEvents = getAllUserEvents(user); // Fetch all user events
+          const date = new Date();
           const eventPromises = userEvents.map((eventPromise) =>
             eventPromise.then((data) => ({
               ...data, // Spread the event data to maintain other properties
@@ -85,7 +86,9 @@ const Events = () => {
           );
 
           // Resolve all event promises in one go
-          const resolvedEvents = await Promise.all(eventPromises);
+          const resolvedEvents = await Promise.all(eventPromises).then(
+            (events) => events.filter((event) => event.dateObject > date)
+          );
 
           // Sort the events by the date field
           const sortedEvents = resolvedEvents.sort(

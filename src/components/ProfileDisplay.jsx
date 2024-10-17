@@ -19,7 +19,6 @@ const convertSeconds = (date) => {
 
 function getAge(dateString) {
   // This will convert a date string to a number
-  console.log(dateString);
   var today = new Date();
   var birthDate =
     dateString instanceof Timestamp
@@ -27,7 +26,6 @@ function getAge(dateString) {
       : dateString.seconds || dateString._seconds
       ? convertSeconds(dateString)
       : new Date(dateString);
-  console.log(birthDate);
   var age = today.getFullYear() - birthDate.getFullYear();
   var m = today.getMonth() - birthDate.getMonth();
   if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
@@ -100,7 +98,6 @@ const ProfileDisplay = () => {
         },
       },
     });
-    console.log("upU: ", upU);
     setEditingCareer(false);
   };
 
